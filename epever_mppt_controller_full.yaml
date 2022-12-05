@@ -543,6 +543,7 @@ number:
     int h = static_cast<int>(x);
     int m = static_cast<int>(id(x903f_m).state);
     uint16_t value = ((h << 8) | m);
+    ESP_LOGI("epever_mppt_controller", "Duration Before Sunrise %x", static_cast<double>(value));
     return static_cast<double>(value);
   disabled_by_default: false
   skip_updates: 0
@@ -564,6 +565,12 @@ number:
   max_value: 24.0
   use_write_multiple: true
   mode: BOX
+  write_lambda: !lambda |-
+    int h = static_cast<int>(id(x903f_h).state);
+    int m = static_cast<int>(x);
+    uint16_t value = ((h << 8) | m);
+    ESP_LOGI("epever_mppt_controller", "Duration Before Sunrise %x", static_cast<double>(value));
+    return static_cast<double>(value);
   disabled_by_default: false
   skip_updates: 0
   force_new_range: false

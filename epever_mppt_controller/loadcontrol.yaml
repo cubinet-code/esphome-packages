@@ -260,10 +260,6 @@ number:
     step: 0.1
     icon: mdi:weather-sunset-down
     use_write_multiple: true
-    write_lambda: |-
-      uint16_t value = x;
-      payload.push_back(value);
-      return x * 1.0;
     multiply: 100
 
   - platform: modbus_controller

@@ -500,10 +500,6 @@ number:
   step: 0.1
   icon: mdi:weather-sunset-down
   use_write_multiple: true
-  write_lambda: !lambda |-
-    uint16_t value = x;
-    payload.push_back(value);
-    return x * 1.0;
   multiply: 100.0
   disabled_by_default: false
   mode: AUTO

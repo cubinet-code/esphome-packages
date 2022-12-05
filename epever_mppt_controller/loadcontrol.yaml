@@ -259,6 +259,7 @@ number:
     max_value: 99
     step: 0.1
     icon: mdi:weather-sunset-down
+    force_new_range: true
     use_write_multiple: true
     multiply: 100
 
@@ -274,5 +275,6 @@ number:
     max_value: 99
     step: 0.1
     icon: mdi:weather-sunset-up
+    force_new_range: true
     use_write_multiple: true
     multiply: 100

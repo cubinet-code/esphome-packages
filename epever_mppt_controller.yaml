@@ -15,7 +15,7 @@ esphome:
     version: "1.0.0"
 
 esp32:
-  board: esp32dev
+  board: esp-wrover-kit
   framework:
     type: arduino
     version: latest

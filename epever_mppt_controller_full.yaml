@@ -19,7 +19,7 @@ esphome:
   name_add_mac_suffix: false
   min_version: 2022.11.3
 esp32:
-  board: esp32dev
+  board: esp-wrover-kit
   framework:
     version: 1.0.6
     source: ~3.10006.0

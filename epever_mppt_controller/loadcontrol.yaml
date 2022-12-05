@@ -1,32 +1,12 @@
 sensor:
   - platform: modbus_controller
     modbus_controller_id: epever
-    name: "${prefix} LC: #2 Duration After Sunset (h) - 0=Off"
-    register_type: holding
-    address: 0x903e
-    bitmask: 0xff00
-    value_type: U_WORD
-    unit_of_measurement: "h"
-    icon: mdi:timer
-
-  - platform: modbus_controller
-    modbus_controller_id: epever
     name: "${prefix} LC: #2 Duration After Sunset (m) - 0=Off"
     register_type: holding
     address: 0x903e
     bitmask: 0xff
     value_type: U_WORD
     unit_of_measurement: "min"
-    icon: mdi:timer
-
-  - platform: modbus_controller
-    modbus_controller_id: epever
-    name: "${prefix} LC: #2 Duration Before Sunrise (h) - 0=Off"
-    register_type: holding
-    address: 0x903f
-    bitmask: 0xff00
-    value_type: U_WORD
-    unit_of_measurement: "h"
     icon: mdi:timer
 
   - platform: modbus_controller
@@ -228,6 +208,35 @@ select:
     # icon: mdi:timer
 
 number:
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    name: "${prefix} LC: #2 Duration After Sunset (h) - 0=Off"
+    register_type: holding
+    address: 0x903e
+    bitmask: 0xff00
+    value_type: U_WORD
+    unit_of_measurement: "h"
+    icon: mdi:timer
+    min_value: 0
+    max_value: 24
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    name: "${prefix} LC: #2 Duration Before Sunrise (h) - 0=Off"
+    register_type: holding
+    address: 0x903f
+    bitmask: 0xff00
+    value_type: U_WORD
+    unit_of_measurement: "h"
+    icon: mdi:timer
+    min_value: 0
+    max_value: 24
+
+
+
+
+
   - platform: modbus_controller
     modbus_controller_id: epever
     id: x901e

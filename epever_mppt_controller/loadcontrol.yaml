@@ -280,6 +280,7 @@ number:
     step: 0.1
     icon: mdi:weather-sunset-up
     multiply: 100
+    write_lambda: |-
       id(update_nttv).execute();
       return {};
 

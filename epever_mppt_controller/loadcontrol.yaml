@@ -1,5 +1,6 @@
 sensor:
   - platform: modbus_controller
+    id: x901f
     modbus_controller_id: epever
     address: 0x901f
     name: "${prefix} LC: Light Sunset Hysteresis Light(Voltage/Delay)"
@@ -10,7 +11,7 @@ sensor:
 
   - platform: modbus_controller
     modbus_controller_id: epever
-    id: light_signal_close_delay_time
+    id: x9021
     address: 0x9021
     name: "${prefix} LC: Light Sunrise Hysteresis Light(Voltage/Delay)"
     unit_of_measurement: "min"
@@ -249,7 +250,7 @@ select:
 number:
   - platform: modbus_controller
     modbus_controller_id: epever
-    id: nttv
+    id: x901e
     address: 0x901e
     name: "${prefix} LC: Night Time Threshold Voltage"
     unit_of_measurement: "V"
@@ -262,10 +263,13 @@ number:
     force_new_range: true
     use_write_multiple: true
     multiply: 100
+    write_lambda: |-
+      id(update_nttv).execute();
+      return{};
 
   - platform: modbus_controller
     modbus_controller_id: epever
-    id: dttv
+    id: x9020
     address: 0x9020
     name: "${prefix} LC: Day Time Threshold Voltage"
     unit_of_measurement: "V"
@@ -278,3 +282,30 @@ number:
     force_new_range: true
     use_write_multiple: true
     multiply: 100
+      id(update_nttv).execute();
+      return{};
+      
+script:
+  - id: update_nttv
+    then:
+      - lambda: |-
+          esphome::modbus_controller::ModbusController *controller = id(epever);
+
+          std::vector<uint16_t> values = {
+            (uint16_t)(id(x901e).state * 100),  // NTTV
+            (uint16_t)(id(x901f).state),        // Delay 
+            (uint16_t)(id(x9020).state * 100),  // DTTV
+            (uint16_t)(id(x9021).state)         // Delay
+          };
+              
+          esphome::modbus_controller::ModbusCommandItem cmd =
+              esphome::modbus_controller::ModbusCommandItem::create_write_multiple_command(
+                controller, 0x901e, values.size(), values
+              );
+          delay(200);
+          controller->queue_command(cmd);
+          
+          delay(200);
+          for(std::vector<uint16_t>::size_type i = 0; i != values.size(); i++) {
+            ESP_LOGI("epever_mppt_controller", "NTTV %x: %d", i + 0x9000, values[i]);
+          }

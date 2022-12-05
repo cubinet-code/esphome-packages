@@ -491,7 +491,7 @@ number:
   modbus_controller_id: epever
   id: x901e
   address: 36894
-  name: 'MPPT LC: Night Time Threshold Voltage'
+  name: 'MPPT LC: 3) Night Time Threshold Voltage'
   unit_of_measurement: V
   register_type: holding
   value_type: U_WORD
@@ -515,19 +515,19 @@ number:
   id: x901f
   modbus_controller_id: epever
   address: 36895
-  name: 'MPPT LC: Light Sunset Hysteresis Light(Voltage/Delay)'
+  name: 'MPPT LC: 3) Night Time Hysteresis Light'
   unit_of_measurement: min
   register_type: holding
   value_type: U_WORD
   min_value: 0.0
   max_value: 60.0
   icon: mdi:timer
+  mode: BOX
   write_lambda: !lambda |-
     item->state = x;
     id(update_nttv).execute();
     return {};
   disabled_by_default: false
-  mode: AUTO
   bitmask: 0xFFFFFFFF
   skip_updates: 0
   force_new_range: false
@@ -539,12 +539,12 @@ number:
   modbus_controller_id: epever
   id: x9020
   address: 36896
-  name: 'MPPT LC: Day Time Threshold Voltage'
+  name: 'MPPT LC: 3) Day Time Threshold Voltage'
   unit_of_measurement: V
   register_type: holding
   value_type: U_WORD
   min_value: 0.0
-  max_value: 60.0
+  max_value: 99.0
   step: 0.1
   icon: mdi:weather-sunset-up
   multiply: 100.0
@@ -563,19 +563,19 @@ number:
   modbus_controller_id: epever
   id: x9021
   address: 36897
-  name: 'MPPT LC: Light Sunrise Hysteresis Light(Voltage/Delay)'
+  name: 'MPPT LC: 3) Day Time Hysteresis Light'
   unit_of_measurement: min
   register_type: holding
   value_type: U_WORD
   min_value: 0.0
-  max_value: 999.0
+  max_value: 60.0
   icon: mdi:timer
+  mode: BOX
   write_lambda: !lambda |-
     item->state = x;
     id(update_nttv).execute();
     return {};
   disabled_by_default: false
-  mode: AUTO
   bitmask: 0xFFFFFFFF
   skip_updates: 0
   force_new_range: false

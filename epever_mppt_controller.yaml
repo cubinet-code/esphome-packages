@@ -6,8 +6,6 @@ substitutions:
   DI: GPIO19    # TX Pin
   RO: GPIO18    # RX Pin
   REDE: GPIO23  # RE/DE Pin
-  # pkg_src: "!include "
-  pkg_src: "github://cubinet-code/esphome-packages/"
   timezone: "Europe/Berlin"
   
 esphome:

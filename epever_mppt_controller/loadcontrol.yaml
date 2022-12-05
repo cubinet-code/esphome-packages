@@ -202,9 +202,9 @@ select:
     value_type: U_WORD
     optionsmap:
       "Manual Control": 0
-      "Time Control 9042/9045 9069: 9048/904b": 1
-      "Light(Time after Sunset, before Sunrise) 903e/903f/9065": 2
-      "Light(Voltage/Delay) 901e/f 9020/1": 3
+      "#1 Time Control 9042/9045 9069: 9048/904b": 1
+      "#2 Light(Time after Sunset, before Sunrise) 903e/903f/9065": 2
+      "#3 Light(Voltage/Delay) 901e/f 9020/1": 3
     icon: mdi:electric-switch
 
   - platform: modbus_controller
@@ -232,7 +232,7 @@ number:
     modbus_controller_id: epever
     id: x901e
     address: 0x901e
-    name: "${prefix} LC: 3) Night Time Threshold Voltage"
+    name: "${prefix} LC: #3 Night Time Threshold Voltage"
     unit_of_measurement: "V"
     register_type: holding
     value_type: U_WORD
@@ -250,7 +250,7 @@ number:
     id: x901f
     modbus_controller_id: epever
     address: 0x901f
-    name: "${prefix} LC: 3) Night Time Hysteresis Light"
+    name: "${prefix} LC: #3 Night Time Hysteresis Light"
     unit_of_measurement: "min"
     register_type: holding
     value_type: U_WORD
@@ -267,7 +267,7 @@ number:
     modbus_controller_id: epever
     id: x9020
     address: 0x9020
-    name: "${prefix} LC: 3) Day Time Threshold Voltage"
+    name: "${prefix} LC: #3 Day Time Threshold Voltage"
     unit_of_measurement: "V"
     register_type: holding
     value_type: U_WORD
@@ -285,7 +285,7 @@ number:
     modbus_controller_id: epever
     id: x9021
     address: 0x9021
-    name: "${prefix} LC: 3) Day Time Hysteresis Light"
+    name: "${prefix} LC: #3 Day Time Hysteresis Light"
     unit_of_measurement: "min"
     register_type: holding
     value_type: U_WORD

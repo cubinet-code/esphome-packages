@@ -499,13 +499,13 @@ number:
   max_value: 99.0
   step: 0.1
   icon: mdi:weather-sunset-down
+  force_new_range: true
   use_write_multiple: true
   multiply: 100.0
   disabled_by_default: false
   mode: AUTO
   bitmask: 0xFFFFFFFF
   skip_updates: 0
-  force_new_range: false
   response_size: 0
 - platform: modbus_controller
   modbus_controller_id: epever
@@ -519,13 +519,13 @@ number:
   max_value: 99.0
   step: 0.1
   icon: mdi:weather-sunset-up
+  force_new_range: true
   use_write_multiple: true
   multiply: 100.0
   disabled_by_default: false
   mode: AUTO
   bitmask: 0xFFFFFFFF
   skip_updates: 0
-  force_new_range: false
   response_size: 0
 - platform: modbus_controller
   modbus_controller_id: epever

@@ -264,6 +264,7 @@ number:
     use_write_multiple: true
     multiply: 100
     write_lambda: |-
+      item->state = x;
       id(update_nttv).execute();
       return {};
 
@@ -281,6 +282,7 @@ number:
     icon: mdi:weather-sunset-up
     multiply: 100
     write_lambda: |-
+      item->state = x;
       id(update_nttv).execute();
       return {};
 

@@ -265,7 +265,7 @@ number:
     multiply: 100
     write_lambda: |-
       id(update_nttv).execute();
-      return{};
+      return {};
 
   - platform: modbus_controller
     modbus_controller_id: epever
@@ -283,8 +283,8 @@ number:
     use_write_multiple: true
     multiply: 100
       id(update_nttv).execute();
-      return{};
-      
+      return {};
+
 script:
   - id: update_nttv
     then:

@@ -498,7 +498,7 @@ number:
   unit_of_measurement: h
   icon: mdi:timer
   min_value: 0.0
-  max_value: 24.0
+  max_value: 23.0
   use_write_multiple: true
   mode: BOX
   write_lambda: !lambda |-
@@ -524,7 +524,7 @@ number:
   unit_of_measurement: min
   icon: mdi:timer
   min_value: 0.0
-  max_value: 24.0
+  max_value: 59.0
   use_write_multiple: true
   mode: BOX
   write_lambda: !lambda |-
@@ -550,7 +550,7 @@ number:
   unit_of_measurement: h
   icon: mdi:timer
   min_value: 0.0
-  max_value: 24.0
+  max_value: 23.0
   use_write_multiple: true
   mode: BOX
   write_lambda: !lambda |-
@@ -576,7 +576,7 @@ number:
   unit_of_measurement: min
   icon: mdi:timer
   min_value: 0.0
-  max_value: 24.0
+  max_value: 59.0
   use_write_multiple: true
   mode: BOX
   write_lambda: !lambda |-

@@ -499,8 +499,8 @@ number:
   min_value: 0.0
   max_value: 24.0
   use_write_multiple: true
+  mode: BOX
   disabled_by_default: false
-  mode: AUTO
   skip_updates: 0
   force_new_range: false
   response_size: 0
@@ -518,8 +518,8 @@ number:
   min_value: 0.0
   max_value: 24.0
   use_write_multiple: true
+  mode: BOX
   disabled_by_default: false
-  mode: AUTO
   skip_updates: 0
   force_new_range: false
   response_size: 0
@@ -537,8 +537,8 @@ number:
   min_value: 0.0
   max_value: 24.0
   use_write_multiple: true
+  mode: BOX
   disabled_by_default: false
-  mode: AUTO
   skip_updates: 0
   force_new_range: false
   response_size: 0
@@ -556,8 +556,8 @@ number:
   min_value: 0.0
   max_value: 24.0
   use_write_multiple: true
+  mode: BOX
   disabled_by_default: false
-  mode: AUTO
   skip_updates: 0
   force_new_range: false
   response_size: 0

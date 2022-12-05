@@ -226,6 +226,7 @@ number:
     max_value: 24
     use_write_multiple: true
     mode: box
+    write_lambda: |-
       int h = static_cast<int>(id(x903e_h).state);
       int m = static_cast<int>(x);
       uint16_t value = ((h << 8) | m);

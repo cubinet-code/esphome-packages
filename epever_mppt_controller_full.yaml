@@ -520,7 +520,7 @@ number:
   register_type: holding
   value_type: U_WORD
   min_value: 0.0
-  max_value: 999.0
+  max_value: 60.0
   icon: mdi:timer
   write_lambda: !lambda |-
     item->state = x;
@@ -544,7 +544,7 @@ number:
   register_type: holding
   value_type: U_WORD
   min_value: 0.0
-  max_value: 99.0
+  max_value: 60.0
   step: 0.1
   icon: mdi:weather-sunset-up
   multiply: 100.0

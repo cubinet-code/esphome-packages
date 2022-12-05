@@ -192,6 +192,7 @@ select:
 number:
 
   - platform: modbus_controller
+    id: x903e_h
     modbus_controller_id: epever
     name: "${prefix} LC: #2 Duration After Sunset (h) - 0=Off"
     register_type: holding
@@ -204,8 +205,15 @@ number:
     max_value: 24
     use_write_multiple: true
     mode: box
+    write_lambda: |-
+      int h = static_cast<int>(x);
+      int m = static_cast<int>(id(x903e_m).state);
+      uint16_t value = ((h << 8) | m);
+      ESP_LOGI("epever_mppt_controller", "Duration After Sunset %f", static_cast<double>(value));
+      return static_cast<double>(value);
 
   - platform: modbus_controller
+    id: x903e_m
     modbus_controller_id: epever
     name: "${prefix} LC: #2 Duration After Sunset (m) - 0=Off"
     register_type: holding
@@ -218,7 +226,11 @@ number:
     max_value: 24
     use_write_multiple: true
     mode: box
-
+      int h = static_cast<int>(id(x903e_h).state);
+      int m = static_cast<int>(x);
+      uint16_t value = ((h << 8) | m);
+      ESP_LOGI("epever_mppt_controller", "Duration After Sunset %f", static_cast<double>(value));
+      return static_cast<double>(value);
 
 
   - platform: modbus_controller

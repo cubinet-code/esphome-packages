@@ -62,7 +62,7 @@ sensor:
   - platform: modbus_controller
     modbus_controller_id: epever
     address: 0x9042
-    name: "${prefix} LC: Turn on timing 1 (s)"
+    name: "${prefix} LC: Turn on time 1 (s)"
     register_type: holding
     unit_of_measurement: "s"
     accuracy_decimals: 0
@@ -71,9 +71,9 @@ sensor:
 
   - platform: modbus_controller
     modbus_controller_id: epever
-    id: turn_on_timing_1_minutes
+    id: turn_on_time_1_minutes
     address: 0x9043
-    name: "${prefix} LC: Turn on timing 1 (m)"
+    name: "${prefix} LC: Turn on time 1 (m)"
     register_type: holding
     unit_of_measurement: "min"
     accuracy_decimals: 0
@@ -82,9 +82,9 @@ sensor:
 
   - platform: modbus_controller
     modbus_controller_id: epever
-    id: turn_on_timing_1_hours
+    id: turn_on_time_1_hours
     address: 0x9044
-    name: "${prefix} LC: Turn on timing 1 (h)"
+    name: "${prefix} LC: Turn on time 1 (h)"
     register_type: holding
     unit_of_measurement: "h"
     accuracy_decimals: 0
@@ -93,9 +93,9 @@ sensor:
 
   - platform: modbus_controller
     modbus_controller_id: epever
-    id: turn_off_timing_1_seconds
+    id: turn_off_time_1_seconds
     address: 0x9045
-    name: "${prefix} LC: Turn off timing 1 (s)"
+    name: "${prefix} LC: Turn off time 1 (s)"
     register_type: holding
     unit_of_measurement: "s"
     accuracy_decimals: 0
@@ -104,9 +104,9 @@ sensor:
 
   - platform: modbus_controller
     modbus_controller_id: epever
-    id: turn_off_timing_1_minutes
+    id: turn_off_time_1_minutes
     address: 0x9046
-    name: "${prefix} LC: Turn off timing 1 (m)"
+    name: "${prefix} LC: Turn off time 1 (m)"
     register_type: holding
     unit_of_measurement: "min"
     accuracy_decimals: 0
@@ -115,9 +115,9 @@ sensor:
 
   - platform: modbus_controller
     modbus_controller_id: epever
-    id: turn_off_timing_1_hours
+    id: turn_off_time_1_hours
     address: 0x9047
-    name: "${prefix} LC: Turn off timing 1 (h)"
+    name: "${prefix} LC: Turn off time 1 (h)"
     register_type: holding
     unit_of_measurement: "h"
     accuracy_decimals: 0
@@ -126,9 +126,9 @@ sensor:
 
   - platform: modbus_controller
     modbus_controller_id: epever
-    id: turn_on_timing_2_seconds
+    id: turn_on_time_2_seconds
     address: 0x9048
-    name: "${prefix} LC: Turn on timing 2 (s)"
+    name: "${prefix} LC: Turn on time 2 (s)"
     unit_of_measurement: "s"
     register_type: holding
     accuracy_decimals: 0
@@ -137,9 +137,9 @@ sensor:
 
   - platform: modbus_controller
     modbus_controller_id: epever
-    id: turn_on_timing_2_minutes
+    id: turn_on_time_2_minutes
     address: 0x9049
-    name: "${prefix} LC: Turn on timing 2 (m)"
+    name: "${prefix} LC: Turn on time 2 (m)"
     register_type: holding
     unit_of_measurement: "min"
     accuracy_decimals: 0
@@ -148,9 +148,9 @@ sensor:
 
   - platform: modbus_controller
     modbus_controller_id: epever
-    id: turn_on_timing_2_hours
+    id: turn_on_time_2_hours
     address: 0x904a
-    name: "${prefix} LC: Turn on timing 2 (h)"
+    name: "${prefix} LC: Turn on time 2 (h)"
     register_type: holding
     unit_of_measurement: "h"
     accuracy_decimals: 0
@@ -159,9 +159,9 @@ sensor:
 
   - platform: modbus_controller
     modbus_controller_id: epever
-    id: turn_off_timing_2_seconds
+    id: turn_off_time_2_seconds
     address: 0x904b
-    name: "${prefix} LC: Turn off timing 2 (s)"
+    name: "${prefix} LC: Turn off time 2 (s)"
     register_type: holding
     unit_of_measurement: "s"
     accuracy_decimals: 0
@@ -170,9 +170,9 @@ sensor:
 
   - platform: modbus_controller
     modbus_controller_id: epever
-    id: turn_off_timing_2_minutes
+    id: turn_off_time_2_minutes
     address: 0x904c
-    name: "${prefix} LC: Turn off timing 2 (m)"
+    name: "${prefix} LC: Turn off time 2 (m)"
     register_type: holding
     unit_of_measurement: "min"
     accuracy_decimals: 0
@@ -181,9 +181,9 @@ sensor:
 
   - platform: modbus_controller
     modbus_controller_id: epever
-    id: turn_off_timing_2_hours
+    id: turn_off_time_2_hours
     address: 0x904d
-    name: "${prefix} LC: Turn off timing 2 (h)"
+    name: "${prefix} LC: Turn off time 2 (h)"
     register_type: holding
     unit_of_measurement: "h"
     accuracy_decimals: 0
@@ -263,6 +263,7 @@ number:
     force_new_range: true
     use_write_multiple: true
     multiply: 100
+    optimistic: true
     write_lambda: |-
       item->state = x;
       id(update_nttv).execute();
@@ -281,6 +282,7 @@ number:
     step: 0.1
     icon: mdi:weather-sunset-up
     multiply: 100
+    optimistic: true
     write_lambda: |-
       item->state = x;
       id(update_nttv).execute();

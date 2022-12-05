@@ -172,7 +172,7 @@ sensor:
 
   - platform: modbus_controller
     modbus_controller_id: epever
-    id: x9065
+    id: x9065_m
     address: 0x9065
     bitmask: 0xff
     unit_of_measurement: "min"
@@ -183,7 +183,7 @@ sensor:
 
   - platform: modbus_controller
     modbus_controller_id: epever
-    id: x9065
+    id: x9065_h
     address: 0x9065
     bitmask: 0xff00
     unit_of_measurement: "h"

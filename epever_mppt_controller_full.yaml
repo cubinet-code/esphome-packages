@@ -489,6 +489,44 @@ number:
   multiply: 1.0
 - platform: modbus_controller
   modbus_controller_id: epever
+  name: 'MPPT LC: #2 Duration After Sunset (h) - 0=Off'
+  register_type: holding
+  address: 36926
+  bitmask: 0xFF00
+  value_type: U_WORD
+  unit_of_measurement: h
+  icon: mdi:timer
+  min_value: 0.0
+  max_value: 24.0
+  disabled_by_default: false
+  mode: AUTO
+  skip_updates: 0
+  force_new_range: false
+  response_size: 0
+  step: 1.0
+  multiply: 1.0
+  use_write_multiple: false
+- platform: modbus_controller
+  modbus_controller_id: epever
+  name: 'MPPT LC: #2 Duration Before Sunrise (h) - 0=Off'
+  register_type: holding
+  address: 36927
+  bitmask: 0xFF00
+  value_type: U_WORD
+  unit_of_measurement: h
+  icon: mdi:timer
+  min_value: 0.0
+  max_value: 24.0
+  disabled_by_default: false
+  mode: AUTO
+  skip_updates: 0
+  force_new_range: false
+  response_size: 0
+  step: 1.0
+  multiply: 1.0
+  use_write_multiple: false
+- platform: modbus_controller
+  modbus_controller_id: epever
   id: x901e
   address: 36894
   name: 'MPPT LC: #3 Night Time Threshold Voltage'
@@ -715,42 +753,12 @@ script:
 sensor:
 - platform: modbus_controller
   modbus_controller_id: epever
-  name: 'MPPT LC: #2 Duration After Sunset (h) - 0=Off'
-  register_type: holding
-  address: 36926
-  bitmask: 0xFF00
-  value_type: U_WORD
-  unit_of_measurement: h
-  icon: mdi:timer
-  disabled_by_default: false
-  force_update: false
-  skip_updates: 0
-  force_new_range: false
-  response_size: 0
-  register_count: 0
-- platform: modbus_controller
-  modbus_controller_id: epever
   name: 'MPPT LC: #2 Duration After Sunset (m) - 0=Off'
   register_type: holding
   address: 36926
   bitmask: 0xFF
   value_type: U_WORD
   unit_of_measurement: min
-  icon: mdi:timer
-  disabled_by_default: false
-  force_update: false
-  skip_updates: 0
-  force_new_range: false
-  response_size: 0
-  register_count: 0
-- platform: modbus_controller
-  modbus_controller_id: epever
-  name: 'MPPT LC: #2 Duration Before Sunrise (h) - 0=Off'
-  register_type: holding
-  address: 36927
-  bitmask: 0xFF00
-  value_type: U_WORD
-  unit_of_measurement: h
   icon: mdi:timer
   disabled_by_default: false
   force_update: false

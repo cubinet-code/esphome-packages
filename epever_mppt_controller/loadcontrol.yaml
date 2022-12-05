@@ -1,23 +1,5 @@
 sensor:
-  - platform: modbus_controller
-    modbus_controller_id: epever
-    name: "${prefix} LC: #2 Duration After Sunset (m) - 0=Off"
-    register_type: holding
-    address: 0x903e
-    bitmask: 0xff
-    value_type: U_WORD
-    unit_of_measurement: "min"
-    icon: mdi:timer
 
-  - platform: modbus_controller
-    modbus_controller_id: epever
-    name: "${prefix} LC: #2 Duration Before Sunrise (m) - 0=Off"
-    register_type: holding
-    address: 0x903f
-    bitmask: 0xff
-    value_type: U_WORD
-    unit_of_measurement: "min"
-    icon: mdi:timer
 
   - platform: modbus_controller
     modbus_controller_id: epever
@@ -220,6 +202,7 @@ number:
     icon: mdi:timer
     min_value: 0
     max_value: 24
+    use_write_multiple: true
 
   - platform: modbus_controller
     modbus_controller_id: epever
@@ -232,9 +215,33 @@ number:
     icon: mdi:timer
     min_value: 0
     max_value: 24
+    use_write_multiple: true
 
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    name: "${prefix} LC: #2 Duration After Sunset (m) - 0=Off"
+    register_type: holding
+    address: 0x903e
+    bitmask: 0xff
+    value_type: U_WORD
+    unit_of_measurement: "min"
+    icon: mdi:timer
+    min_value: 0
+    max_value: 24
+    use_write_multiple: true
 
-
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    name: "${prefix} LC: #2 Duration Before Sunrise (m) - 0=Off"
+    register_type: holding
+    address: 0x903f
+    bitmask: 0xff
+    value_type: U_WORD
+    unit_of_measurement: "min"
+    icon: mdi:timer
+    min_value: 0
+    max_value: 24
+    use_write_multiple: true
 
 
   - platform: modbus_controller

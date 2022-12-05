@@ -1,7 +1,7 @@
 sensor:
   - platform: modbus_controller
     modbus_controller_id: epever
-    address: 0x901F
+    address: 0x901f
     name: "${prefix} LC: Light Sunset Hysteresis Light(Voltage/Delay)"
     unit_of_measurement: "min"
     register_type: holding
@@ -148,7 +148,7 @@ sensor:
   - platform: modbus_controller
     modbus_controller_id: epever
     id: turn_on_timing_2_hours
-    address: 0x904A
+    address: 0x904a
     name: "${prefix} LC: Turn on timing 2 (h)"
     register_type: holding
     unit_of_measurement: "h"
@@ -159,7 +159,7 @@ sensor:
   - platform: modbus_controller
     modbus_controller_id: epever
     id: turn_off_timing_2_seconds
-    address: 0x904B
+    address: 0x904b
     name: "${prefix} LC: Turn off timing 2 (s)"
     register_type: holding
     unit_of_measurement: "s"
@@ -170,7 +170,7 @@ sensor:
   - platform: modbus_controller
     modbus_controller_id: epever
     id: turn_off_timing_2_minutes
-    address: 0x904C
+    address: 0x904c
     name: "${prefix} LC: Turn off timing 2 (m)"
     register_type: holding
     unit_of_measurement: "min"
@@ -181,7 +181,7 @@ sensor:
   - platform: modbus_controller
     modbus_controller_id: epever
     id: turn_off_timing_2_hours
-    address: 0x904D
+    address: 0x904d
     name: "${prefix} LC: Turn off timing 2 (h)"
     register_type: holding
     unit_of_measurement: "h"
@@ -193,7 +193,7 @@ sensor:
     modbus_controller_id: epever
     id: length_of_night_minutes
     address: 0x9065
-    bitmask: 0xFF
+    bitmask: 0xff
     unit_of_measurement: "min"
     name: "${prefix} LC: Length of night (m)"
     register_type: holding
@@ -204,7 +204,7 @@ sensor:
     modbus_controller_id: epever
     id: length_of_night
     address: 0x9065
-    bitmask: 0xFF00
+    bitmask: 0xff00
     unit_of_measurement: "h"
     name: "${prefix} LC: Length of night (h)"
     register_type: holding
@@ -217,7 +217,7 @@ select:
     modbus_controller_id: epever
     id: load_controlling_modes_select
     name: "${prefix} LC: Load Control Mode"
-    address: 0x903D
+    address: 0x903d
     value_type: U_WORD
     optionsmap:
       "Manual Control": 0

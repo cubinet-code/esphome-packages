@@ -203,7 +203,8 @@ number:
     min_value: 0
     max_value: 24
     use_write_multiple: true
-
+    mode: box
+    
   - platform: modbus_controller
     modbus_controller_id: epever
     name: "${prefix} LC: #2 Duration Before Sunrise (h) - 0=Off"
@@ -216,6 +217,7 @@ number:
     min_value: 0
     max_value: 24
     use_write_multiple: true
+    mode: box
 
   - platform: modbus_controller
     modbus_controller_id: epever
@@ -229,6 +231,7 @@ number:
     min_value: 0
     max_value: 24
     use_write_multiple: true
+    mode: box
 
   - platform: modbus_controller
     modbus_controller_id: epever
@@ -242,7 +245,7 @@ number:
     min_value: 0
     max_value: 24
     use_write_multiple: true
-
+    mode: box
 
   - platform: modbus_controller
     modbus_controller_id: epever

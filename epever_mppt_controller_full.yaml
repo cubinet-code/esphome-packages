@@ -498,6 +498,7 @@ number:
   icon: mdi:timer
   min_value: 0.0
   max_value: 24.0
+  use_write_multiple: true
   disabled_by_default: false
   mode: AUTO
   skip_updates: 0
@@ -505,7 +506,6 @@ number:
   response_size: 0
   step: 1.0
   multiply: 1.0
-  use_write_multiple: false
 - platform: modbus_controller
   modbus_controller_id: epever
   name: 'MPPT LC: #2 Duration Before Sunrise (h) - 0=Off'
@@ -517,6 +517,7 @@ number:
   icon: mdi:timer
   min_value: 0.0
   max_value: 24.0
+  use_write_multiple: true
   disabled_by_default: false
   mode: AUTO
   skip_updates: 0
@@ -524,7 +525,44 @@ number:
   response_size: 0
   step: 1.0
   multiply: 1.0
-  use_write_multiple: false
+- platform: modbus_controller
+  modbus_controller_id: epever
+  name: 'MPPT LC: #2 Duration After Sunset (m) - 0=Off'
+  register_type: holding
+  address: 36926
+  bitmask: 0xFF
+  value_type: U_WORD
+  unit_of_measurement: min
+  icon: mdi:timer
+  min_value: 0.0
+  max_value: 24.0
+  use_write_multiple: true
+  disabled_by_default: false
+  mode: AUTO
+  skip_updates: 0
+  force_new_range: false
+  response_size: 0
+  step: 1.0
+  multiply: 1.0
+- platform: modbus_controller
+  modbus_controller_id: epever
+  name: 'MPPT LC: #2 Duration Before Sunrise (m) - 0=Off'
+  register_type: holding
+  address: 36927
+  bitmask: 0xFF
+  value_type: U_WORD
+  unit_of_measurement: min
+  icon: mdi:timer
+  min_value: 0.0
+  max_value: 24.0
+  use_write_multiple: true
+  disabled_by_default: false
+  mode: AUTO
+  skip_updates: 0
+  force_new_range: false
+  response_size: 0
+  step: 1.0
+  multiply: 1.0
 - platform: modbus_controller
   modbus_controller_id: epever
   id: x901e
@@ -751,36 +789,6 @@ script:
   mode: single
   parameters: {}
 sensor:
-- platform: modbus_controller
-  modbus_controller_id: epever
-  name: 'MPPT LC: #2 Duration After Sunset (m) - 0=Off'
-  register_type: holding
-  address: 36926
-  bitmask: 0xFF
-  value_type: U_WORD
-  unit_of_measurement: min
-  icon: mdi:timer
-  disabled_by_default: false
-  force_update: false
-  skip_updates: 0
-  force_new_range: false
-  response_size: 0
-  register_count: 0
-- platform: modbus_controller
-  modbus_controller_id: epever
-  name: 'MPPT LC: #2 Duration Before Sunrise (m) - 0=Off'
-  register_type: holding
-  address: 36927
-  bitmask: 0xFF
-  value_type: U_WORD
-  unit_of_measurement: min
-  icon: mdi:timer
-  disabled_by_default: false
-  force_update: false
-  skip_updates: 0
-  force_new_range: false
-  response_size: 0
-  register_count: 0
 - platform: modbus_controller
   modbus_controller_id: epever
   address: 36930

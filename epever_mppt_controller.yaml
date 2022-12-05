@@ -46,10 +46,10 @@ web_server:
 time:
   - platform: homeassistant
     id: hass_time
-    update_interval: never
+    update_interval: 24h
   - platform: sntp
     id: sntp_time
-    update_interval: never
+    update_interval: 24h
     timezone: $timezone
     on_time_sync:
         then:

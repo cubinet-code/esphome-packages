@@ -172,22 +172,22 @@ sensor:
 
   - platform: modbus_controller
     modbus_controller_id: epever
-    id: length_of_night_minutes
+    id: x9065
     address: 0x9065
     bitmask: 0xff
     unit_of_measurement: "min"
-    name: "${prefix} LC: #2 Length of night (m)"
+    name: "${prefix} LC: #2 Duration Of Night (m)"
     register_type: holding
     value_type: U_WORD
     icon: mdi:timer
 
   - platform: modbus_controller
     modbus_controller_id: epever
-    id: length_of_night
+    id: x9065
     address: 0x9065
     bitmask: 0xff00
     unit_of_measurement: "h"
-    name: "${prefix} LC: #2 Length of night (h)"
+    name: "${prefix} LC: #2 Duration Of Night (h)"
     register_type: holding
     value_type: U_WORD
     icon: mdi:timer

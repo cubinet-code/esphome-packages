@@ -67,7 +67,7 @@ select:
   optionsmap:
     '#0 Manual Control': 0
     '#1 Time Control 9042/9045 9069: 9048/904b': 1
-    '#2 Light(Time after Sunset, before Sunrise) 903e/903f/9065': 2
+    '#2 Light(Duration after Sunset, before Sunrise) 903e/903f/9065': 2
     '#3 Light(Voltage/Delay)': 3
   icon: mdi:electric-switch
   disabled_by_default: false
@@ -92,7 +92,7 @@ select:
 - platform: modbus_controller
   modbus_controller_id: epever
   address: 36970
-  name: 'MPPT LC: Manual Mode Default'
+  name: 'MPPT LC: #0 Manual Mode Default'
   optionsmap:
     'Off': 0
     'On': 1
@@ -715,7 +715,7 @@ script:
 sensor:
 - platform: modbus_controller
   modbus_controller_id: epever
-  name: 'MPPT LC: #2 Time After Sunset (h) - 0=Off'
+  name: 'MPPT LC: #2 Duration After Sunset (h) - 0=Off'
   register_type: holding
   address: 36926
   bitmask: 0xFF00
@@ -730,7 +730,7 @@ sensor:
   register_count: 0
 - platform: modbus_controller
   modbus_controller_id: epever
-  name: 'MPPT LC: #2 Time After Sunset (m) - 0=Off'
+  name: 'MPPT LC: #2 Duration After Sunset (m) - 0=Off'
   register_type: holding
   address: 36926
   bitmask: 0xFF
@@ -745,7 +745,7 @@ sensor:
   register_count: 0
 - platform: modbus_controller
   modbus_controller_id: epever
-  name: 'MPPT LC: #2 Time Before Sunrise (h) - 0=Off'
+  name: 'MPPT LC: #2 Duration Before Sunrise (h) - 0=Off'
   register_type: holding
   address: 36927
   bitmask: 0xFF00
@@ -760,7 +760,7 @@ sensor:
   register_count: 0
 - platform: modbus_controller
   modbus_controller_id: epever
-  name: 'MPPT LC: #2 Time Before Sunrise (m) - 0=Off'
+  name: 'MPPT LC: #2 Duration Before Sunrise (m) - 0=Off'
   register_type: holding
   address: 36927
   bitmask: 0xFF
@@ -982,7 +982,7 @@ sensor:
   address: 36965
   bitmask: 0xFF
   unit_of_measurement: min
-  name: 'MPPT LC: Length of night (m)'
+  name: 'MPPT LC: #2 Length of night (m)'
   register_type: holding
   value_type: U_WORD
   icon: mdi:timer

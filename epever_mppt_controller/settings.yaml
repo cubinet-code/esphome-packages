@@ -84,7 +84,8 @@ number:
     use_write_multiple: true
     min_value: -40
     max_value: 0
-
+    mode: box
+    
   - platform: modbus_controller
     modbus_controller_id: epever
     name: "${prefix} SET: Backlight time"

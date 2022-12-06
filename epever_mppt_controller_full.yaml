@@ -837,7 +837,7 @@ number:
 text_sensor:
 - platform: modbus_controller
   modbus_controller_id: epever
-  name: 'MPPT BAT: Li Over Temp. Drop Power'
+  name: 'MPPT BP: Li Over Temp. Drop Power'
   address: 37127
   register_type: holding
   raw_encode: NONE
@@ -854,7 +854,7 @@ text_sensor:
   response_size: 2
 - platform: modbus_controller
   modbus_controller_id: epever
-  name: 'MPPT BAT: Li Low Temp Protection For Discharging'
+  name: 'MPPT BP: Li Low Temp Protection For Discharging'
   address: 37127
   register_type: holding
   raw_encode: NONE
@@ -871,7 +871,7 @@ text_sensor:
   response_size: 2
 - platform: modbus_controller
   modbus_controller_id: epever
-  name: 'MPPT BAT: Li Low Temp Protection For Charging'
+  name: 'MPPT BP: Li Low Temp Protection For Charging'
   address: 37127
   register_type: holding
   raw_encode: NONE

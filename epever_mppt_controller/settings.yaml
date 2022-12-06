@@ -74,6 +74,37 @@ number:
 
   - platform: modbus_controller
     modbus_controller_id: epever
+    address: 0x9010
+    name: "${prefix} SET: Battery Low Temp Charging Limit"
+    icon: mdi:thermometer-alert
+    unit_of_measurement: "°C"
+    register_type: holding
+    value_type: S_WORD
+    multiply: 100
+    use_write_multiple: true
+    min_value: -40
+    max_value: 10
+    mode: box
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    address: 0x9011
+    name: "${prefix} SET: Battery Low Temp Discharging Limit"
+    icon: mdi:thermometer-alert
+    unit_of_measurement: "°C"
+    register_type: holding
+    value_type: S_WORD
+    multiply: 100
+    use_write_multiple: true
+    min_value: -40
+    max_value: 10
+    mode: box
+
+
+
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
     address: 0x9018
     name: "${prefix} SET: Battery Lower Temperature Limit"
     icon: mdi:thermometer-alert

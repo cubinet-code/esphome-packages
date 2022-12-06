@@ -522,7 +522,7 @@ number:
   modbus_controller_id: epever
   id: reg906d
   address: 36973
-  name: 'MPPT BP: Battery discharge'
+  name: 'MPPT BP: SOC Mode Battery discharge'
   unit_of_measurement: '%'
   register_type: holding
   value_type: U_WORD
@@ -541,7 +541,7 @@ number:
   modbus_controller_id: epever
   id: reg906e
   address: 36974
-  name: 'MPPT BP: Battery charge (DoC)'
+  name: 'MPPT BP: SOC Mode Battery charge (DoC)'
   unit_of_measurement: '%'
   register_type: holding
   value_type: U_WORD
@@ -801,7 +801,7 @@ text_sensor:
   modbus_controller_id: epever
   name: 'MPPT BAT: Li Over Temp. Drop Power'
   address: 37127
-  register_type: read
+  register_type: holding
   raw_encode: NONE
   lambda: !lambda "uint16_t value = (data[item->offset] << 8) + data[item->offset+1];\n\
     value = value >> 11;\nvalue = value & 0x1; \nswitch (value) { \n  case 0x0: return\
@@ -818,7 +818,7 @@ text_sensor:
   modbus_controller_id: epever
   name: 'MPPT BAT: Li Low Temp Protection For Discharging'
   address: 37127
-  register_type: read
+  register_type: holding
   raw_encode: NONE
   lambda: !lambda "uint16_t value = (data[item->offset] << 8) + data[item->offset+1];\n\
     value = value >> 9;\nvalue = value & 0x1; \nswitch (value) { \n  case 0x0: return\
@@ -835,7 +835,7 @@ text_sensor:
   modbus_controller_id: epever
   name: 'MPPT BAT: Li Low Temp Protection For Charging'
   address: 37127
-  register_type: read
+  register_type: holding
   raw_encode: NONE
   lambda: !lambda "uint16_t value = (data[item->offset] << 8) + data[item->offset+1];\n\
     value = value >> 8;\nvalue = value & 0x1; \nswitch (value) { \n  case 0x0: return\

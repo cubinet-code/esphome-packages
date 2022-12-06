@@ -1,7 +1,7 @@
 sensor:
   - platform: modbus_controller
     modbus_controller_id: epever
-    address: 0x901b
+    address: 0x901e
     name: "${prefix} SET: Battery temperature 0x901b"
     icon: mdi:thermometer-alert
     unit_of_measurement: "°C"

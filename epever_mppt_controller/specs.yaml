@@ -1,5 +1,13 @@
 sensor:
-
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    name: "${prefix} SPEC: Device ID"
+    icon: mdi:thermometer-alert
+    custom_command: [0xf8, 0x45, 0x00, 0x01, 0x01, 0xf8]
+    lambda: |-
+      ESP_LOGE("epever", "Device ID %d", data[0]);
+      return static_cast<double>(data[0]);
+      
   - platform: modbus_controller
     skip_updates: 100
     disabled_by_default: ${disabled_by_default}

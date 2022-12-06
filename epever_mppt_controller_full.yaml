@@ -1528,6 +1528,9 @@ sensor:
   - 0x01
   - 0x01
   - 0xF8
+  lambda: !lambda |-
+    ESP_LOGE("epever", "Device ID %d", data[0]);
+    return static_cast<double>(data[0]);
   disabled_by_default: false
   force_update: false
   bitmask: 0xFFFFFFFF

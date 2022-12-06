@@ -393,7 +393,7 @@ text_sensor:
 
   - platform: modbus_controller
     modbus_controller_id: epever
-    name: "${prefix} BAT: Li Over Temp. Drop Power"
+    name: "${prefix} BP: Li Over Temp. Drop Power"
     address: 0x9107
     register_type: holding
     raw_encode: NONE
@@ -411,7 +411,7 @@ text_sensor:
 
   - platform: modbus_controller
     modbus_controller_id: epever
-    name: "${prefix} BAT: Li Low Temp Protection For Discharging"
+    name: "${prefix} BP: Li Low Temp Protection For Discharging"
     address: 0x9107
     register_type: holding
     raw_encode: NONE
@@ -429,7 +429,7 @@ text_sensor:
 
   - platform: modbus_controller
     modbus_controller_id: epever
-    name: "${prefix} BAT: Li Low Temp Protection For Charging"
+    name: "${prefix} BP: Li Low Temp Protection For Charging"
     address: 0x9107
     register_type: holding
     raw_encode: NONE

@@ -1056,24 +1056,6 @@ sensor:
   register_count: 0
 - platform: modbus_controller
   modbus_controller_id: epever
-  address: 36894
-  name: 'MPPT SET: Battery temperature 0x901b'
-  icon: mdi:thermometer-alert
-  unit_of_measurement: °C
-  register_type: holding
-  value_type: S_WORD
-  filters:
-  - multiply: 0.01
-  accuracy_decimals: 2
-  disabled_by_default: false
-  force_update: false
-  bitmask: 0xFFFFFFFF
-  skip_updates: 0
-  force_new_range: false
-  response_size: 0
-  register_count: 0
-- platform: modbus_controller
-  modbus_controller_id: epever
   address: 36887
   name: 'MPPT SET: Battery temperature warning upper limit'
   icon: mdi:thermometer-alert

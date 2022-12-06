@@ -530,8 +530,8 @@ number:
   max_value: 100.0
   step: 1.0
   use_write_multiple: true
+  mode: BOX
   disabled_by_default: false
-  mode: AUTO
   bitmask: 0xFFFFFFFF
   skip_updates: 0
   force_new_range: false
@@ -549,8 +549,8 @@ number:
   max_value: 100.0
   step: 1.0
   use_write_multiple: true
+  mode: BOX
   disabled_by_default: false
-  mode: AUTO
   bitmask: 0xFFFFFFFF
   skip_updates: 0
   force_new_range: false

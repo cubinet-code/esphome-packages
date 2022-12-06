@@ -38,7 +38,38 @@ select:
     Sealed: 1
     Gel: 2
     Flooded: 3
+    LiFePO4 (4s): 4
+    LiFePO4 (8s): 5
+    LiFePO4 (15s): 6
+    LiFePO4 (16s): 7
+    Li(NiCoMn)O2 (3s): 8
+    Li(NiCoMn)O2 (6s): 9
+    Li(NiCoMn)O2 (7s): 10
+    Li(NiCoMn)O2 (13s): 11
+    Li(NiCoMn)O2 (14s): 12
   icon: mdi:battery-unknown
+  disabled_by_default: false
+  skip_updates: 0
+  force_new_range: false
+  use_write_multiple: false
+  optimistic: false
+- platform: modbus_controller
+  modbus_controller_id: epever
+  name: 'MPPT BP: Battery Rated Voltage Level'
+  address: 36967
+  value_type: U_WORD
+  optionsmap:
+    Auto: 0
+    12V: 1
+    24V: 2
+    36V: 3
+    48V: 4
+    60V: 5
+    110V: 6
+    120V: 7
+    220V: 8
+    240V: 9
+  icon: mdi:sine-wave
   disabled_by_default: false
   skip_updates: 0
   force_new_range: false
@@ -136,7 +167,7 @@ number:
   register_type: holding
   value_type: U_WORD
   min_value: 0.0
-  max_value: 99.0
+  max_value: 9.0
   step: 0.01
   icon: mdi:thermometer-lines
   use_write_multiple: true
@@ -488,6 +519,44 @@ number:
   response_size: 0
   multiply: 1.0
 - platform: modbus_controller
+  modbus_controller_id: epever
+  id: reg906d
+  address: 36973
+  name: 'MPPT BP: Battery discharge'
+  unit_of_measurement: '%'
+  register_type: holding
+  value_type: U_WORD
+  min_value: 0.0
+  max_value: 100.0
+  step: 1.0
+  use_write_multiple: true
+  disabled_by_default: false
+  mode: AUTO
+  bitmask: 0xFFFFFFFF
+  skip_updates: 0
+  force_new_range: false
+  response_size: 0
+  multiply: 1.0
+- platform: modbus_controller
+  modbus_controller_id: epever
+  id: reg906e
+  address: 36974
+  name: 'MPPT BP: Battery charge (DoC)'
+  unit_of_measurement: '%'
+  register_type: holding
+  value_type: U_WORD
+  min_value: 0.0
+  max_value: 100.0
+  step: 1.0
+  use_write_multiple: true
+  disabled_by_default: false
+  mode: AUTO
+  bitmask: 0xFFFFFFFF
+  skip_updates: 0
+  force_new_range: false
+  response_size: 0
+  multiply: 1.0
+- platform: modbus_controller
   id: x903e_h
   modbus_controller_id: epever
   name: 'MPPT LC: #2 Duration After Sunset (h) - 0=Off'
@@ -727,6 +796,343 @@ number:
   response_size: 0
   multiply: 1.0
   use_write_multiple: false
+text_sensor:
+- platform: modbus_controller
+  modbus_controller_id: epever
+  name: 'MPPT BAT: Li Over Temp. Drop Power'
+  address: 37127
+  register_type: read
+  raw_encode: NONE
+  lambda: !lambda "uint16_t value = (data[item->offset] << 8) + data[item->offset+1];\n\
+    value = value >> 11;\nvalue = value & 0x1; \nswitch (value) { \n  case 0x0: return\
+    \ std::string(\"Disable\");\n  case 0x1: return std::string(\"Enable\");\n  default:\
+    \ return std::string(\"Unknown\");\n}\nreturn x;"
+  icon: mdi:thermometer
+  disabled_by_default: false
+  bitmask: 0xFFFFFFFF
+  skip_updates: 0
+  force_new_range: false
+  register_count: 0
+  response_size: 2
+- platform: modbus_controller
+  modbus_controller_id: epever
+  name: 'MPPT BAT: Li Low Temp Protection For Discharging'
+  address: 37127
+  register_type: read
+  raw_encode: NONE
+  lambda: !lambda "uint16_t value = (data[item->offset] << 8) + data[item->offset+1];\n\
+    value = value >> 9;\nvalue = value & 0x1; \nswitch (value) { \n  case 0x0: return\
+    \ std::string(\"Disable\");\n  case 0x1: return std::string(\"Enable\");\n  default:\
+    \ return std::string(\"Unknown\");\n}\nreturn x;"
+  icon: mdi:thermometer
+  disabled_by_default: false
+  bitmask: 0xFFFFFFFF
+  skip_updates: 0
+  force_new_range: false
+  register_count: 0
+  response_size: 2
+- platform: modbus_controller
+  modbus_controller_id: epever
+  name: 'MPPT BAT: Li Low Temp Protection For Charging'
+  address: 37127
+  register_type: read
+  raw_encode: NONE
+  lambda: !lambda "uint16_t value = (data[item->offset] << 8) + data[item->offset+1];\n\
+    value = value >> 8;\nvalue = value & 0x1; \nswitch (value) { \n  case 0x0: return\
+    \ std::string(\"Disable\");\n  case 0x1: return std::string(\"Enable\");\n  default:\
+    \ return std::string(\"Unknown\");\n}\nreturn x;"
+  icon: mdi:thermometer
+  disabled_by_default: false
+  bitmask: 0xFFFFFFFF
+  skip_updates: 0
+  force_new_range: false
+  register_count: 0
+  response_size: 2
+- platform: modbus_controller
+  modbus_controller_id: epever
+  name: 'MPPT BAT: Battery Status Temperature'
+  address: 12800
+  register_type: read
+  raw_encode: NONE
+  lambda: !lambda "uint16_t value = (data[item->offset] << 8) + data[item->offset+1];\n\
+    value = value >> 4;\nvalue = value & 0xf; \nswitch (value) { \n  case 0x0: return\
+    \ std::string(\"Normal\");\n  case 0x1: return std::string(\"Over Temp\");\n \
+    \ case 0x2: return std::string(\"Low Temp\");\n  default: return std::string(\"\
+    Unknown\");\n}\nreturn x;"
+  icon: mdi:thermometer
+  disabled_by_default: false
+  bitmask: 0xFFFFFFFF
+  skip_updates: 0
+  force_new_range: false
+  register_count: 0
+  response_size: 2
+- platform: modbus_controller
+  modbus_controller_id: epever
+  name: 'MPPT BAT: Battery Status Voltage'
+  address: 12800
+  register_type: read
+  raw_encode: NONE
+  lambda: !lambda "uint16_t value = (data[item->offset] << 8) + data[item->offset+1];\n\
+    value = value & 0xf; \nswitch (value) { \n  case 0x0: return std::string(\"Normal\"\
+    );\n  case 0x1: return std::string(\"Over Voltage\");\n  case 0x2: return std::string(\"\
+    Under Voltage\");\n  case 0x3: return std::string(\"Over Discharge\");\n  case\
+    \ 0x4: return std::string(\"Fault\");\n  default: return std::string(\"Unknown\"\
+    );\n}\nreturn x;"
+  icon: mdi:sine-wave
+  disabled_by_default: false
+  bitmask: 0xFFFFFFFF
+  skip_updates: 0
+  force_new_range: false
+  register_count: 0
+  response_size: 2
+- platform: modbus_controller
+  modbus_controller_id: epever
+  name: 'MPPT DIS: Discharging Input Voltage'
+  register_type: read
+  address: 12802
+  raw_encode: NONE
+  lambda: !lambda "uint16_t value = (data[item->offset] << 8) + data[item->offset+1];\n\
+    value = value >> 14;   \nvalue = value & 0x3; /* 0x1=1Bit, 0x3=2Bits, 0x7=3Bits\
+    \ */\nswitch (value) { \n  case 0x0: return std::string(\"Normal\");\n  case 0x1:\
+    \ return std::string(\"Low\");\n  case 0x2: return std::string(\"High\");\n  case\
+    \ 0x3: return std::string(\"No Access\");\n  default: return std::string(\"Unknown\"\
+    );\n}\nreturn x;"
+  icon: mdi:sine-wave
+  disabled_by_default: false
+  bitmask: 0xFFFFFFFF
+  skip_updates: 0
+  force_new_range: false
+  register_count: 0
+  response_size: 2
+- platform: modbus_controller
+  modbus_controller_id: epever
+  name: 'MPPT DIS: Discharging Output Power'
+  register_type: read
+  address: 12802
+  raw_encode: NONE
+  icon: mdi:flash
+  lambda: !lambda "uint16_t value = (data[item->offset] << 8) + data[item->offset+1];\n\
+    value = value >> 12;   \nvalue = value & 0x3; /* 0x1=1Bit, 0x3=2Bits, 0x7=3Bits\
+    \ */\nswitch (value) { \n  case 0x0: return std::string(\"Light Load\");\n  case\
+    \ 0x1: return std::string(\"Moderate Load\");\n  case 0x2: return std::string(\"\
+    Rated\");\n  case 0x3: return std::string(\"Overload\");\n  default: return std::string(\"\
+    Unknown\");\n}\nreturn x;\n\n  "
+  disabled_by_default: false
+  bitmask: 0xFFFFFFFF
+  skip_updates: 0
+  force_new_range: false
+  register_count: 0
+  response_size: 2
+- platform: modbus_controller
+  modbus_controller_id: epever
+  name: 'MPPT DIS: Discharging Health'
+  register_type: read
+  address: 12802
+  raw_encode: NONE
+  icon: mdi:pulse
+  lambda: !lambda "uint16_t value = (data[item->offset] << 8) + data[item->offset+1];\n\
+    value = value >> 1;\nvalue = value & 0x1; /* 0x1=1Bit, 0x3=2Bits, 0x7=3Bits */\n\
+    switch (value) { \n  case 0x0: return std::string(\"Normal\");\n  case 0x1: return\
+    \ std::string(\"Fault\");\n  default: return std::string(\"Unknown\");\n}\nreturn\
+    \ x;"
+  disabled_by_default: false
+  bitmask: 0xFFFFFFFF
+  skip_updates: 0
+  force_new_range: false
+  register_count: 0
+  response_size: 2
+- platform: modbus_controller
+  modbus_controller_id: epever
+  name: 'MPPT DIS: Discharging State'
+  register_type: read
+  address: 12802
+  raw_encode: HEXBYTES
+  icon: mdi:battery-negative
+  lambda: !lambda "uint16_t value = modbus_controller::word_from_hex_str(x, 0);\n\
+    value = value & 0x1; /* 0x1=1Bit, 0x3=2Bits, 0x7=3Bits */\nswitch (value) { \n\
+    \  case 0x0: return std::string(\"Standby\");\n  case 0x1: return std::string(\"\
+    Running\");\n  default: return std::string(\"Unknown\");\n}\nreturn x;"
+  disabled_by_default: false
+  bitmask: 0xFFFFFFFF
+  skip_updates: 0
+  force_new_range: false
+  register_count: 0
+  response_size: 2
+- platform: modbus_controller
+  modbus_controller_id: epever
+  name: 'MPPT DIS: Discharging Register'
+  register_type: read
+  address: 12802
+  raw_encode: HEXBYTES
+  lambda: !lambda |-
+    return x;
+  disabled_by_default: false
+  bitmask: 0xFFFFFFFF
+  skip_updates: 0
+  force_new_range: false
+  register_count: 0
+  response_size: 2
+- platform: modbus_controller
+  modbus_controller_id: epever
+  name: 'MPPT CHG: Charging PV Input Voltage Status'
+  register_type: read
+  address: 12801
+  raw_encode: NONE
+  lambda: !lambda "uint16_t value = (data[item->offset] << 8) + data[item->offset+1];\n\
+    value = value >> 14;   \nvalue = value & 0x3; /* 0x1=1Bit, 0x3=2Bits, 0x7=3Bits\
+    \ */\nswitch (value) { \n  case 0x0: return std::string(\"Normal\");\n  case 0x1:\
+    \ return std::string(\"No Input Power\");\n  case 0x2: return std::string(\"Higher\
+    \ Input Voltage\");\n  case 0x3: return std::string(\"Input Voltage Error\");\n\
+    \  default: return std::string(\"Unknown\");\n}\nreturn x;"
+  icon: mdi:sine-wave
+  disabled_by_default: false
+  bitmask: 0xFFFFFFFF
+  skip_updates: 0
+  force_new_range: false
+  register_count: 0
+  response_size: 2
+- platform: modbus_controller
+  modbus_controller_id: epever
+  id: charger_status
+  name: 'MPPT CHG: Charging Status'
+  register_type: read
+  address: 12801
+  raw_encode: NONE
+  icon: mdi:battery-charging
+  lambda: !lambda "uint16_t value = (data[item->offset] << 8) + data[item->offset+1];\n\
+    value = value >> 2;   /* starting D2 */\nvalue = value & 0x3; /* for two bits\
+    \ */\nswitch (value) { \n  case 0x0: return std::string(\"Not charging\");\n \
+    \ case 0x1: return std::string(\"Float\");\n  case 0x2: return std::string(\"\
+    Boost\");\n  case 0x3: return std::string(\"Equalization\");\n  default: return\
+    \ std::string(\"Unknown\");\n}\nreturn x;"
+  disabled_by_default: false
+  bitmask: 0xFFFFFFFF
+  skip_updates: 0
+  force_new_range: false
+  register_count: 0
+  response_size: 2
+- platform: modbus_controller
+  modbus_controller_id: epever
+  name: 'MPPT CHG: Charging Health'
+  register_type: read
+  force_new_range: true
+  address: 12801
+  raw_encode: NONE
+  lambda: !lambda "uint16_t value = (data[item->offset] << 8) + data[item->offset+1];\n\
+    value = value >> 1;\nvalue = value & 0x1; /* 0x1=1Bit, 0x3=2Bits, 0x7=3Bits */\n\
+    switch (value) { \n  case 0x0: return std::string(\"Normal\");\n  case 0x1: return\
+    \ std::string(\"Fault\");\n  default: return std::string(\"Unknown\");\n}\nreturn\
+    \ x;"
+  icon: mdi:pulse
+  disabled_by_default: false
+  bitmask: 0xFFFFFFFF
+  skip_updates: 0
+  register_count: 0
+  response_size: 2
+- platform: modbus_controller
+  modbus_controller_id: epever
+  name: 'MPPT CHG: Charging State'
+  register_type: read
+  address: 12801
+  raw_encode: NONE
+  lambda: !lambda "uint16_t value = (data[item->offset] << 8) + data[item->offset+1];\n\
+    value = value & 0x1; /* 0x1=1Bit, 0x3=2Bits, 0x7=3Bits */\nswitch (value) { \n\
+    \  case 0x0: return std::string(\"Standby\");\n  case 0x1: return std::string(\"\
+    Running\");\n  default: return std::string(\"Unknown\");\n}\nreturn x;"
+  icon: mdi:battery-positive
+  disabled_by_default: false
+  bitmask: 0xFFFFFFFF
+  skip_updates: 0
+  force_new_range: false
+  register_count: 0
+  response_size: 2
+- platform: modbus_controller
+  modbus_controller_id: epever
+  name: 'MPPT CHG: Charging Register'
+  force_new_range: true
+  register_type: read
+  address: 12801
+  raw_encode: HEXBYTES
+  lambda: !lambda |-
+    return x;
+  disabled_by_default: false
+  bitmask: 0xFFFFFFFF
+  skip_updates: 0
+  register_count: 0
+  response_size: 2
+- platform: modbus_controller
+  modbus_controller_id: epever
+  name: 'MPPT RT: Over Temperature Inside The Device'
+  address: 8192
+  register_type: discrete_input
+  raw_encode: NONE
+  lambda: !lambda "uint16_t value = data[item->offset];\nswitch (value) { \n  case\
+    \ 0x0: return std::string(\"Normal\");\n  case 0x1: return std::string(\"Higher\
+    \ Than Over Temp Setting\");\n  default:  return esphome::to_string(value);\n\
+    }\nreturn x;"
+  disabled_by_default: false
+  bitmask: 0xFFFFFFFF
+  skip_updates: 0
+  force_new_range: false
+  register_count: 0
+  response_size: 2
+- platform: modbus_controller
+  modbus_controller_id: epever
+  name: 'MPPT OP: Day/Night'
+  address: 8204
+  register_type: discrete_input
+  raw_encode: NONE
+  icon: mdi:weather-sunset-up
+  lambda: !lambda "uint16_t value = data[item->offset];\nswitch (value) { \n  case\
+    \ 0x0: return std::string(\"Day\");\n  case 0x1: return std::string(\"Night\"\
+    );\n  default:  return esphome::to_string(value);\n}\nreturn x;"
+  disabled_by_default: false
+  bitmask: 0xFFFFFFFF
+  skip_updates: 0
+  force_new_range: false
+  register_count: 0
+  response_size: 2
+- platform: modbus_controller
+  modbus_controller_id: epever
+  name: 'MPPT OP: System Time'
+  internal: false
+  register_type: holding
+  address: 36883
+  register_count: 3
+  raw_encode: HEXBYTES
+  icon: mdi:clock-outline
+  lambda: !lambda |-
+    uint8_t m = esphome::modbus_controller::byte_from_hex_str(x,0);
+    uint8_t s = esphome::modbus_controller::byte_from_hex_str(x,1);
+    uint8_t d = esphome::modbus_controller::byte_from_hex_str(x,2);
+    uint8_t h = esphome::modbus_controller::byte_from_hex_str(x,3);
+    uint8_t y = esphome::modbus_controller::byte_from_hex_str(x,4);
+    uint8_t M = esphome::modbus_controller::byte_from_hex_str(x,5);
+
+    char buf[20];
+    sprintf(buf, "%04d-%02d-%02d %02d:%02d:%02d", y+2000, M, d, h, m, s);
+    return std::string(buf);
+  disabled_by_default: false
+  bitmask: 0xFFFFFFFF
+  skip_updates: 0
+  force_new_range: false
+  response_size: 2
+- platform: modbus_controller
+  skip_updates: 100
+  disabled_by_default: true
+  modbus_controller_id: epever
+  name: 'MPPT SPEC: Charging Mode'
+  register_type: read
+  address: 12296
+  raw_encode: NONE
+  lambda: !lambda "uint16_t value = (data[item->offset] << 8) + data[item->offset+1];\n\
+    switch (value) { \n  case 0x0: return std::string(\"Connect/disconnect\");\n \
+    \ case 0x1: return std::string(\"PWM\");\n  case 0x2: return std::string(\"MPPT\"\
+    );\n  default: return std::string(\"Unknown\");\n}"
+  bitmask: 0xFFFFFFFF
+  force_new_range: false
+  register_count: 0
+  response_size: 2
 button:
 - platform: template
   name: 'MPPT BP: Write Battery Parameters'
@@ -1477,6 +1883,23 @@ sensor:
   accuracy_decimals: 2
   filters:
   - multiply: 0.01
+  disabled_by_default: false
+  force_update: false
+  bitmask: 0xFFFFFFFF
+  skip_updates: 0
+  force_new_range: false
+  response_size: 0
+  register_count: 0
+- platform: modbus_controller
+  modbus_controller_id: epever
+  name: 'MPPT RT: PV Input Voltage'
+  address: 12544
+  unit_of_measurement: V
+  register_type: read
+  value_type: U_WORD
+  accuracy_decimals: 2
+  filters:
+  - multiply: 0.01
   icon: mdi:sine-wave
   disabled_by_default: false
   force_update: false
@@ -1728,8 +2151,7 @@ sensor:
   register_count: 0
 - platform: modbus_controller
   modbus_controller_id: epever
-  id: battery_volt_settings
-  name: 'MPPT RT: System Voltage'
+  name: 'MPPT RT: Current System Rated Voltage'
   address: 12573
   unit_of_measurement: V
   register_type: read
@@ -1826,7 +2248,7 @@ sensor:
   disabled_by_default: true
   modbus_controller_id: epever
   id: battery_rated_current
-  name: 'MPPT SPEC: Battery Rated Current'
+  name: 'MPPT SPEC: Rated charging current'
   address: 12293
   unit_of_measurement: A
   register_type: read
@@ -1862,9 +2284,8 @@ sensor:
 - platform: modbus_controller
   skip_updates: 100
   disabled_by_default: true
-  modbus_controller_id: epever
   id: rated_current_of_load
-  name: 'MPPT SPEC: Rated Load Current'
+  name: 'MPPT SPEC: Rated load current'
   address: 12302
   unit_of_measurement: A
   register_type: read
@@ -2098,276 +2519,6 @@ binary_sensor:
   skip_updates: 0
   force_new_range: false
   response_size: 0
-text_sensor:
-- platform: modbus_controller
-  modbus_controller_id: epever
-  name: 'MPPT BAT: Battery Status Temperature'
-  address: 12800
-  register_type: read
-  raw_encode: NONE
-  lambda: !lambda "uint16_t value = (data[item->offset] << 8) + data[item->offset+1];\n\
-    value = value >> 4;\nvalue = value & 0xf; \nswitch (value) { \n  case 0x0: return\
-    \ std::string(\"Normal\");\n  case 0x1: return std::string(\"Over Temp\");\n \
-    \ case 0x2: return std::string(\"Low Temp\");\n  default: return std::string(\"\
-    Unknown\");\n}\nreturn x;"
-  icon: mdi:thermometer
-  disabled_by_default: false
-  bitmask: 0xFFFFFFFF
-  skip_updates: 0
-  force_new_range: false
-  register_count: 0
-  response_size: 2
-- platform: modbus_controller
-  modbus_controller_id: epever
-  name: 'MPPT BAT: Battery Status Voltage'
-  address: 12800
-  register_type: read
-  raw_encode: NONE
-  lambda: !lambda "uint16_t value = (data[item->offset] << 8) + data[item->offset+1];\n\
-    value = value & 0xf; \nswitch (value) { \n  case 0x0: return std::string(\"Normal\"\
-    );\n  case 0x1: return std::string(\"Over Voltage\");\n  case 0x2: return std::string(\"\
-    Under Voltage\");\n  case 0x3: return std::string(\"Over Discharge\");\n  case\
-    \ 0x4: return std::string(\"Fault\");\n  default: return std::string(\"Unknown\"\
-    );\n}\nreturn x;"
-  icon: mdi:sine-wave
-  disabled_by_default: false
-  bitmask: 0xFFFFFFFF
-  skip_updates: 0
-  force_new_range: false
-  register_count: 0
-  response_size: 2
-- platform: modbus_controller
-  modbus_controller_id: epever
-  name: 'MPPT DIS: Discharging Input Voltage'
-  register_type: read
-  address: 12802
-  raw_encode: NONE
-  lambda: !lambda "uint16_t value = (data[item->offset] << 8) + data[item->offset+1];\n\
-    value = value >> 14;   \nvalue = value & 0x3; /* 0x1=1Bit, 0x3=2Bits, 0x7=3Bits\
-    \ */\nswitch (value) { \n  case 0x0: return std::string(\"Normal\");\n  case 0x1:\
-    \ return std::string(\"Low\");\n  case 0x2: return std::string(\"High\");\n  case\
-    \ 0x3: return std::string(\"No Access\");\n  default: return std::string(\"Unknown\"\
-    );\n}\nreturn x;"
-  icon: mdi:sine-wave
-  disabled_by_default: false
-  bitmask: 0xFFFFFFFF
-  skip_updates: 0
-  force_new_range: false
-  register_count: 0
-  response_size: 2
-- platform: modbus_controller
-  modbus_controller_id: epever
-  name: 'MPPT DIS: Discharging Output Power'
-  register_type: read
-  address: 12802
-  raw_encode: NONE
-  icon: mdi:flash
-  lambda: !lambda "uint16_t value = (data[item->offset] << 8) + data[item->offset+1];\n\
-    value = value >> 12;   \nvalue = value & 0x3; /* 0x1=1Bit, 0x3=2Bits, 0x7=3Bits\
-    \ */\nswitch (value) { \n  case 0x0: return std::string(\"Light Load\");\n  case\
-    \ 0x1: return std::string(\"Moderate Load\");\n  case 0x2: return std::string(\"\
-    Rated\");\n  case 0x3: return std::string(\"Overload\");\n  default: return std::string(\"\
-    Unknown\");\n}\nreturn x;\n\n  "
-  disabled_by_default: false
-  bitmask: 0xFFFFFFFF
-  skip_updates: 0
-  force_new_range: false
-  register_count: 0
-  response_size: 2
-- platform: modbus_controller
-  modbus_controller_id: epever
-  name: 'MPPT DIS: Discharging Health'
-  register_type: read
-  address: 12802
-  raw_encode: NONE
-  icon: mdi:pulse
-  lambda: !lambda "uint16_t value = (data[item->offset] << 8) + data[item->offset+1];\n\
-    value = value >> 1;\nvalue = value & 0x1; /* 0x1=1Bit, 0x3=2Bits, 0x7=3Bits */\n\
-    switch (value) { \n  case 0x0: return std::string(\"Normal\");\n  case 0x1: return\
-    \ std::string(\"Fault\");\n  default: return std::string(\"Unknown\");\n}\nreturn\
-    \ x;"
-  disabled_by_default: false
-  bitmask: 0xFFFFFFFF
-  skip_updates: 0
-  force_new_range: false
-  register_count: 0
-  response_size: 2
-- platform: modbus_controller
-  modbus_controller_id: epever
-  name: 'MPPT DIS: Discharging State'
-  register_type: read
-  address: 12802
-  raw_encode: HEXBYTES
-  icon: mdi:battery-negative
-  lambda: !lambda "uint16_t value = modbus_controller::word_from_hex_str(x, 0);\n\
-    value = value & 0x1; /* 0x1=1Bit, 0x3=2Bits, 0x7=3Bits */\nswitch (value) { \n\
-    \  case 0x0: return std::string(\"Standby\");\n  case 0x1: return std::string(\"\
-    Running\");\n  default: return std::string(\"Unknown\");\n}\nreturn x;"
-  disabled_by_default: false
-  bitmask: 0xFFFFFFFF
-  skip_updates: 0
-  force_new_range: false
-  register_count: 0
-  response_size: 2
-- platform: modbus_controller
-  modbus_controller_id: epever
-  name: 'MPPT DIS: Discharging Register'
-  register_type: read
-  address: 12802
-  raw_encode: HEXBYTES
-  lambda: !lambda |-
-    return x;
-  disabled_by_default: false
-  bitmask: 0xFFFFFFFF
-  skip_updates: 0
-  force_new_range: false
-  register_count: 0
-  response_size: 2
-- platform: modbus_controller
-  modbus_controller_id: epever
-  name: 'MPPT CHG: Charging PV Input Voltage Status'
-  register_type: read
-  address: 12801
-  raw_encode: NONE
-  lambda: !lambda "uint16_t value = (data[item->offset] << 8) + data[item->offset+1];\n\
-    value = value >> 14;   \nvalue = value & 0x3; /* 0x1=1Bit, 0x3=2Bits, 0x7=3Bits\
-    \ */\nswitch (value) { \n  case 0x0: return std::string(\"Normal\");\n  case 0x1:\
-    \ return std::string(\"No Input Power\");\n  case 0x2: return std::string(\"Higher\
-    \ Input Voltage\");\n  case 0x3: return std::string(\"Input Voltage Error\");\n\
-    \  default: return std::string(\"Unknown\");\n}\nreturn x;"
-  icon: mdi:sine-wave
-  disabled_by_default: false
-  bitmask: 0xFFFFFFFF
-  skip_updates: 0
-  force_new_range: false
-  register_count: 0
-  response_size: 2
-- platform: modbus_controller
-  modbus_controller_id: epever
-  id: charger_status
-  name: 'MPPT CHG: Charging Status'
-  register_type: read
-  address: 12801
-  raw_encode: NONE
-  icon: mdi:battery-charging
-  lambda: !lambda "uint16_t value = (data[item->offset] << 8) + data[item->offset+1];\n\
-    value = value >> 2;   /* starting D2 */\nvalue = value & 0x3; /* for two bits\
-    \ */\nswitch (value) { \n  case 0x0: return std::string(\"Not charging\");\n \
-    \ case 0x1: return std::string(\"Float\");\n  case 0x2: return std::string(\"\
-    Boost\");\n  case 0x3: return std::string(\"Equalization\");\n  default: return\
-    \ std::string(\"Unknown\");\n}\nreturn x;"
-  disabled_by_default: false
-  bitmask: 0xFFFFFFFF
-  skip_updates: 0
-  force_new_range: false
-  register_count: 0
-  response_size: 2
-- platform: modbus_controller
-  modbus_controller_id: epever
-  name: 'MPPT CHG: Charging Health'
-  register_type: read
-  force_new_range: true
-  address: 12801
-  raw_encode: NONE
-  lambda: !lambda "uint16_t value = (data[item->offset] << 8) + data[item->offset+1];\n\
-    value = value >> 1;\nvalue = value & 0x1; /* 0x1=1Bit, 0x3=2Bits, 0x7=3Bits */\n\
-    switch (value) { \n  case 0x0: return std::string(\"Normal\");\n  case 0x1: return\
-    \ std::string(\"Fault\");\n  default: return std::string(\"Unknown\");\n}\nreturn\
-    \ x;"
-  icon: mdi:pulse
-  disabled_by_default: false
-  bitmask: 0xFFFFFFFF
-  skip_updates: 0
-  register_count: 0
-  response_size: 2
-- platform: modbus_controller
-  modbus_controller_id: epever
-  name: 'MPPT CHG: Charging State'
-  register_type: read
-  address: 12801
-  raw_encode: NONE
-  lambda: !lambda "uint16_t value = (data[item->offset] << 8) + data[item->offset+1];\n\
-    value = value & 0x1; /* 0x1=1Bit, 0x3=2Bits, 0x7=3Bits */\nswitch (value) { \n\
-    \  case 0x0: return std::string(\"Standby\");\n  case 0x1: return std::string(\"\
-    Running\");\n  default: return std::string(\"Unknown\");\n}\nreturn x;"
-  icon: mdi:battery-positive
-  disabled_by_default: false
-  bitmask: 0xFFFFFFFF
-  skip_updates: 0
-  force_new_range: false
-  register_count: 0
-  response_size: 2
-- platform: modbus_controller
-  modbus_controller_id: epever
-  name: 'MPPT CHG: Charging Register'
-  force_new_range: true
-  register_type: read
-  address: 12801
-  raw_encode: HEXBYTES
-  lambda: !lambda |-
-    return x;
-  disabled_by_default: false
-  bitmask: 0xFFFFFFFF
-  skip_updates: 0
-  register_count: 0
-  response_size: 2
-- platform: modbus_controller
-  modbus_controller_id: epever
-  name: 'MPPT OP: Day/Night'
-  address: 8204
-  register_type: discrete_input
-  raw_encode: NONE
-  icon: mdi:weather-sunset-up
-  lambda: !lambda "uint16_t value = data[item->offset];\nswitch (value) { \n  case\
-    \ 0x0: return std::string(\"Day\");\n  case 0x1: return std::string(\"Night\"\
-    );\n  default:  return esphome::to_string(value);\n}\nreturn x;"
-  disabled_by_default: false
-  bitmask: 0xFFFFFFFF
-  skip_updates: 0
-  force_new_range: false
-  register_count: 0
-  response_size: 2
-- platform: modbus_controller
-  modbus_controller_id: epever
-  name: 'MPPT OP: System Time'
-  internal: false
-  register_type: holding
-  address: 36883
-  register_count: 3
-  raw_encode: HEXBYTES
-  icon: mdi:clock-outline
-  lambda: !lambda |-
-    uint8_t m = esphome::modbus_controller::byte_from_hex_str(x,0);
-    uint8_t s = esphome::modbus_controller::byte_from_hex_str(x,1);
-    uint8_t d = esphome::modbus_controller::byte_from_hex_str(x,2);
-    uint8_t h = esphome::modbus_controller::byte_from_hex_str(x,3);
-    uint8_t y = esphome::modbus_controller::byte_from_hex_str(x,4);
-    uint8_t M = esphome::modbus_controller::byte_from_hex_str(x,5);
-
-    char buf[20];
-    sprintf(buf, "%04d-%02d-%02d %02d:%02d:%02d", y+2000, M, d, h, m, s);
-    return std::string(buf);
-  disabled_by_default: false
-  bitmask: 0xFFFFFFFF
-  skip_updates: 0
-  force_new_range: false
-  response_size: 2
-- platform: modbus_controller
-  skip_updates: 100
-  disabled_by_default: true
-  modbus_controller_id: epever
-  name: 'MPPT SPEC: Charging Mode'
-  register_type: read
-  address: 12296
-  raw_encode: NONE
-  lambda: !lambda "uint16_t value = (data[item->offset] << 8) + data[item->offset+1];\n\
-    switch (value) { \n  case 0x0: return std::string(\"Connect/disconnect\");\n \
-    \ case 0x1: return std::string(\"PWM\");\n  case 0x2: return std::string(\"MPPT\"\
-    );\n  default: return std::string(\"Unknown\");\n}"
-  bitmask: 0xFFFFFFFF
-  force_new_range: false
-  register_count: 0
-  response_size: 2
 switch:
 - platform: modbus_controller
   modbus_controller_id: epever

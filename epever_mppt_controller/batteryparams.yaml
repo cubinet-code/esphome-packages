@@ -363,7 +363,7 @@ number:
     modbus_controller_id: epever
     id: reg906d
     address: 0x906d
-    name: "${prefix} BP: Battery discharge"
+    name: "${prefix} BP: SOC Mode Battery discharge"
     # The percentage of battery's remaining capacity when stop charging
     unit_of_measurement: "%"
     register_type: holding
@@ -377,7 +377,7 @@ number:
     modbus_controller_id: epever
     id: reg906e
     address: 0x906e
-    name: "${prefix} BP: Battery charge (DoC)"
+    name: "${prefix} BP: SOC Mode Battery charge (DoC)"
     # Depth of charge
     unit_of_measurement: "%"
     register_type: holding
@@ -393,7 +393,7 @@ text_sensor:
     modbus_controller_id: epever
     name: "${prefix} BAT: Li Over Temp. Drop Power"
     address: 0x9107
-    register_type: read
+    register_type: holding
     raw_encode: NONE
     lambda: |-
       uint16_t value = (data[item->offset] << 8) + data[item->offset+1];
@@ -411,7 +411,7 @@ text_sensor:
     modbus_controller_id: epever
     name: "${prefix} BAT: Li Low Temp Protection For Discharging"
     address: 0x9107
-    register_type: read
+    register_type: holding
     raw_encode: NONE
     lambda: |-
       uint16_t value = (data[item->offset] << 8) + data[item->offset+1];
@@ -429,7 +429,7 @@ text_sensor:
     modbus_controller_id: epever
     name: "${prefix} BAT: Li Low Temp Protection For Charging"
     address: 0x9107
-    register_type: read
+    register_type: holding
     raw_encode: NONE
     lambda: |-
       uint16_t value = (data[item->offset] << 8) + data[item->offset+1];

@@ -9,10 +9,7 @@ number.modbus_controller: [source .esphome/packages/93553e33/epever_mppt_control
   unit_of_measurement: °C
   register_type: holding
   value_type: S_WORD
-  
-  [filters] is an invalid option for [number.modbus_controller]. Please check the indentation.
-  filters: 
-    - multiply: 0.01
+  multiply: 100
   
   [accuracy_decimals] is an invalid option for [number.modbus_controller]. Please check the indentation.
   accuracy_decimals: 2

@@ -1519,28 +1519,6 @@ sensor:
   register_count: 0
 - platform: modbus_controller
   modbus_controller_id: epever
-  name: 'MPPT SET: Device ID'
-  icon: mdi:thermometer-alert
-  custom_command:
-  - 0xF8
-  - 0x45
-  - 0x00
-  - 0x01
-  - 0x01
-  - 0xF8
-  lambda: !lambda |-
-    ESP_LOGE("epever", "Device ID %d", data[0]);
-    return static_cast<double>(data[0]);
-  disabled_by_default: false
-  force_update: false
-  bitmask: 0xFFFFFFFF
-  skip_updates: 0
-  force_new_range: false
-  response_size: 0
-  value_type: U_WORD
-  register_count: 0
-- platform: modbus_controller
-  modbus_controller_id: epever
   address: 36887
   name: 'MPPT SET: Battery Upper Temperature Limit'
   icon: mdi:thermometer-alert
@@ -2225,6 +2203,28 @@ sensor:
   skip_updates: 0
   force_new_range: false
   response_size: 0
+  register_count: 0
+- platform: modbus_controller
+  modbus_controller_id: epever
+  name: 'MPPT SPEC: Device ID'
+  icon: mdi:thermometer-alert
+  custom_command:
+  - 0xF8
+  - 0x45
+  - 0x00
+  - 0x01
+  - 0x01
+  - 0xF8
+  lambda: !lambda |-
+    ESP_LOGE("epever", "Device ID %d", data[0]);
+    return static_cast<double>(data[0]);
+  disabled_by_default: false
+  force_update: false
+  bitmask: 0xFFFFFFFF
+  skip_updates: 0
+  force_new_range: false
+  response_size: 0
+  value_type: U_WORD
   register_count: 0
 - platform: modbus_controller
   skip_updates: 100

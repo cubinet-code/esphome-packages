@@ -372,6 +372,7 @@ number:
     max_value: 100
     step: 1
     use_write_multiple: true
+    mode: box
 
   - platform: modbus_controller
     modbus_controller_id: epever
@@ -386,7 +387,8 @@ number:
     max_value: 100
     step: 1
     use_write_multiple: true
-
+    mode: box
+    
 text_sensor:
 
   - platform: modbus_controller

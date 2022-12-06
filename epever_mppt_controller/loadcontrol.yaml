@@ -249,10 +249,11 @@ number:
     use_write_multiple: true
     mode: box
     write_lambda: |-
+      item->state = x;
       int h = static_cast<int>(x);
       int m = static_cast<int>(id(x903f_m).state);
       uint16_t value = ((h << 8) | m);
-      ESP_LOGI("epever_mppt_controller", "Duration Before Sunrise %f", static_cast<double>(value));
+      // ESP_LOGI("epever_mppt_controller", "Duration Before Sunrise %f", static_cast<double>(value));
       return static_cast<double>(value);
 
   - platform: modbus_controller
@@ -270,10 +271,11 @@ number:
     use_write_multiple: true
     mode: box
     write_lambda: |-
+      item->state = x;
       int h = static_cast<int>(id(x903f_h).state);
       int m = static_cast<int>(x);
       uint16_t value = ((h << 8) | m);
-      ESP_LOGI("epever_mppt_controller", "Duration Before Sunrise %f", static_cast<double>(value));
+      // ESP_LOGI("epever_mppt_controller", "Duration Before Sunrise %f", static_cast<double>(value));
       return static_cast<double>(value);
 
   - platform: modbus_controller

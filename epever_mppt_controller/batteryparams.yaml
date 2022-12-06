@@ -1,5 +1,4 @@
 select:
-
   - platform: modbus_controller
     modbus_controller_id: epever
     id: battery_type
@@ -11,8 +10,34 @@ select:
       "Sealed": 1
       "Gel": 2
       "Flooded": 3
+      "LiFePO4 (4s)": 4
+      "LiFePO4 (8s)": 5
+      "LiFePO4 (15s)": 6
+      "LiFePO4 (16s)": 7
+      "Li(NiCoMn)O2 (3s)": 8
+      "Li(NiCoMn)O2 (6s)": 9
+      "Li(NiCoMn)O2 (7s)": 10
+      "Li(NiCoMn)O2 (13s)": 11
+      "Li(NiCoMn)O2 (14s)": 12
     icon: mdi:battery-unknown
 
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    name: "${prefix} BP: Battery Rated Voltage Level"
+    address: 0x9067
+    value_type: U_WORD
+    optionsmap:
+      "Auto": 0
+      "12V": 1
+      "24V": 2
+      "36V": 3
+      "48V": 4
+      "60V": 5
+      "110V": 6
+      "120V": 7
+      "220V": 8
+      "240V": 9            
+    icon: mdi:sine-wave
 
   - platform: modbus_controller
     modbus_controller_id: epever
@@ -23,6 +48,7 @@ select:
       "Voltage Compensation": 0
       "SOC": 1
     icon: mdi:battery-unknown
+
 
 number:
 
@@ -57,7 +83,7 @@ number:
     register_type: holding
     value_type: U_WORD
     min_value: 0
-    max_value: 99
+    max_value: 9
     step: 0.01
     icon: mdi:thermometer-lines
     use_write_multiple: true
@@ -332,6 +358,90 @@ number:
       item->state = x;
       id(update_battery_params).execute();
       return {};
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: reg906d
+    address: 0x906d
+    name: "${prefix} BP: Battery discharge"
+    # The percentage of battery's remaining capacity when stop charging
+    unit_of_measurement: "%"
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0
+    max_value: 100
+    step: 1
+    use_write_multiple: true
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: reg906e
+    address: 0x906e
+    name: "${prefix} BP: Battery charge (DoC)"
+    # Depth of charge
+    unit_of_measurement: "%"
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0
+    max_value: 100
+    step: 1
+    use_write_multiple: true
+
+text_sensor:
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    name: "${prefix} BAT: Li Over Temp. Drop Power"
+    address: 0x9107
+    register_type: read
+    raw_encode: NONE
+    lambda: |-
+      uint16_t value = (data[item->offset] << 8) + data[item->offset+1];
+      value = value >> 11;
+      value = value & 0x1; 
+      switch (value) { 
+        case 0x0: return std::string("Disable");
+        case 0x1: return std::string("Enable");
+        default: return std::string("Unknown");
+      }
+      return x;
+    icon: mdi:thermometer
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    name: "${prefix} BAT: Li Low Temp Protection For Discharging"
+    address: 0x9107
+    register_type: read
+    raw_encode: NONE
+    lambda: |-
+      uint16_t value = (data[item->offset] << 8) + data[item->offset+1];
+      value = value >> 9;
+      value = value & 0x1; 
+      switch (value) { 
+        case 0x0: return std::string("Disable");
+        case 0x1: return std::string("Enable");
+        default: return std::string("Unknown");
+      }
+      return x;
+    icon: mdi:thermometer
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    name: "${prefix} BAT: Li Low Temp Protection For Charging"
+    address: 0x9107
+    register_type: read
+    raw_encode: NONE
+    lambda: |-
+      uint16_t value = (data[item->offset] << 8) + data[item->offset+1];
+      value = value >> 8;
+      value = value & 0x1; 
+      switch (value) { 
+        case 0x0: return std::string("Disable");
+        case 0x1: return std::string("Enable");
+        default: return std::string("Unknown");
+      }
+      return x;
+    icon: mdi:thermometer
 
 button:
   - platform: template

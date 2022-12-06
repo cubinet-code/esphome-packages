@@ -66,7 +66,7 @@ sensor:
     disabled_by_default: ${disabled_by_default}
     modbus_controller_id: epever
     id: battery_rated_current
-    name: "${prefix} SPEC: Battery Rated Current"
+    name: "${prefix} SPEC: Rated charging current"
     address: 0x3005
     unit_of_measurement: "A"
     register_type: read
@@ -94,10 +94,9 @@ sensor:
   - platform: modbus_controller
     skip_updates: 100
     disabled_by_default: ${disabled_by_default}
-    modbus_controller_id: epever
     id: rated_current_of_load
-    name: "${prefix} SPEC: Rated Load Current"
-    address: 0x300E
+    name: "${prefix} SPEC: Rated load current"
+    address: 0x300e
     unit_of_measurement: "A"
     register_type: read
     value_type: U_WORD

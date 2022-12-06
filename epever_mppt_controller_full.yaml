@@ -701,8 +701,8 @@ number:
   use_write_multiple: true
   min_value: -40.0
   max_value: 0.0
+  mode: BOX
   disabled_by_default: false
-  mode: AUTO
   bitmask: 0xFFFFFFFF
   skip_updates: 0
   force_new_range: false

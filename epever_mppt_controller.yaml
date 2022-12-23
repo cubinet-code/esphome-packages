@@ -23,6 +23,7 @@ esp32:
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
+  use_address: 10.1.1.167
 
 dashboard_import:
   package_import_url: github://cubinet-code/esphome-packages/epever_mppt_controller.yaml@main

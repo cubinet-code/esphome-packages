@@ -2641,6 +2641,7 @@ switch:
   response_size: 0
   use_write_multiple: false
 wifi:
+  use_address: 10.1.1.167
   domain: .local
   reboot_timeout: 15min
   power_save_mode: LIGHT
@@ -2649,7 +2650,6 @@ wifi:
   - ssid: EXTREME
     password: X2erZisRGFM7MepT
     priority: 0.0
-  use_address: tracer.local
 dashboard_import:
   package_import_url: github://cubinet-code/esphome-packages/epever_mppt_controller.yaml@main
 web_server:

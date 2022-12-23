@@ -1059,7 +1059,7 @@ text_sensor:
   lambda: !lambda "uint16_t value = (data[item->offset] << 8) + data[item->offset+1];\n\
     value = value >> 1;\nvalue = value & 0x1; /* 0x1=1Bit, 0x3=2Bits, 0x7=3Bits */\n\
     switch (value) { \n  case 0x0: return std::string(\"Normal\");\n  case 0x1: return\
-    \ std::string(\"Fault\");\n  default: return std::string(\"Unknown\");\n}\nreturn\
+    \ std::string(\"Normal\");\n  default: return std::string(\"Unknown\");\n}\nreturn\
     \ x;"
   icon: mdi:pulse
   disabled_by_default: false

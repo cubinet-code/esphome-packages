@@ -126,7 +126,7 @@ text_sensor:
       value = value >> 1;
       value = value & 0x1; /* 0x1=1Bit, 0x3=2Bits, 0x7=3Bits */
       switch (value) { 
-        case 0x0: return std::string("Normal");
+        case 0x0: return std::string("Idle");
         case 0x1: return std::string("Normal");
         default: return std::string("Unknown");
       }

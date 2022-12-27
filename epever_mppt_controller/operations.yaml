@@ -128,7 +128,7 @@ script:
           int m = now.minute;
           int h = now.hour;
           int d = now.day_of_month;
-          int M = now.month + 1;
+          int M = now.month;
           int y = now.year % 100;
           
           uint16_t r1 = ((m << 8) | s);

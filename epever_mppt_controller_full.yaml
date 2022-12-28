@@ -2650,14 +2650,12 @@ time:
   id: sntp_time
   update_interval: 24h
   timezone: CET-1CEST,M3.5.0,M10.5.0/3
+  servers:
+  - de.pool.ntp.org
   on_time_sync:
   - then:
     - script.execute:
         id: update_rtc
-  servers:
-  - 0.pool.ntp.org
-  - 1.pool.ntp.org
-  - 2.pool.ntp.org
 logger:
   baud_rate: 115200
   tx_buffer_size: 512

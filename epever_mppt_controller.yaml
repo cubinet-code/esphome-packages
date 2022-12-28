@@ -55,6 +55,8 @@ time:
     id: sntp_time
     update_interval: 24h
     timezone: $timezone
+    servers:
+      - de.pool.ntp.org
     on_time_sync:
         then:
           - script.execute: update_rtc

@@ -107,6 +107,7 @@ select:
   use_write_multiple: false
   optimistic: false
 - platform: modbus_controller
+  disabled_by_default: true
   modbus_controller_id: epever
   address: 36969
   name: 'MPPT LC: #1 Time Control Mode'
@@ -115,7 +116,6 @@ select:
     Timer 1 & Timer 2: 1
   value_type: U_WORD
   icon: mdi:timer
-  disabled_by_default: false
   skip_updates: 0
   force_new_range: false
   use_write_multiple: false
@@ -1283,6 +1283,7 @@ script:
   parameters: {}
 sensor:
 - platform: modbus_controller
+  disabled_by_default: true
   modbus_controller_id: epever
   address: 36930
   name: 'MPPT LC: #1 Turn on time 1 (s)'
@@ -1291,7 +1292,6 @@ sensor:
   accuracy_decimals: 0
   value_type: U_WORD
   icon: mdi:clock-digital
-  disabled_by_default: false
   force_update: false
   bitmask: 0xFFFFFFFF
   skip_updates: 0
@@ -1299,6 +1299,7 @@ sensor:
   response_size: 0
   register_count: 0
 - platform: modbus_controller
+  disabled_by_default: true
   modbus_controller_id: epever
   id: turn_on_time_1_minutes
   address: 36931
@@ -1308,7 +1309,6 @@ sensor:
   accuracy_decimals: 0
   value_type: U_WORD
   icon: mdi:clock-digital
-  disabled_by_default: false
   force_update: false
   bitmask: 0xFFFFFFFF
   skip_updates: 0
@@ -1316,6 +1316,7 @@ sensor:
   response_size: 0
   register_count: 0
 - platform: modbus_controller
+  disabled_by_default: true
   modbus_controller_id: epever
   id: turn_on_time_1_hours
   address: 36932
@@ -1325,7 +1326,6 @@ sensor:
   accuracy_decimals: 0
   value_type: U_WORD
   icon: mdi:clock-digital
-  disabled_by_default: false
   force_update: false
   bitmask: 0xFFFFFFFF
   skip_updates: 0
@@ -1333,6 +1333,7 @@ sensor:
   response_size: 0
   register_count: 0
 - platform: modbus_controller
+  disabled_by_default: true
   modbus_controller_id: epever
   id: turn_off_time_1_seconds
   address: 36933
@@ -1342,7 +1343,6 @@ sensor:
   accuracy_decimals: 0
   value_type: U_WORD
   icon: mdi:clock-digital
-  disabled_by_default: false
   force_update: false
   bitmask: 0xFFFFFFFF
   skip_updates: 0
@@ -1350,6 +1350,7 @@ sensor:
   response_size: 0
   register_count: 0
 - platform: modbus_controller
+  disabled_by_default: true
   modbus_controller_id: epever
   id: turn_off_time_1_minutes
   address: 36934
@@ -1359,7 +1360,6 @@ sensor:
   accuracy_decimals: 0
   value_type: U_WORD
   icon: mdi:clock-digital
-  disabled_by_default: false
   force_update: false
   bitmask: 0xFFFFFFFF
   skip_updates: 0
@@ -1367,6 +1367,7 @@ sensor:
   response_size: 0
   register_count: 0
 - platform: modbus_controller
+  disabled_by_default: true
   modbus_controller_id: epever
   id: turn_off_time_1_hours
   address: 36935
@@ -1376,7 +1377,6 @@ sensor:
   accuracy_decimals: 0
   value_type: U_WORD
   icon: mdi:clock-digital
-  disabled_by_default: false
   force_update: false
   bitmask: 0xFFFFFFFF
   skip_updates: 0
@@ -1384,6 +1384,7 @@ sensor:
   response_size: 0
   register_count: 0
 - platform: modbus_controller
+  disabled_by_default: true
   modbus_controller_id: epever
   id: turn_on_time_2_seconds
   address: 36936
@@ -1393,7 +1394,6 @@ sensor:
   accuracy_decimals: 0
   value_type: U_WORD
   icon: mdi:clock-digital
-  disabled_by_default: false
   force_update: false
   bitmask: 0xFFFFFFFF
   skip_updates: 0
@@ -1401,6 +1401,7 @@ sensor:
   response_size: 0
   register_count: 0
 - platform: modbus_controller
+  disabled_by_default: true
   modbus_controller_id: epever
   id: turn_on_time_2_minutes
   address: 36937
@@ -1410,7 +1411,6 @@ sensor:
   accuracy_decimals: 0
   value_type: U_WORD
   icon: mdi:clock-digital
-  disabled_by_default: false
   force_update: false
   bitmask: 0xFFFFFFFF
   skip_updates: 0
@@ -1418,6 +1418,7 @@ sensor:
   response_size: 0
   register_count: 0
 - platform: modbus_controller
+  disabled_by_default: true
   modbus_controller_id: epever
   id: turn_on_time_2_hours
   address: 36938
@@ -1427,7 +1428,6 @@ sensor:
   accuracy_decimals: 0
   value_type: U_WORD
   icon: mdi:clock-digital
-  disabled_by_default: false
   force_update: false
   bitmask: 0xFFFFFFFF
   skip_updates: 0
@@ -1435,6 +1435,7 @@ sensor:
   response_size: 0
   register_count: 0
 - platform: modbus_controller
+  disabled_by_default: true
   modbus_controller_id: epever
   id: turn_off_time_2_seconds
   address: 36939
@@ -1444,7 +1445,6 @@ sensor:
   accuracy_decimals: 0
   value_type: U_WORD
   icon: mdi:clock-digital
-  disabled_by_default: false
   force_update: false
   bitmask: 0xFFFFFFFF
   skip_updates: 0
@@ -1452,6 +1452,7 @@ sensor:
   response_size: 0
   register_count: 0
 - platform: modbus_controller
+  disabled_by_default: true
   modbus_controller_id: epever
   id: turn_off_time_2_minutes
   address: 36940
@@ -1461,7 +1462,6 @@ sensor:
   accuracy_decimals: 0
   value_type: U_WORD
   icon: mdi:clock-digital
-  disabled_by_default: false
   force_update: false
   bitmask: 0xFFFFFFFF
   skip_updates: 0
@@ -1469,6 +1469,7 @@ sensor:
   response_size: 0
   register_count: 0
 - platform: modbus_controller
+  disabled_by_default: true
   modbus_controller_id: epever
   id: turn_off_time_2_hours
   address: 36941
@@ -1478,7 +1479,6 @@ sensor:
   accuracy_decimals: 0
   value_type: U_WORD
   icon: mdi:clock-digital
-  disabled_by_default: false
   force_update: false
   bitmask: 0xFFFFFFFF
   skip_updates: 0
@@ -1854,6 +1854,7 @@ sensor:
   response_size: 0
   register_count: 0
 - platform: modbus_controller
+  disabled_by_default: true
   modbus_controller_id: epever
   id: co2_reduction
   name: 'MPPT STAT: CO₂ Reduction'
@@ -1865,7 +1866,6 @@ sensor:
   filters:
   - multiply: 10.0
   icon: mdi:molecule-co2
-  disabled_by_default: false
   force_update: false
   bitmask: 0xFFFFFFFF
   skip_updates: 0
@@ -2648,16 +2648,6 @@ time:
   timezone: CET-1CEST,M3.5.0,M10.5.0/3
   on_time_sync:
   - then:
-    - script.execute:
-        id: update_rtc
-  on_time:
-  - seconds:
-    - 0
-    minutes:
-    - 0
-    hours:
-    - 0
-    then:
     - script.execute:
         id: update_rtc
   servers:

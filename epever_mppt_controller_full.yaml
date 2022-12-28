@@ -2641,6 +2641,10 @@ time:
 - platform: homeassistant
   id: hass_time
   update_interval: 24h
+  on_time_sync:
+  - then:
+    - script.execute:
+        id: update_rtc
   timezone: CET-1CEST,M3.5.0,M10.5.0/3
 - platform: sntp
   id: sntp_time

@@ -48,6 +48,9 @@ time:
   - platform: homeassistant
     id: hass_time
     update_interval: 24h
+    on_time_sync:
+        then:
+          - script.execute: update_rtc
   - platform: sntp
     id: sntp_time
     update_interval: 24h

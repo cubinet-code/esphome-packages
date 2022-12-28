@@ -160,6 +160,7 @@ sensor:
     icon: mdi:counter
     
   - platform: modbus_controller
+    disabled_by_default: ${disabled_by_default}
     modbus_controller_id: epever
     id: co2_reduction
     name: "${prefix} STAT: CO₂ Reduction"

@@ -55,6 +55,12 @@ time:
     on_time_sync:
         then:
           - script.execute: update_rtc
+    on_time:
+      - seconds: 0
+        minutes: 0
+        hours: 0
+        then:
+          - script.execute: update_rtc
 
 logger:
   #level: VERBOSE

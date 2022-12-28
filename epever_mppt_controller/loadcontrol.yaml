@@ -2,6 +2,7 @@ sensor:
 
 
   - platform: modbus_controller
+    disabled_by_default: ${disabled_by_default}
     modbus_controller_id: epever
     address: 0x9042
     name: "${prefix} LC: #1 Turn on time 1 (s)"
@@ -12,6 +13,7 @@ sensor:
     icon: mdi:clock-digital
 
   - platform: modbus_controller
+    disabled_by_default: ${disabled_by_default}
     modbus_controller_id: epever
     id: turn_on_time_1_minutes
     address: 0x9043
@@ -23,6 +25,7 @@ sensor:
     icon: mdi:clock-digital
 
   - platform: modbus_controller
+    disabled_by_default: ${disabled_by_default}
     modbus_controller_id: epever
     id: turn_on_time_1_hours
     address: 0x9044
@@ -34,6 +37,7 @@ sensor:
     icon: mdi:clock-digital
 
   - platform: modbus_controller
+    disabled_by_default: ${disabled_by_default}
     modbus_controller_id: epever
     id: turn_off_time_1_seconds
     address: 0x9045
@@ -45,6 +49,7 @@ sensor:
     icon: mdi:clock-digital
 
   - platform: modbus_controller
+    disabled_by_default: ${disabled_by_default}
     modbus_controller_id: epever
     id: turn_off_time_1_minutes
     address: 0x9046
@@ -56,6 +61,7 @@ sensor:
     icon: mdi:clock-digital
 
   - platform: modbus_controller
+    disabled_by_default: ${disabled_by_default}
     modbus_controller_id: epever
     id: turn_off_time_1_hours
     address: 0x9047
@@ -67,6 +73,7 @@ sensor:
     icon: mdi:clock-digital
 
   - platform: modbus_controller
+    disabled_by_default: ${disabled_by_default}
     modbus_controller_id: epever
     id: turn_on_time_2_seconds
     address: 0x9048
@@ -78,6 +85,7 @@ sensor:
     icon: mdi:clock-digital
 
   - platform: modbus_controller
+    disabled_by_default: ${disabled_by_default}
     modbus_controller_id: epever
     id: turn_on_time_2_minutes
     address: 0x9049
@@ -89,6 +97,7 @@ sensor:
     icon: mdi:clock-digital
 
   - platform: modbus_controller
+    disabled_by_default: ${disabled_by_default}
     modbus_controller_id: epever
     id: turn_on_time_2_hours
     address: 0x904a
@@ -100,6 +109,7 @@ sensor:
     icon: mdi:clock-digital
 
   - platform: modbus_controller
+    disabled_by_default: ${disabled_by_default}
     modbus_controller_id: epever
     id: turn_off_time_2_seconds
     address: 0x904b
@@ -111,6 +121,7 @@ sensor:
     icon: mdi:clock-digital
 
   - platform: modbus_controller
+    disabled_by_default: ${disabled_by_default}
     modbus_controller_id: epever
     id: turn_off_time_2_minutes
     address: 0x904c
@@ -122,6 +133,7 @@ sensor:
     icon: mdi:clock-digital
 
   - platform: modbus_controller
+    disabled_by_default: ${disabled_by_default}
     modbus_controller_id: epever
     id: turn_off_time_2_hours
     address: 0x904d
@@ -170,6 +182,7 @@ select:
     icon: mdi:electric-switch
 
   - platform: modbus_controller
+    disabled_by_default: ${disabled_by_default}
     modbus_controller_id: epever
     address: 0x9069
     name: "${prefix} LC: #1 Time Control Mode"

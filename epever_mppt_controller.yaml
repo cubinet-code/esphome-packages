@@ -1,7 +1,7 @@
 substitutions:
   name: tracer
   prefix: "MPPT"
-  update_interval: 30s
+  update_interval: 15s
   disabled_by_default: "true"
   DI: GPIO19    # TX Pin
   RO: GPIO18    # RX Pin

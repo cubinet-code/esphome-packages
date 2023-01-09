@@ -1,7 +1,7 @@
 substitutions:
   name: tracer
   prefix: MPPT
-  update_interval: 30s
+  update_interval: 15s
   disabled_by_default: 'true'
   DI: GPIO19
   RO: GPIO18
@@ -17,13 +17,13 @@ esphome:
   includes: []
   libraries: []
   name_add_mac_suffix: false
-  min_version: 2022.11.3
+  min_version: 2022.12.3
 esp32:
   board: esp-wrover-kit
   framework:
-    version: 1.0.6
-    source: ~3.10006.0
-    platform_version: platformio/espressif32 @ 3.5.0
+    version: 2.0.5
+    source: ~3.20005.0
+    platform_version: platformio/espressif32 @ 5.2.0
     type: arduino
   variant: ESP32
 select:
@@ -2338,7 +2338,7 @@ sensor:
   register_count: 0
 - platform: wifi_signal
   name: MPPT ESP WiFi Signal
-  update_interval: 30s
+  update_interval: 15s
   entity_category: diagnostic
   disabled_by_default: false
   force_update: false
@@ -2565,6 +2565,7 @@ switch:
   name: 'MPPT OP: Manual Load Control'
   icon: mdi:toggle-switch
   disabled_by_default: false
+  restore_mode: DISABLED
   skip_updates: 0
   force_new_range: false
   response_size: 0
@@ -2577,6 +2578,7 @@ switch:
   name: 'MPPT OP: Default control the load'
   icon: mdi:toggle-switch
   disabled_by_default: false
+  restore_mode: DISABLED
   skip_updates: 0
   force_new_range: false
   response_size: 0
@@ -2589,6 +2591,7 @@ switch:
   name: 'MPPT OP: Enable load test mode'
   icon: mdi:toggle-switch
   disabled_by_default: false
+  restore_mode: DISABLED
   skip_updates: 0
   force_new_range: false
   response_size: 0
@@ -2601,6 +2604,7 @@ switch:
   name: 'MPPT OP: Force Load on/off'
   icon: mdi:toggle-switch
   disabled_by_default: false
+  restore_mode: DISABLED
   skip_updates: 0
   force_new_range: false
   response_size: 0
@@ -2614,6 +2618,7 @@ switch:
   bitmask: 0x01
   name: 'MPPT OP: Clear Stats'
   icon: mdi:eraser
+  restore_mode: DISABLED
   skip_updates: 0
   force_new_range: false
   response_size: 0
@@ -2630,6 +2635,7 @@ wifi:
   use_address: tracer.local
 dashboard_import:
   package_import_url: github://cubinet-code/esphome-packages/epever_mppt_controller.yaml@main
+  import_full_config: false
 web_server:
   port: 80
   version: 2
@@ -2685,6 +2691,7 @@ uart:
       open_drain: false
       pullup: false
       pulldown: false
+    drive_strength: 20.0
     inverted: false
   rx_pin:
     number: 18
@@ -2694,6 +2701,7 @@ uart:
       open_drain: false
       pullup: false
       pulldown: false
+    drive_strength: 20.0
     inverted: false
   baud_rate: 115200
   stop_bits: 1
@@ -2709,11 +2717,12 @@ modbus:
       open_drain: false
       pullup: false
       pulldown: false
+    drive_strength: 20.0
     inverted: false
   send_wait_time: 200ms
 modbus_controller:
 - id: epever
   address: 0x01
-  update_interval: 30s
+  update_interval: 15s
   command_throttle: 0ms
 

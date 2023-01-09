@@ -68,7 +68,7 @@ time:
     #       - script.execute: update_rtc
 
 logger:
-  #level: VERBOSE
+  level: INFO
 
 api:
   reboot_timeout: 0s

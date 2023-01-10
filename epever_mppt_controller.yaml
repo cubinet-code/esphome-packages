@@ -30,16 +30,17 @@ dashboard_import:
 
 # https://github.com/cubinet-code/esphome-packages
 packages:
-  specs:              "github://cubinet-code/esphome-packages/epever_mppt_controller/specs.yaml@main"
-  operations:         "github://cubinet-code/esphome-packages/epever_mppt_controller/operations.yaml@main"
-  realtime:           "github://cubinet-code/esphome-packages/epever_mppt_controller/realtime.yaml@main"
-  stats:              "github://cubinet-code/esphome-packages/epever_mppt_controller/stats.yaml@main"
-  stats-charging:     "github://cubinet-code/esphome-packages/epever_mppt_controller/stats-charging.yaml@main"
-  stats-discharging:  "github://cubinet-code/esphome-packages/epever_mppt_controller/stats-discharging.yaml@main"
-  stats-battery:      "github://cubinet-code/esphome-packages/epever_mppt_controller/stats-battery.yaml@main"
-  settings:           "github://cubinet-code/esphome-packages/epever_mppt_controller/settings.yaml@main"
-  loadcontrol:        "github://cubinet-code/esphome-packages/epever_mppt_controller/loadcontrol.yaml@main"
-  batteryparams:      "github://cubinet-code/esphome-packages/epever_mppt_controller/batteryparams.yaml@main"
+  special:            "github://cubinet-code/esphome-packages/epever_mppt_controller/special.yaml@main"
+  # specs:              "github://cubinet-code/esphome-packages/epever_mppt_controller/specs.yaml@main"
+  # operations:         "github://cubinet-code/esphome-packages/epever_mppt_controller/operations.yaml@main"
+  # realtime:           "github://cubinet-code/esphome-packages/epever_mppt_controller/realtime.yaml@main"
+  # stats:              "github://cubinet-code/esphome-packages/epever_mppt_controller/stats.yaml@main"
+  # stats-charging:     "github://cubinet-code/esphome-packages/epever_mppt_controller/stats-charging.yaml@main"
+  # stats-discharging:  "github://cubinet-code/esphome-packages/epever_mppt_controller/stats-discharging.yaml@main"
+  # stats-battery:      "github://cubinet-code/esphome-packages/epever_mppt_controller/stats-battery.yaml@main"
+  # settings:           "github://cubinet-code/esphome-packages/epever_mppt_controller/settings.yaml@main"
+  # loadcontrol:        "github://cubinet-code/esphome-packages/epever_mppt_controller/loadcontrol.yaml@main"
+  # batteryparams:      "github://cubinet-code/esphome-packages/epever_mppt_controller/batteryparams.yaml@main"
 
 web_server:
   port: 80
@@ -68,7 +69,7 @@ time:
     #       - script.execute: update_rtc
 
 logger:
-  level: INFO
+  level: VERBOSE
 
 api:
   reboot_timeout: 0s

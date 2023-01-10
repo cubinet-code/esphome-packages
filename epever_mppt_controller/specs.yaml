@@ -108,15 +108,6 @@ sensor:
 text_sensor:
 
   - platform: modbus_controller
-    modbus_controller_id: epever
-    name: "${prefix} SPEC: Product ID"
-    custom_command: [0x01, 0x2b, 0x0e, 0x01, 0x00]
-    raw_encode: COMMA
-    lambda: |-
-      ESP_LOGE("epever", "Device ID %s", x);
-      return x;
-
-  - platform: modbus_controller
     skip_updates: 100
     disabled_by_default: ${disabled_by_default}
     modbus_controller_id: epever

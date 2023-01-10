@@ -1,7 +1,8 @@
 Failed config
 
 modbus: [source epever_mppt_controller.yaml:87]
-  - flow_control_pin: GPIO23
+  - id: modbus1
+    flow_control_pin: GPIO23
     send_wait_time: 200ms
     
     [disable_crc] is an invalid option for [0]. Please check the indentation.

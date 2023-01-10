@@ -87,14 +87,15 @@ uart:
 modbus:
   flow_control_pin: ${REDE} # RE/DE
   send_wait_time: 200ms
-  disable_crc: true
   
+
 modbus_controller:
   - id: epever
     address: 0x1
     # command_throttle: 10ms
     update_interval: ${update_interval}
-
+    disable_crc: true
+    
 sensor:
   - platform: wifi_signal
     name: "${prefix} ESP WiFi Signal"

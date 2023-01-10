@@ -18,10 +18,9 @@ text_sensor.modbus_controller: [source .esphome/packages/93553e33/epever_mppt_co
   disable_crc: True
   lambda: ESP_LOGE("epever", "Device ID %s", x);
   return x;
-modbus_controller: [source epever_mppt_controller.yaml:93]
-  - id: epever
-    address: 1
-    update_interval: 15s
+modbus: [source epever_mppt_controller.yaml:87]
+  - flow_control_pin: GPIO23
+    send_wait_time: 200ms
     
     [disable_crc] is an invalid option for [0]. Please check the indentation.
     disable_crc: True

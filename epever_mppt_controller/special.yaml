@@ -3,7 +3,8 @@ text_sensor:
   - platform: modbus_controller
     modbus_controller_id: epever
     name: "${prefix} SPEC: Product ID"
-    custom_command: [0x01, 0x2b, 0x0e, 0x01, 0x00, 0x70, 0x77]
+    force_new_range: true
+    custom_command: [0x01, 0x2b, 0x0e, 0x01, 0x00]
     response_size: 103
     raw_encode: COMMA
     lambda: |-

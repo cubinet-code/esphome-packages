@@ -37,7 +37,7 @@ text_sensor:
   - 0x0E
   - 0x01
   - 0x00
-  response_size: 58
+  response_size: 53
   raw_encode: COMMA
   lambda: !lambda |-
     ESP_LOGE("epever", "Device ID %s", x);

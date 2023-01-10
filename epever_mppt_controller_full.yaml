@@ -1,6 +1,6 @@
 Failed config
 
-modbus: [source epever_mppt_controller.yaml:87]
+modbus: [source epever_mppt_controller.yaml:88]
   - id: modbus1
     flow_control_pin: GPIO23
     send_wait_time: 200ms

@@ -85,10 +85,10 @@ uart:
   stop_bits: 1
 
 modbus:
-  id: modbus1
-  flow_control_pin: ${REDE} # RE/DE
-  send_wait_time: 200ms
-  disable_crc: true
+  - id: modbus1
+    flow_control_pin: ${REDE} # RE/DE
+    send_wait_time: 200ms
+    disable_crc: true
 
 modbus_controller:
   - id: epever

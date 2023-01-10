@@ -1,23 +1,5 @@
 Failed config
 
-text_sensor.modbus_controller: [source .esphome/packages/93553e33/epever_mppt_controller/special.yaml:3]
-  platform: modbus_controller
-  modbus_controller_id: epever
-  name: MPPT SPEC: Product ID
-  force_new_range: True
-  custom_command: 
-    - 1
-    - 43
-    - 14
-    - 1
-    - 0
-  response_size: 103
-  raw_encode: COMMA
-  
-  [disable_crc] is an invalid option for [text_sensor.modbus_controller]. Please check the indentation.
-  disable_crc: True
-  lambda: ESP_LOGE("epever", "Device ID %s", x);
-  return x;
 modbus: [source epever_mppt_controller.yaml:87]
   - flow_control_pin: GPIO23
     send_wait_time: 200ms

@@ -87,7 +87,7 @@ uart:
 modbus:
   flow_control_pin: ${REDE} # RE/DE
   send_wait_time: 200ms
-  disable_crc: true
+  disable_crc: True
 
 modbus_controller:
   - id: epever

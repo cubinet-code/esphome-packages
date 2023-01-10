@@ -1,0 +1,18 @@
+Failed config
+
+text_sensor.modbus_controller: [source .esphome/packages/93553e33/epever_mppt_controller/special.yaml:3]
+  platform: modbus_controller
+  modbus_controller_id: epever
+  name: MPPT SPEC: Product ID
+  custom_command: 
+    - 1
+    - 43
+    - 14
+    - 1
+    - 0
+  
+  Must be string, got <class 'NoneType'>. did you forget putting quotes around the value?.
+  response_size: 
+  raw_encode: COMMA
+  lambda: ESP_LOGE("epever", "Device ID %s", x);
+  return x;

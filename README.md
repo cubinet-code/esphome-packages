@@ -26,6 +26,8 @@ From fine-tuning charging parameters to monitoring real-time performance and sea
 
 Your require a hardware setup for a Modbus Controller Interface like described on the [ESPHOME Website](https://esphome.io/components/modbus_controller.html)
 
+To use all entities in these configurations, I strongly recommend an ESP32 platform.
+
 Adjust setting in the header of epever_mppt_controller.yaml:
 
 ```

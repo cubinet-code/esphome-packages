@@ -1,0 +1,125 @@
+sensor:
+     
+  - platform: modbus_controller
+    skip_updates: 100
+    disabled_by_default: ${disabled_by_default}
+    modbus_controller_id: epever
+    id: array_rated_voltage
+    name: "${prefix} SPEC: PV Rated Voltage"
+    address: 0x3000
+    unit_of_measurement: "V"
+    register_type: read
+    value_type: U_WORD
+    accuracy_decimals: 1
+    filters:
+        - multiply: 0.01
+    icon: mdi:sine-wave
+
+  - platform: modbus_controller
+    skip_updates: 100
+    disabled_by_default: ${disabled_by_default}
+    modbus_controller_id: epever
+    id: array_rated_current
+    name: "${prefix} SPEC: PV Rated Current"
+    address: 0x3001
+    unit_of_measurement: "A"
+    register_type: read
+    value_type: U_WORD
+    accuracy_decimals: 2
+    filters:
+        - multiply: 0.01
+    icon: mdi:current-dc
+
+  - platform: modbus_controller
+    skip_updates: 100
+    disabled_by_default: ${disabled_by_default}
+    modbus_controller_id: epever
+    id: array_rated_power
+    name: "${prefix} SPEC: PV Rated Power"
+    address: 0x3002
+    register_count: 2
+    unit_of_measurement: "W"
+    register_type: read
+    value_type: U_DWORD_R
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.01
+    icon: mdi:flash
+
+  - platform: modbus_controller
+    skip_updates: 100
+    disabled_by_default: ${disabled_by_default}
+    modbus_controller_id: epever
+    id: battery_rated_voltage
+    name: "${prefix} SPEC: Battery Rated Voltage"
+    address: 0x3004
+    unit_of_measurement: "V"
+    register_type: read
+    value_type: U_WORD
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.01
+    icon: mdi:sine-wave
+    
+  - platform: modbus_controller
+    skip_updates: 100
+    disabled_by_default: ${disabled_by_default}
+    modbus_controller_id: epever
+    id: battery_rated_current
+    name: "${prefix} SPEC: Rated charging current"
+    address: 0x3005
+    unit_of_measurement: "A"
+    register_type: read
+    value_type: U_WORD
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.01
+    icon: mdi:current-dc
+
+  - platform: modbus_controller
+    skip_updates: 100
+    disabled_by_default: ${disabled_by_default}
+    modbus_controller_id: epever
+    id: battery_rated_power
+    name: "${prefix} SPEC: Battery Rated Power"
+    address: 0x3006
+    unit_of_measurement: "W"
+    register_type: read
+    value_type: U_DWORD_R
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.01
+    icon: mdi:flash
+
+  - platform: modbus_controller
+    skip_updates: 100
+    disabled_by_default: ${disabled_by_default}
+    id: rated_current_of_load
+    name: "${prefix} SPEC: Rated load current"
+    address: 0x300e
+    unit_of_measurement: "A"
+    register_type: read
+    value_type: U_WORD
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.01
+    icon: mdi:current-dc
+    
+text_sensor:
+
+  - platform: modbus_controller
+    skip_updates: 100
+    disabled_by_default: ${disabled_by_default}
+    modbus_controller_id: epever
+    name: "${prefix} SPEC: Charging Mode"
+    register_type: read
+    address: 0x3008
+    raw_encode: NONE
+    lambda: |-
+      uint16_t value = (data[item->offset] << 8) + data[item->offset+1];
+      switch (value) { 
+        case 0x0: return std::string("Connect/disconnect");
+        case 0x1: return std::string("PWM");
+        case 0x2: return std::string("MPPT");
+        default: return std::string("Unknown");
+      }

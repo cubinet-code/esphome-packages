@@ -1,0 +1,144 @@
+substitutions:
+  name: tracer
+  prefix: "MPPT"
+  update_interval: 10s
+  disabled_by_default: "true"
+  DI: GPIO19    # TX Pin
+  RO: GPIO18    # RX Pin
+  REDE: GPIO23  # RE/DE Pin
+  timezone: "Europe/Berlin"
+  
+esphome:
+  name: ${name}
+  project:
+    name: "cubinet-code.epever_mppt_controller"
+    version: "1.0.0"
+
+esp32:
+  board: esp-wrover-kit
+  framework:
+    type: arduino
+    version: latest
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  # use_address: 10.1.1.167
+
+dashboard_import:
+  package_import_url: github://cubinet-code/esphome-packages/epever_mppt_controller.yaml@main
+
+logger:
+  level: INFO
+
+# https://github.com/cubinet-code/esphome-packages
+packages:
+  # special:            "github://cubinet-code/esphome-packages/epever_mppt_controller/special.yaml@main"
+  specs:              "github://cubinet-code/esphome-packages/epever_mppt_controller/specs.yaml@main"
+  operations:         "github://cubinet-code/esphome-packages/epever_mppt_controller/operations.yaml@main"
+  realtime:           "github://cubinet-code/esphome-packages/epever_mppt_controller/realtime.yaml@main"
+  stats:              "github://cubinet-code/esphome-packages/epever_mppt_controller/stats.yaml@main"
+  stats-charging:     "github://cubinet-code/esphome-packages/epever_mppt_controller/stats-charging.yaml@main"
+  stats-discharging:  "github://cubinet-code/esphome-packages/epever_mppt_controller/stats-discharging.yaml@main"
+  stats-battery:      "github://cubinet-code/esphome-packages/epever_mppt_controller/stats-battery.yaml@main"
+  settings:           "github://cubinet-code/esphome-packages/epever_mppt_controller/settings.yaml@main"
+  loadcontrol:        "github://cubinet-code/esphome-packages/epever_mppt_controller/loadcontrol.yaml@main"
+  batteryparams:      "github://cubinet-code/esphome-packages/epever_mppt_controller/batteryparams.yaml@main"
+
+web_server:
+  port: 80
+
+time:
+  - platform: homeassistant
+    id: hass_time
+    update_interval: 24h
+    on_time_sync:
+        then:
+          - script.execute: update_rtc
+  - platform: sntp
+    id: sntp_time
+    update_interval: 24h
+    timezone: $timezone
+    servers:
+      - de.pool.ntp.org
+    on_time_sync:
+        then:
+          - script.execute: update_rtc
+
+api:
+  reboot_timeout: 0s
+
+ota:
+  on_error:
+    - button.press: restart_button
+
+uart:
+  tx_pin: ${DI} # DI
+  rx_pin: ${RO} # RO
+  baud_rate: 115200
+  stop_bits: 1
+
+modbus:
+  id: modbus1
+  flow_control_pin: ${REDE} # RE/DE
+  send_wait_time: 200ms
+  # disable_crc: true
+
+modbus_controller:
+  - id: epever
+    address: 0x1
+    # command_throttle: 10ms
+    update_interval: ${update_interval}
+
+sensor:
+  - platform: wifi_signal
+    name: "${prefix} ESP WiFi Signal"
+    update_interval: ${update_interval}
+    entity_category: diagnostic
+
+button:
+  - platform: restart
+    id: restart_button
+    name: "${prefix} ESP Restart"
+    entity_category: diagnostic
+
+script:
+  - id: update_rtc
+    then:
+      - lambda: |-
+          auto now = id(sntp_time).now();
+          
+          if (!now.is_valid()) {
+            ESP_LOGW("epever_mppt_controller", "RTC not valid yet. Skipping RTC Update.");
+            return;
+          }
+          
+          int s = now.second;
+          int m = now.minute;
+          int h = now.hour;
+          int d = now.day_of_month;
+          int M = now.month;
+          int y = now.year % 100;
+          
+          uint16_t r1 = ((m << 8) | s);
+          uint16_t r2 = ((d << 8) | h);
+          uint16_t r3 = ((y << 8) | M);
+
+          std::vector<uint16_t> rtc_data = {
+            r1, r2, r3
+          };
+
+          for(std::vector<uint16_t>::size_type i = 0; i != rtc_data.size(); i++) {
+            ESP_LOGI("epever_mppt_controller", "RTC Data to be sent: 0x%x: 0x%x", i + 0x9013, rtc_data[i]);
+          }
+
+          esphome::modbus_controller::ModbusController *controller = id(epever);
+          esphome::modbus_controller::ModbusCommandItem cmd =
+              esphome::modbus_controller::ModbusCommandItem::create_write_multiple_command(
+                controller, 0x9013, 3, rtc_data
+              );
+          delay(200);
+          controller->queue_command(cmd);
+          delay(200);
+          
+          ESP_LOGI("epever_mppt_controller", "RTC updated to %04d-%02d-%02d %02d:%02d:%02d", y+2000, M, d, h, m, s);

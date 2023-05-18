@@ -1,0 +1,387 @@
+sensor:
+
+
+  - platform: modbus_controller
+    disabled_by_default: ${disabled_by_default}
+    modbus_controller_id: epever
+    address: 0x9042
+    name: "${prefix} LC: #1 Turn on time 1 (s)"
+    register_type: holding
+    unit_of_measurement: "s"
+    accuracy_decimals: 0
+    value_type: U_WORD
+    icon: mdi:clock-digital
+
+  - platform: modbus_controller
+    disabled_by_default: ${disabled_by_default}
+    modbus_controller_id: epever
+    id: turn_on_time_1_minutes
+    address: 0x9043
+    name: "${prefix} LC: #1 Turn on time 1 (m)"
+    register_type: holding
+    unit_of_measurement: "min"
+    accuracy_decimals: 0
+    value_type: U_WORD
+    icon: mdi:clock-digital
+
+  - platform: modbus_controller
+    disabled_by_default: ${disabled_by_default}
+    modbus_controller_id: epever
+    id: turn_on_time_1_hours
+    address: 0x9044
+    name: "${prefix} LC: #1 Turn on time 1 (h)"
+    register_type: holding
+    unit_of_measurement: "h"
+    accuracy_decimals: 0
+    value_type: U_WORD
+    icon: mdi:clock-digital
+
+  - platform: modbus_controller
+    disabled_by_default: ${disabled_by_default}
+    modbus_controller_id: epever
+    id: turn_off_time_1_seconds
+    address: 0x9045
+    name: "${prefix} LC: #1 Turn off time 1 (s)"
+    register_type: holding
+    unit_of_measurement: "s"
+    accuracy_decimals: 0
+    value_type: U_WORD
+    icon: mdi:clock-digital
+
+  - platform: modbus_controller
+    disabled_by_default: ${disabled_by_default}
+    modbus_controller_id: epever
+    id: turn_off_time_1_minutes
+    address: 0x9046
+    name: "${prefix} LC: #1 Turn off time 1 (m)"
+    register_type: holding
+    unit_of_measurement: "min"
+    accuracy_decimals: 0
+    value_type: U_WORD
+    icon: mdi:clock-digital
+
+  - platform: modbus_controller
+    disabled_by_default: ${disabled_by_default}
+    modbus_controller_id: epever
+    id: turn_off_time_1_hours
+    address: 0x9047
+    name: "${prefix} LC: #1 Turn off time 1 (h)"
+    register_type: holding
+    unit_of_measurement: "h"
+    accuracy_decimals: 0
+    value_type: U_WORD
+    icon: mdi:clock-digital
+
+  - platform: modbus_controller
+    disabled_by_default: ${disabled_by_default}
+    modbus_controller_id: epever
+    id: turn_on_time_2_seconds
+    address: 0x9048
+    name: "${prefix} LC: #1 Turn on time 2 (s)"
+    unit_of_measurement: "s"
+    register_type: holding
+    accuracy_decimals: 0
+    value_type: U_WORD
+    icon: mdi:clock-digital
+
+  - platform: modbus_controller
+    disabled_by_default: ${disabled_by_default}
+    modbus_controller_id: epever
+    id: turn_on_time_2_minutes
+    address: 0x9049
+    name: "${prefix} LC: #1 Turn on time 2 (m)"
+    register_type: holding
+    unit_of_measurement: "min"
+    accuracy_decimals: 0
+    value_type: U_WORD
+    icon: mdi:clock-digital
+
+  - platform: modbus_controller
+    disabled_by_default: ${disabled_by_default}
+    modbus_controller_id: epever
+    id: turn_on_time_2_hours
+    address: 0x904a
+    name: "${prefix} LC: #1 Turn on time 2 (h)"
+    register_type: holding
+    unit_of_measurement: "h"
+    accuracy_decimals: 0
+    value_type: U_WORD
+    icon: mdi:clock-digital
+
+  - platform: modbus_controller
+    disabled_by_default: ${disabled_by_default}
+    modbus_controller_id: epever
+    id: turn_off_time_2_seconds
+    address: 0x904b
+    name: "${prefix} LC: #1 Turn off time 2 (s)"
+    register_type: holding
+    unit_of_measurement: "s"
+    accuracy_decimals: 0
+    value_type: U_WORD
+    icon: mdi:clock-digital
+
+  - platform: modbus_controller
+    disabled_by_default: ${disabled_by_default}
+    modbus_controller_id: epever
+    id: turn_off_time_2_minutes
+    address: 0x904c
+    name: "${prefix} LC: #1 Turn off time 2 (m)"
+    register_type: holding
+    unit_of_measurement: "min"
+    accuracy_decimals: 0
+    value_type: U_WORD
+    icon: mdi:clock-digital
+
+  - platform: modbus_controller
+    disabled_by_default: ${disabled_by_default}
+    modbus_controller_id: epever
+    id: turn_off_time_2_hours
+    address: 0x904d
+    name: "${prefix} LC: #1 Turn off time 2 (h)"
+    register_type: holding
+    unit_of_measurement: "h"
+    accuracy_decimals: 0
+    value_type: U_WORD
+    icon: mdi:clock-digital
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: x9065_m
+    address: 0x9065
+    bitmask: 0xff
+    unit_of_measurement: "min"
+    name: "${prefix} LC: #2 Duration Of Night (m)"
+    register_type: holding
+    value_type: U_WORD
+    icon: mdi:timer
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: x9065_h
+    address: 0x9065
+    bitmask: 0xff00
+    unit_of_measurement: "h"
+    name: "${prefix} LC: #2 Duration Of Night (h)"
+    register_type: holding
+    value_type: U_WORD
+    icon: mdi:timer
+
+select:
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: load_controlling_modes_select
+    name: "${prefix} LC: # Load Control Mode"
+    address: 0x903d
+    value_type: U_WORD
+    optionsmap:
+      "#0 Manual Control": 0
+      "#1 Time Control 9042/9045 9069: 9048/904b": 1
+      "#2 Light(Duration after Sunset, before Sunrise) 903e/903f/9065": 2
+      "#3 Light(Voltage/Delay)": 3
+    icon: mdi:electric-switch
+
+  - platform: modbus_controller
+    disabled_by_default: ${disabled_by_default}
+    modbus_controller_id: epever
+    address: 0x9069
+    name: "${prefix} LC: #1 Time Control Mode"
+    optionsmap:
+      "Only Timer 1": 0
+      "Timer 1 & Timer 2": 1
+    value_type: U_WORD
+    icon: mdi:timer
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    address: 0x906a
+    name: "${prefix} LC: #0 Manual Mode Default"
+    optionsmap:
+      "Off": 0
+      "On": 1
+    value_type: U_WORD
+    # icon: mdi:timer
+
+number:
+
+  - platform: modbus_controller
+    id: x903e_h
+    modbus_controller_id: epever
+    name: "${prefix} LC: #2 Duration After Sunset (h) - 0=Off"
+    register_type: holding
+    address: 0x903e
+    bitmask: 0xff00
+    value_type: U_WORD
+    unit_of_measurement: "h"
+    icon: mdi:timer
+    min_value: 0
+    max_value: 23
+    use_write_multiple: true
+    mode: box
+    write_lambda: |-
+      int h = static_cast<int>(x);
+      int m = static_cast<int>(id(x903e_m).state);
+      uint16_t value = ((h << 8) | m);
+      ESP_LOGI("epever_mppt_controller", "Duration After Sunset %f", static_cast<double>(value));
+      return static_cast<double>(value);
+
+  - platform: modbus_controller
+    id: x903e_m
+    modbus_controller_id: epever
+    name: "${prefix} LC: #2 Duration After Sunset (m) - 0=Off"
+    register_type: holding
+    address: 0x903e
+    bitmask: 0xff
+    value_type: U_WORD
+    unit_of_measurement: "min"
+    icon: mdi:timer
+    min_value: 0
+    max_value: 59
+    use_write_multiple: true
+    mode: box
+    write_lambda: |-
+      int h = static_cast<int>(id(x903e_h).state);
+      int m = static_cast<int>(x);
+      uint16_t value = ((h << 8) | m);
+      ESP_LOGI("epever_mppt_controller", "Duration After Sunset %f", static_cast<double>(value));
+      return static_cast<double>(value);
+
+
+  - platform: modbus_controller
+    id: x903f_h
+    modbus_controller_id: epever
+    name: "${prefix} LC: #2 Duration Before Sunrise (h) - 0=Off"
+    register_type: holding
+    address: 0x903f
+    bitmask: 0xff00
+    value_type: U_WORD
+    unit_of_measurement: "h"
+    icon: mdi:timer
+    min_value: 0
+    max_value: 23
+    use_write_multiple: true
+    mode: box
+    write_lambda: |-
+      item->state = x;
+      int h = static_cast<int>(x);
+      int m = static_cast<int>(id(x903f_m).state);
+      uint16_t value = ((h << 8) | m);
+      // ESP_LOGI("epever_mppt_controller", "Duration Before Sunrise %f", static_cast<double>(value));
+      return static_cast<double>(value);
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: x903f_m
+    name: "${prefix} LC: #2 Duration Before Sunrise (m) - 0=Off"
+    register_type: holding
+    address: 0x903f
+    bitmask: 0xff
+    value_type: U_WORD
+    unit_of_measurement: "min"
+    icon: mdi:timer
+    min_value: 0
+    max_value: 59
+    use_write_multiple: true
+    mode: box
+    write_lambda: |-
+      item->state = x;
+      int h = static_cast<int>(id(x903f_h).state);
+      int m = static_cast<int>(x);
+      uint16_t value = ((h << 8) | m);
+      // ESP_LOGI("epever_mppt_controller", "Duration Before Sunrise %f", static_cast<double>(value));
+      return static_cast<double>(value);
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: x901e
+    address: 0x901e
+    name: "${prefix} LC: #3 Night Time Threshold Voltage"
+    unit_of_measurement: "V"
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0
+    max_value: 99
+    step: 0.1
+    icon: mdi:weather-sunset-down
+    multiply: 100
+    write_lambda: |-
+      item->state = x;
+      id(update_nttv).execute();
+      return {};
+
+  - platform: modbus_controller
+    id: x901f
+    modbus_controller_id: epever
+    address: 0x901f
+    name: "${prefix} LC: #3 Night Time Hysteresis Light"
+    unit_of_measurement: "min"
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0
+    max_value: 60
+    icon: mdi:weather-sunset-down
+    mode: box
+    write_lambda: |-
+      item->state = x;
+      id(update_nttv).execute();
+      return {};
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: x9020
+    address: 0x9020
+    name: "${prefix} LC: #3 Day Time Threshold Voltage"
+    unit_of_measurement: "V"
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0
+    max_value: 99
+    step: 0.1
+    icon: mdi:weather-sunset-up
+    multiply: 100
+    write_lambda: |-
+      item->state = x;
+      id(update_nttv).execute();
+      return {};
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: x9021
+    address: 0x9021
+    name: "${prefix} LC: #3 Day Time Hysteresis Light"
+    unit_of_measurement: "min"
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0
+    max_value: 60
+    icon: mdi:weather-sunset-up
+    mode: box
+    write_lambda: |-
+      item->state = x;
+      id(update_nttv).execute();
+      return {};
+
+script:
+  - id: update_nttv
+    then:
+      - lambda: |-
+          esphome::modbus_controller::ModbusController *controller = id(epever);
+
+          std::vector<uint16_t> values = {
+            (uint16_t)(id(x901e).state * 100),  // NTTV
+            (uint16_t)(id(x901f).state),        // Delay 
+            (uint16_t)(id(x9020).state * 100),  // DTTV
+            (uint16_t)(id(x9021).state)         // Delay
+          };
+              
+          esphome::modbus_controller::ModbusCommandItem cmd =
+              esphome::modbus_controller::ModbusCommandItem::create_write_multiple_command(
+                controller, 0x901e, values.size(), values
+              );
+          delay(200);
+          controller->queue_command(cmd);
+          
+          delay(200);
+          for(std::vector<uint16_t>::size_type i = 0; i != values.size(); i++) {
+            ESP_LOGI("epever_mppt_controller", "NTTV %x: %d", i + 0x9000, values[i]);
+          }

@@ -1,0 +1,110 @@
+sensor:
+  # - platform: modbus_controller
+  #   modbus_controller_id: epever
+  #   address: 0x9017
+  #   name: "${prefix} BP: Battery Upper Temperature Limit"
+  #   icon: mdi:thermometer-alert
+  #   register_type: holding
+  #   value_type: S_WORD
+  #   filters:
+  #     - multiply: 0.01
+  #   accuracy_decimals: 2
+
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    address: 0x9019
+    name: "${prefix} SET: Controller inner temperature upper limit"
+    icon: mdi:thermometer-chevron-down
+    unit_of_measurement: "°C"
+    register_type: holding
+    value_type: S_WORD
+    filters:
+      - multiply: 0.01
+    accuracy_decimals: 2
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    address: 0x901A
+    name: "${prefix} SET: Controller inner temperature upper limit recover"
+    unit_of_measurement: "°C"
+    register_type: holding
+    value_type: S_WORD
+    filters:
+      - multiply: 0.01
+    accuracy_decimals: 2
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    address: 0x901B
+    name: "${prefix} SET: Power component temperature upper limit"
+    icon: mdi:thermometer-chevron-down
+    unit_of_measurement: "°C"
+    register_type: holding
+    value_type: S_WORD
+    filters:
+      - multiply: 0.01
+    accuracy_decimals: 2
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    address: 0x901C
+    name: "${prefix} SET: Power component temperature upper limit recover"
+    unit_of_measurement: "°C"
+    register_type: holding
+    value_type: S_WORD
+    filters:
+      - multiply: 0.01
+    accuracy_decimals: 2
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    address: 0x901d
+    name: "${prefix} SET: Line Impedance"
+    unit_of_measurement: "mOhm"
+    register_type: holding
+    value_type: U_WORD
+    filters:
+      - multiply: 0.01
+    accuracy_decimals: 2
+    icon: mdi:omega
+
+number:
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    address: 0x9017
+    name: "${prefix} BP: Battery Upper Temperature Limit"
+    icon: mdi:thermometer-alert
+    unit_of_measurement: "°C"
+    register_type: holding
+    value_type: S_WORD
+    multiply: 100
+    use_write_multiple: true
+    mode: box
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    address: 0x9018
+    name: "${prefix} BP: Battery Lower Temperature Limit"
+    icon: mdi:thermometer-alert
+    unit_of_measurement: "°C"
+    register_type: holding
+    value_type: S_WORD
+    multiply: 100
+    use_write_multiple: true
+    min_value: -40
+    max_value: 0
+    mode: box
+    
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    name: "${prefix} SET: Backlight time"
+    address: 0x9063
+    value_type: U_WORD
+    register_type: holding
+    unit_of_measurement: "s"
+    min_value: 0
+    max_value: 999
+    step: 1
+    icon: mdi:television-ambient-light
+

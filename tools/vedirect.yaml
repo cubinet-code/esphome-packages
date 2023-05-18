@@ -1,0 +1,112 @@
+substitutions:
+  name: vedirect
+  prefix: "MPPT"
+  disabled_by_default: "true"
+  PIN_TX: GPIO27    # TX Pin
+  PIN_RX: GPIO26    # RX Pin
+  timezone: "Europe/Berlin"
+
+external_components:
+  - source:
+      type: local
+      path: components
+
+esphome:
+  name: ${name}
+  project:
+    name: "cubinet-code.vedirect"
+    version: "1.0.0"
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+    version: latest
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  # use_address: 10.1.1.218
+
+#dashboard_import:
+#  package_import_url: github://cubinet-code/esphome-packages/epever_mppt_controller.yaml@main
+
+# https://github.com/cubinet-code/esphome-packages
+# packages:
+#   specs:              "github://cubinet-code/esphome-packages/epever_mppt_controller/specs.yaml@main"
+#   operations:         "github://cubinet-code/esphome-packages/epever_mppt_controller/operations.yaml@main"
+#   realtime:           "github://cubinet-code/esphome-packages/epever_mppt_controller/realtime.yaml@main"
+#   stats:              "github://cubinet-code/esphome-packages/epever_mppt_controller/stats.yaml@main"
+#   stats-charging:     "github://cubinet-code/esphome-packages/epever_mppt_controller/stats-charging.yaml@main"
+#   stats-discharging:  "github://cubinet-code/esphome-packages/epever_mppt_controller/stats-discharging.yaml@main"
+#   stats-battery:      "github://cubinet-code/esphome-packages/epever_mppt_controller/stats-battery.yaml@main"
+#   settings:           "github://cubinet-code/esphome-packages/epever_mppt_controller/settings.yaml@main"
+#   loadcontrol:        "github://cubinet-code/esphome-packages/epever_mppt_controller/loadcontrol.yaml@main"
+#   batteryparams:      "github://cubinet-code/esphome-packages/epever_mppt_controller/batteryparams.yaml@main"
+
+web_server:
+  port: 80
+
+time:
+  - platform: homeassistant
+    id: hass_time
+    update_interval: 24h
+    on_time_sync:
+        then: []
+          # - script.execute: update_rtc
+  - platform: sntp
+    id: sntp_time
+    update_interval: 24h
+    timezone: $timezone
+    servers:
+      - de.pool.ntp.org
+    on_time_sync:
+        then: []
+          # - script.execute: update_rtc
+    # on_time:
+    #   - seconds: 0
+    #     minutes: 0
+    #     hours: 0
+    #     then:
+    #       - script.execute: update_rtc
+
+logger:
+  #level: VERBOSE
+
+api:
+  reboot_timeout: 0s
+
+ota:
+  on_error:
+    - button.press: restart_button
+
+uart:
+  id: uart0
+  tx_pin: ${PIN_TX}
+  rx_pin: ${PIN_RX}
+  baud_rate: 19200
+
+sensor:
+  - platform: wifi_signal
+    name: "${prefix} ESP WiFi Signal"
+    entity_category: diagnostic
+
+button:
+  - platform: restart
+    id: restart_button
+    name: "${prefix} ESP Restart"
+    entity_category: diagnostic
+
+interval:
+  - interval: 10s
+    then:
+      - uart.write: ":791ED00D0\n"
+
+vedirect:
+  id: vedirect0
+
+# text_sensor:
+#   - platform: vedirect
+#     vedirect_id: vedirect0
+#     load_off_reason:
+#       name: "${prefix} load_off_reason"

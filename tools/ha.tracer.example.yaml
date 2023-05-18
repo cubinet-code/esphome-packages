@@ -1,0 +1,394 @@
+- theme: Backend-selected
+  title: Tracer
+  path: tracer
+  badges: []
+  cards:
+    - type: custom:apexcharts-card
+      apex_config:
+        chart:
+          height: 250px
+      header:
+        show: true
+        title: Charging ~10-100% - 21.6(1%), 25.6(10%), 27(100%)
+        show_states: true
+        colorize_states: true
+      graph_span: 60min
+      hours_12: false
+      locale: de
+      yaxis:
+        - id: voltage
+          opposite: true
+          min: 21.6
+          max: 30
+        - id: soc
+          min: 0
+          max: 100
+      show:
+        loading: false
+      all_series_config:
+        stroke_width: 1
+        float_precision: 2
+        curve: smooth
+        fill_raw: last
+        show:
+          in_header: false
+        yaxis_id: voltage
+      series:
+        - entity: sensor.battery_soc_calc
+          name: SOC Calc
+          yaxis_id: soc
+          type: area
+          stroke_width: 0.01
+          opacity: 0.1
+          show:
+            in_header: true
+        - entity: sensor.battery_ah_balance_meter
+          name: Capacity
+          yaxis_id: soc
+          type: line
+          stroke_width: 0.01
+          opacity: 0.5
+          show:
+            in_header: true
+        - entity: sensor.mppt_rt_battery_soc
+          name: SOC EP
+          yaxis_id: soc
+          type: area
+          stroke_width: 0.01
+          opacity: 0.04
+        - entity: sensor.mppt_stat_battery_voltage
+          name: Bat V
+          show:
+            in_header: true
+            extremas: false
+          color: black
+        - entity: sensor.mppt_stat_minimum_battery_voltage_today
+          name: Bat. Min
+          opacity: 0.3
+          color: purple
+        - entity: sensor.mppt_stat_maximum_battery_voltage_today
+          name: Bat. Max
+          opacity: 0.3
+          color: blue
+        - entity: number.mppt_bp_low_voltage_disconnect
+          name: Disconnect
+          color: orange
+        - entity: number.mppt_bp_low_voltage_reconnect
+          name: Reconnect
+          color: orange
+        - entity: number.mppt_bp_discharging_limit_voltage
+          name: Dischg Limit
+          color: red
+        - entity: number.mppt_bp_charging_limit_voltage
+          name: Chg Limit
+          color: red
+        - entity: number.mppt_bp_boost_voltage
+          name: Boost V
+          color: green
+        - entity: number.mppt_bp_float_voltage
+          name: Float V
+          color: lightgreen
+          opacity: 1
+    - type: custom:apexcharts-card
+      apex_config:
+        chart:
+          height: 250px
+      header:
+        show: true
+        title: Battery Voltage and Current
+        show_states: true
+        colorize_states: true
+      graph_span: 30min
+      hours_12: false
+      locale: de
+      show:
+        loading: false
+      all_series_config:
+        stroke_width: 1
+        float_precision: 2
+      yaxis:
+        - id: current
+          opposite: true
+          min: ~-30
+          max: ~30
+          decimals: 2
+          apex_config:
+            tickAmount: 5
+        - id: voltage
+          min: 24
+          max: 29
+          decimals: 2
+          apex_config:
+            tickAmount: 5
+      series:
+        - entity: sensor.mppt_stat_battery_voltage
+          name: Voltage
+          yaxis_id: voltage
+          color: red
+        - entity: sensor.mppt_stat_battery_current
+          name: Bat Current
+          yaxis_id: current
+          color: lightblue
+        - entity: sensor.mppt_rt_load_current
+          name: Load Current
+          yaxis_id: current
+          color: blue
+        - entity: sensor.mppt_rt_pv_input_power
+          name: PV Power
+          yaxis_id: voltage
+          color: grey
+          show:
+            in_chart: false
+    - type: history-graph
+      entities:
+        - entity: sensor.mppt_chg_charging_status
+      hours_to_show: 1
+    - type: custom:auto-entities
+      card:
+        type: entities
+        title: Charging 3201
+      filter:
+        include:
+          - device: tracer
+            name: '*CHG:*'
+          - device: tracer
+            name: '*RT: Charging*'
+        exclude:
+          - device: tracer
+            domain: binary_sensor
+            name: '*CHG:*'
+            state: 'off'
+    - type: custom:auto-entities
+      card:
+        type: entities
+        title: Battery 3200
+      unique: true
+      filter:
+        include:
+          - device: tracer
+            name: '*BAT:*'
+          - device: tracer
+            name: '*Battery SOC*'
+          - device: tracer
+            name: '*STAT: M*Bat*'
+          - device: tracer
+            name: '*STAT: Battery*'
+          - device: tracer
+            name: '*RT: Battery Temp*'
+        exclude:
+          - device: tracer
+            domain: binary_sensor
+            name: '*BAT:*'
+            state: 'off'
+    - type: custom:auto-entities
+      card:
+        type: entities
+        title: Discharging 3202
+      filter:
+        include:
+          - device: tracer
+            name: '*DIS:*'
+          - device: tracer
+            name: '*RT: Dis*'
+          - device: tracer
+            name: '*RT: Load*'
+        exclude:
+          - device: tracer
+            domain: binary_sensor
+            name: '*DIS:*'
+            state: 'off'
+    - type: custom:auto-entities
+      card:
+        type: entities
+        title: Operation
+        show_header_toggle: false
+      filter:
+        include:
+          - device: tracer
+            name: '*OP:*'
+        exclude:
+          - device: tracer
+            name: '*SPEC:*'
+          - device: tracer
+            name: '*STAT:*'
+          - device: tracer
+            name: '*RT:*'
+          - device: tracer
+            name: '*SET:*'
+          - device: tracer
+            name: '*CHG:*'
+          - device: tracer
+            name: '*DIS:*'
+          - device: tracer
+            name: '*BAT:*'
+    - type: custom:auto-entities
+      card:
+        type: entities
+        title: Real Time Data
+      filter:
+        include:
+          - device: tracer
+            name: '*RT:*'
+        exclude:
+          - device: tracer
+            name: '*RT: Charging*'
+          - device: tracer
+            name: '*RT: Load*'
+    - type: custom:auto-entities
+      card:
+        type: entities
+        title: Stats
+      filter:
+        include:
+          - device: tracer
+            name: '*STAT:*'
+      sort:
+        method: friendly_name
+    - type: custom:auto-entities
+      card:
+        type: entities
+        title: Global Settings
+      filter:
+        include:
+          - device: tracer
+            name: '*SET:*'
+    - type: custom:auto-entities
+      card:
+        type: entities
+        title: Load Setup
+      filter:
+        include:
+          - device: tracer
+            name: '*LC:*'
+      sort:
+        method: friendly_name
+    - type: custom:auto-entities
+      card:
+        type: entities
+        title: Specs
+      filter:
+        include:
+          - device: tracer
+            name: '*SPEC:*'
+      show_empty: false
+    - type: custom:auto-entities
+      card:
+        type: entities
+        title: Battery Params
+      filter:
+        include:
+          - device: tracer
+            name: '*BP:*'
+- theme: Backend-selected
+  title: PV
+  path: pv
+  badges: []
+  cards:
+    - type: custom:apexcharts-card
+      apex_config:
+        chart:
+          height: 250px
+      header:
+        show: true
+        show_states: true
+        colorize_states: true
+        title: Grid Overview
+      show:
+        loading: false
+      graph_span: 3h
+      update_interval: 5s
+      hours_12: false
+      locale: de
+      yaxis:
+        - id: power
+          opposite: true
+          min: -100
+          max: 100
+        - id: limit
+          min: 0
+          max: 100
+      all_series_config:
+        stroke_width: 1
+        float_precision: 0
+      series:
+        - entity: number.hm1500_limit_nonpersistent_relative
+          name: Limit
+          yaxis_id: limit
+          color: black
+        - entity: sensor.em3_total_power
+          name: Grid
+          yaxis_id: power
+          type: area
+          color: orange
+          stroke_width: 0
+          group_by:
+            func: median
+            duration: 60s
+        - entity: sensor.solar_outlet_power
+          yaxis_id: power
+          name: Solar
+          type: area
+          stroke_width: 1
+          opacity: 0.1
+          color: green
+          group_by:
+            func: median
+            duration: 60s
+    - type: entities
+      entities:
+        - entity: switch.mppt_op_manual_load_control
+        - entity: sensor.mppt_dis_discharging_state
+        - entity: switch.solar_outlet
+        - entity: sensor.power_highest_peak_time_today
+        - entity: sensor.energy_production_today
+    - type: custom:apexcharts-card
+      apex_config:
+        chart:
+          height: 250px
+      header:
+        show: true
+        show_states: true
+        colorize_states: true
+        title: Bat Overview
+      show:
+        loading: false
+      graph_span: 6h
+      update_interval: 5s
+      hours_12: false
+      locale: de
+      yaxis:
+        - id: power
+          opposite: true
+          min: ~0
+          max: ~0
+        - id: soc
+          min: 0
+          max: ~100
+      all_series_config:
+        stroke_width: 1
+        float_precision: 0
+        yaxis_id: voltage
+        group_by:
+          func: median
+          duration: 60s
+      series:
+        - entity: sensor.battery_ah_balance_meter
+          name: Bat
+          yaxis_id: soc
+          color: blue
+        - entity: sensor.mppt_stat_battery_current
+          name: Bat A
+          yaxis_id: power
+          color: red
+        - entity: sensor.mppt_rt_load_current
+          name: Load A
+          yaxis_id: power
+          color: green
+    - type: entities
+      entities:
+        - entity: sensor.mppt_stat_battery_voltage
+        - entity: sensor.mppt_bat_battery_status_voltage
+        - entity: sensor.mppt_chg_charging_status
+        - entity: sensor.mppt_rt_charging_current
+        - entity: sensor.mppt_rt_load_current
+        - entity: sensor.mppt_stat_battery_current

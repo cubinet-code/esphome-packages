@@ -1,0 +1,12 @@
+text_sensor:
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    name: "${prefix} SPEC: Product ID"
+    force_new_range: true
+    custom_command: [0x01, 0x2b, 0x0e, 0x01, 0x00]
+    response_size: 54
+    raw_encode: COMMA
+    lambda: |-
+      ESP_LOGE("epever", "Device ID %s", x);
+      return x;

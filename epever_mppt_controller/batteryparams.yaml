@@ -1,0 +1,541 @@
+select:
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: battery_type
+    name: "${prefix} BP: Battery Type"
+    address: 0x9000
+    value_type: U_WORD
+    optionsmap:
+      "User Defined": 0
+      "Sealed": 1
+      "Gel": 2
+      "Flooded": 3
+      "LiFePO4 (4s)": 4
+      "LiFePO4 (8s)": 5
+      "LiFePO4 (15s)": 6
+      "LiFePO4 (16s)": 7
+      "Li(NiCoMn)O2 (3s)": 8
+      "Li(NiCoMn)O2 (6s)": 9
+      "Li(NiCoMn)O2 (7s)": 10
+      "Li(NiCoMn)O2 (13s)": 11
+      "Li(NiCoMn)O2 (14s)": 12
+    icon: mdi:battery-unknown
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    name: "${prefix} BP: Battery Rated Voltage Level"
+    address: 0x9067
+    value_type: U_WORD
+    optionsmap:
+      "Auto": 0
+      "12V": 1
+      "24V": 2
+      "36V": 3
+      "48V": 4
+      "60V": 5
+      "110V": 6
+      "120V": 7
+      "220V": 8
+      "240V": 9            
+    icon: mdi:sine-wave
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    name: "${prefix} BP: Charging Mode"
+    address: 0x9070
+    value_type: U_WORD
+    optionsmap:
+      "Voltage Compensation": 0
+      "SOC": 1
+    icon: mdi:battery-unknown
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    name: "${prefix} BP: Li Over Temp. Drop Power"
+    address: 0x9107
+    lambda: |-
+      uint16_t value = (data[item->offset] << 8) + data[item->offset+1];
+      value = value >> 11;
+      value = value & 0x1; 
+      switch (value) { 
+        case 0x0: return std::string("Disable");
+        case 0x1: return std::string("Enable");
+        default: return std::string("Unknown");
+      }
+    write_lambda:
+      return {};
+    optionsmap:
+      "Disable": 0
+      "Enable": 1
+      "Unknown": 99
+    icon: mdi:thermometer
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    name: "${prefix} BP: Li Low Temp Protection For Discharging"
+    address: 0x9107
+    lambda: |-
+      uint16_t value = (data[item->offset] << 8) + data[item->offset+1];
+      value = value >> 9;
+      value = value & 0x1; 
+      switch (value) { 
+        case 0x0: return std::string("Disable");
+        case 0x1: return std::string("Enable");
+        default: return std::string("Unknown");
+      }
+    write_lambda:
+      return {};
+    optionsmap:
+      "Disable": 0
+      "Enable": 1
+      "Unknown": 99
+    icon: mdi:thermometer
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    name: "${prefix} BP: Li Low Temp Protection For Charging"
+    address: 0x9107
+    lambda: |-
+      uint16_t value = (data[item->offset] << 8) + data[item->offset+1];
+      value = value >> 8;
+      value = value & 0x1; 
+      switch (value) { 
+        case 0x0: return std::string("Disable");
+        case 0x1: return std::string("Enable");
+        default: return std::string("Unknown");
+      }
+    write_lambda:
+      return {};
+    optionsmap:
+      "Disable": 0
+      "Enable": 1
+      "Unknown": 99
+    icon: mdi:thermometer
+
+number:
+#
+# Battery Params
+#
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: reg9001
+    address: 0x9001
+    name: "${prefix} BP: Battery Capacity"
+    unit_of_measurement: "Ah"
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0
+    max_value: 9999
+    step: 1
+    icon: mdi:battery-high
+    use_write_multiple: true
+    write_lambda: |-
+      item->state = x;
+      id(update_battery_params).execute();
+      return {};
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: reg9002
+    address: 0x9002
+    name: "${prefix} BP: Temperature Compensation Coefficient"
+    unit_of_measurement: "mV/°C/2V"
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0
+    max_value: 9
+    step: 0.01
+    icon: mdi:thermometer-lines
+    use_write_multiple: true
+    write_lambda: |-
+      item->state = x;
+      id(update_battery_params).execute();
+      return {};
+    multiply: 100
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: reg9003
+    address: 0x9003
+    name: "${prefix} BP: Over Voltage disconnect"
+    unit_of_measurement: "V"
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0
+    max_value: 99
+    step: 0.01
+    icon: mdi:battery-off
+    use_write_multiple: true
+    write_lambda: |-
+      item->state = x;
+      id(update_battery_params).execute();
+      return {};
+    multiply: 100
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: reg9004
+    address: 0x9004
+    name: "${prefix} BP: Charging limit voltage"
+    unit_of_measurement: "V"
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0
+    max_value: 99
+    step: 0.01
+    icon: mdi:battery-arrow-down
+    use_write_multiple: true
+    write_lambda: |-
+      item->state = x;
+      id(update_battery_params).execute();
+      return {};
+    multiply: 100
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: reg9005
+    address: 0x9005
+    name: "${prefix} BP: Over voltage reconnect"
+    unit_of_measurement: "V"
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0
+    max_value: 99
+    step: 0.01
+    icon: mdi:battery-sync
+    use_write_multiple: true
+    write_lambda: |-
+      item->state = x;
+      id(update_battery_params).execute();
+      return {};
+    multiply: 100
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: reg9006
+    address: 0x9006
+    name: "${prefix} BP: Equalization Voltage"
+    unit_of_measurement: "V"
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0
+    max_value: 99
+    step: 0.01
+    icon: mdi:battery-charging-90
+    use_write_multiple: true
+    write_lambda: |-
+      item->state = x;
+      id(update_battery_params).execute();
+      return {};
+    multiply: 100
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: reg9007
+    address: 0x9007
+    name: "${prefix} BP: Boost Voltage"
+    unit_of_measurement: "V"
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0
+    max_value: 99
+    step: 0.01
+    icon: mdi:battery-charging-90
+    use_write_multiple: true
+    write_lambda: |-
+      item->state = x;
+      id(update_battery_params).execute();
+      return {};
+    multiply: 100
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: reg9008
+    address: 0x9008
+    name: "${prefix} BP: Float Voltage"
+    unit_of_measurement: "V"
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0
+    max_value: 99
+    step: 0.01
+    icon: mdi:battery-charging-100
+    use_write_multiple: true
+    write_lambda: |-
+      item->state = x;
+      id(update_battery_params).execute();
+      return {};
+    multiply: 100
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: reg9009
+    address: 0x9009
+    name: "${prefix} BP: Boost reconnect voltage"
+    unit_of_measurement: "V"
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0
+    max_value: 99
+    step: 0.01
+    icon: mdi:battery-charging-60
+    use_write_multiple: true
+    write_lambda: |-
+      item->state = x;
+      id(update_battery_params).execute();
+      return {};
+    multiply: 100
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: reg900a
+    address: 0x900a
+    name: "${prefix} BP: Low voltage reconnect"
+    unit_of_measurement: "V"
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0
+    max_value: 99
+    step: 0.01
+    icon: mdi:battery-alert-variant-outline
+    use_write_multiple: true
+    write_lambda: |-
+      item->state = x;
+      id(update_battery_params).execute();
+      return {};
+    multiply: 100
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: reg900b
+    address: 0x900b
+    name: "${prefix} BP: Under Voltage Warning Recover"
+    unit_of_measurement: "V"
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0
+    max_value: 99
+    step: 0.01
+    icon: mdi:battery-alert-variant-outline
+    use_write_multiple: true
+    write_lambda: |-
+      item->state = x;
+      id(update_battery_params).execute();
+      return {};
+    multiply: 100
+
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: reg900c
+    address: 0x900c
+    name: "${prefix} BP: Under Voltage Warning"
+    unit_of_measurement: "V"
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0
+    max_value: 99
+    step: 0.01
+    icon: mdi:battery-alert-variant-outline
+    use_write_multiple: true
+    write_lambda: |-
+      item->state = x;
+      id(update_battery_params).execute();
+      return {};
+    multiply: 100
+
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: reg900d
+    address: 0x900d
+    name: "${prefix} BP: Low voltage disconnect"
+    unit_of_measurement: "V"
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0
+    max_value: 99
+    step: 0.01
+    icon: mdi:battery-off-outline
+    use_write_multiple: true
+    write_lambda: |-
+      item->state = x;
+      id(update_battery_params).execute();
+      return {};
+    multiply: 100
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: reg900e
+    address: 0x900e
+    name: "${prefix} BP: Discharging limit voltage"
+    unit_of_measurement: "V"
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0
+    max_value: 99
+    step: 0.01
+    icon: mdi:battery-arrow-up-outline
+    use_write_multiple: true
+    write_lambda: |-
+      item->state = x;
+      id(update_battery_params).execute();
+      return {};
+    multiply: 100
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    address: 0x9010
+    name: "${prefix} BP: Li Low Temp Charging Limit"
+    icon: mdi:thermometer-alert
+    unit_of_measurement: "°C"
+    register_type: holding
+    value_type: S_WORD
+    multiply: 100
+    use_write_multiple: true
+    min_value: -40
+    max_value: 10
+    mode: box
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    address: 0x9011
+    name: "${prefix} BP: Li Low Temp Discharging Limit"
+    icon: mdi:thermometer-alert
+    unit_of_measurement: "°C"
+    register_type: holding
+    value_type: S_WORD
+    multiply: 100
+    use_write_multiple: true
+    min_value: -40
+    max_value: 10
+    mode: box
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: reg906b
+    address: 0x906b
+    name: "${prefix} BP: Equalize Duration"
+    unit_of_measurement: "min"
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0
+    max_value: 999
+    step: 1
+    use_write_multiple: true
+    write_lambda: |-
+      item->state = x;
+      id(update_battery_params).execute();
+      return {};
+    icon: mdi:battery-clock
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: reg906c
+    address: 0x906c
+    name: "${prefix} BP: Boost Duration"
+    unit_of_measurement: "min"
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0
+    max_value: 999
+    step: 1
+    icon: mdi:battery-clock
+    use_write_multiple: true
+    write_lambda: |-
+      item->state = x;
+      id(update_battery_params).execute();
+      return {};
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: reg906d
+    address: 0x906d
+    name: "${prefix} BP: SOC Mode Battery discharge"
+    # The percentage of battery's remaining capacity when stop charging
+    unit_of_measurement: "%"
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0
+    max_value: 100
+    step: 1
+    use_write_multiple: true
+    mode: box
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: reg906e
+    address: 0x906e
+    name: "${prefix} BP: SOC Mode Battery charge (DoC)"
+    # Depth of charge
+    unit_of_measurement: "%"
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0
+    max_value: 100
+    step: 1
+    use_write_multiple: true
+    mode: box
+
+text_sensor:
+
+button:
+  - platform: template
+    name: "${prefix} BP: Write Battery Parameters"
+    on_press:
+      - script.execute: update_battery_params
+
+script:
+  - id: update_battery_params
+    then:
+      - lambda: |-
+          esphome::modbus_controller::ModbusController *controller = id(epever);
+
+          std::vector<uint16_t> bat_params = {
+            0,                                    // Battery Type User
+            (uint16_t)(id(reg9001).state),        // Battery capacity (Ah)
+            (uint16_t)(id(reg9002).state * 100),  // Temperature compensation coefficient
+            (uint16_t)(id(reg9003).state * 100),  // Over voltage disconnect voltage (Load)
+            (uint16_t)(id(reg9004).state * 100),  // Charging limit voltage (highest voltage the controller will allow charging)
+            (uint16_t)(id(reg9005).state * 100),  // Over voltage reconnect voltage (Load)
+            (uint16_t)(id(reg9006).state * 100),  // Equalize charging voltage
+            (uint16_t)(id(reg9007).state * 100),  // Boost charging voltage
+            (uint16_t)(id(reg9008).state * 100),  // Float charging voltage
+            (uint16_t)(id(reg9009).state * 100),  // Boost reconnect charging voltage
+            (uint16_t)(id(reg900a).state * 100),  // Low voltage reconnect voltage (load)
+            (uint16_t)(id(reg900b).state * 100),  // Under voltage warning recover voltage
+            (uint16_t)(id(reg900c).state * 100),  // Under voltage warning voltage
+            (uint16_t)(id(reg900d).state * 100),  // Low voltage disconnect voltage (load)
+            (uint16_t)(id(reg900e).state * 100)   // Discharging limit voltage (lowest voltage the controller will allow discharging)
+          };
+              
+          esphome::modbus_controller::ModbusCommandItem write_bat_params =
+              esphome::modbus_controller::ModbusCommandItem::create_write_multiple_command(
+                controller, 0x9000, bat_params.size(), bat_params
+              );
+          delay(200);
+          controller->queue_command(write_bat_params);
+          delay(200);
+          for(std::vector<uint16_t>::size_type i = 0; i != bat_params.size(); i++) {
+            ESP_LOGI("epever_mppt_controller", "Battery Parameter %x: %d", i + 0x9000, bat_params[i]);
+          }
+          
+          // Charge Timers
+          std::vector<uint16_t> bat_timers = {
+              (uint16_t)id(reg906b).state, // Equalize Duration
+              (uint16_t)id(reg906c).state  // Boost Duration
+          };
+          esphome::modbus_controller::ModbusCommandItem write_bat_timers =
+              esphome::modbus_controller::ModbusCommandItem::create_write_multiple_command(
+                controller, 0x906b, bat_timers.size(), bat_timers
+              );
+          delay(200);
+          controller->queue_command(write_bat_timers);
+          delay(200);
+          for(std::vector<uint16_t>::size_type i = 0; i != bat_timers.size(); i++) {
+            ESP_LOGI("epever_mppt_controller", "Battery Timer %x: %d", i + 0x906b, bat_timers[i]);
+          }
+
+          ESP_LOGW("epever_mppt_controller", "Battery Parameters have been set!");
+

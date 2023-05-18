@@ -1,0 +1,213 @@
+sensor:
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: max_pv_voltage_today
+    name: "${prefix} STAT: Maximum PV Voltage Today"
+    address: 0x3300
+    register_type: read
+    value_type: U_WORD
+    accuracy_decimals: 2
+    unit_of_measurement: "V"
+    filters:
+      - multiply: 0.01
+    icon: mdi:sine-wave
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: min_pv_voltage_today
+    name: "${prefix} STAT: Minimum PV Voltage Today"
+    address: 0x3301
+    register_type: read
+    value_type: U_WORD
+    accuracy_decimals: 2
+    unit_of_measurement: "V"
+    filters:
+      - multiply: 0.01
+    icon: mdi:sine-wave
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: max_battery_voltage_today
+    name: "${prefix} STAT: Maximum Battery Voltage Today"
+    address: 0x3302
+    register_type: read
+    value_type: U_WORD
+    accuracy_decimals: 2
+    unit_of_measurement: "V"
+    filters:
+      - multiply: 0.01
+    icon: mdi:sine-wave
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: min_battery_today
+    name: "${prefix} STAT: Minimum Battery Voltage Today"
+    address: 0x3303
+    register_type: read
+    value_type: U_WORD
+    accuracy_decimals: 2
+    unit_of_measurement: "V"
+    filters:
+      - multiply: 0.01
+    icon: mdi:sine-wave
+    
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    name: "${prefix} STAT: Consumed Energy Today"
+    address: 0x3304
+    register_type: read
+    value_type: U_DWORD_R
+    accuracy_decimals: 2
+    unit_of_measurement: "kWh"
+    device_class: energy
+    state_class: total_increasing
+    filters:
+      - multiply: 0.01
+    icon: mdi:counter
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: consumed_energy_month
+    name: "${prefix} STAT: Consumed Energy Month"
+    address: 0x3306
+    register_type: read
+    value_type: U_DWORD_R
+    accuracy_decimals: 2
+    unit_of_measurement: "kWh"
+    filters:
+      - multiply: 0.01
+    icon: mdi:counter
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: consumed_energy_year
+    name: "${prefix} STAT: Consumed Energy Year"
+    address: 0x3308
+    register_type: read
+    value_type: U_DWORD_R
+    accuracy_decimals: 2
+    unit_of_measurement: "kWh"
+    filters:
+      - multiply: 0.01
+    icon: mdi:counter
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: consumed_energy_total
+    name: "${prefix} STAT: Consumed energy total"
+    address: 0x330A
+    register_type: read
+    value_type: U_DWORD_R
+    accuracy_decimals: 2
+    unit_of_measurement: "kWh"
+    filters:
+      - multiply: 0.01
+    icon: mdi:counter
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: generated_energy_today
+    name: "${prefix} STAT: Generated Energy Today"
+    address: 0x330C
+    register_type: read
+    value_type: U_DWORD_R
+    accuracy_decimals: 2
+    unit_of_measurement: "kWh"
+    device_class: energy
+    state_class: total_increasing
+    filters:
+      - multiply: 0.01
+    icon: mdi:counter
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: generated_energy_month
+    name: "${prefix} STAT: Generated Energy Month"
+    address: 0x330E
+    register_type: read
+    value_type: U_DWORD_R
+    accuracy_decimals: 2
+    unit_of_measurement: "kWh"
+    filters:
+      - multiply: 0.01
+    icon: mdi:counter
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: generated_energy_year
+    name: "${prefix} STAT: Generated Energy Year"
+    address: 0x3310
+    register_type: read
+    value_type: U_DWORD_R
+    accuracy_decimals: 2
+    unit_of_measurement: "kWh"
+    filters:
+      - multiply: 0.01
+    icon: mdi:counter
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: generated_energy_total
+    name: "${prefix} STAT: Generated Energy Total"
+    address: 0x3312
+    register_type: read
+    value_type: U_DWORD_R
+    accuracy_decimals: 2
+    unit_of_measurement: "kWh"
+    filters:
+      - multiply: 0.01
+    icon: mdi:counter
+    
+  - platform: modbus_controller
+    disabled_by_default: ${disabled_by_default}
+    modbus_controller_id: epever
+    id: co2_reduction
+    name: "${prefix} STAT: CO₂ Reduction"
+    address: 0x3314
+    register_type: read
+    value_type: U_DWORD_R
+    accuracy_decimals: 2
+    unit_of_measurement: "kg"
+    filters:
+      - multiply: 10
+    icon: mdi:molecule-co2
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: battery_voltage
+    name: "${prefix} STAT: Battery Voltage"
+    address: 0x331A
+    register_type: read
+    value_type: U_WORD
+    accuracy_decimals: 2
+    unit_of_measurement: "V"
+    filters:
+      - multiply: 0.01
+    icon: mdi:sine-wave
+    on_value:
+      then:
+        - sensor.template.publish:
+            id: real_soc
+            state: !lambda 'return x*2;'
+            #state: !lambda 'return 101.1475 + pow((1.010924 - 101.1475)/(1 + pow((x/31.86812), 81.69155)),5299956);'
+            # 1.010924 /(1 + (x/31.86812)**81.69155)**5299956
+  - platform: template
+    id: real_soc
+    name: "${prefix} STAT: Battery SOC"
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: battery_current
+    name: "${prefix} STAT: Battery Current"
+    address: 0x331B
+    register_type: read
+    value_type: S_DWORD_R
+    register_count: 2
+    accuracy_decimals: 2
+    unit_of_measurement: "A"
+    filters:
+      - multiply: 0.01
+    icon: mdi:current-dc
+
+

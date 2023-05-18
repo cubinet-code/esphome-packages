@@ -1,0 +1,161 @@
+binary_sensor:
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    name: "${prefix} CHG: Charging MOSFET Short Circuit"
+    register_type: read
+    address: 0x3201
+    bitmask: 0x2000
+    icon: mdi:battery-alert-variant
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    name: "${prefix} CHG: Charging or Anti-reverse MOSFET Open Circuit"
+    register_type: read
+    address: 0x3201
+    bitmask: 0x1000
+    icon: mdi:battery-alert-variant
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    name: "${prefix} CHG: Charging Anti-reverse MOSFET Short Circuit"
+    register_type: read
+    address: 0x3201
+    bitmask: 0x800
+    icon: mdi:battery-alert-variant
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    name: "${prefix} CHG: Charging Input Over Current"
+    register_type: read
+    address: 0x3201
+    bitmask: 0x400
+    icon: mdi:battery-alert-variant
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    name: "${prefix} CHG: Charging Load Over Current"
+    register_type: read
+    address: 0x3201
+    bitmask: 0x200
+    icon: mdi:battery-alert-variant
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    name: "${prefix} CHG: Charging Load Short Circuit"
+    register_type: read
+    address: 0x3201
+    bitmask: 0x100
+    icon: mdi:battery-alert-variant
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    name: "${prefix} CHG: Charging Load MOSFET Short Circuit"
+    register_type: read
+    address: 0x3201
+    bitmask: 0x80
+    icon: mdi:battery-alert-variant
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    name: "${prefix} CHG: Charging Disequilibrium in three"
+    register_type: read
+    address: 0x3201
+    bitmask: 0x40
+    icon: mdi:battery-alert-variant
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    name: "${prefix} CHG: Charging PV Input Short Circuit"
+    register_type: read
+    address: 0x3201
+    bitmask: 0x20
+    icon: mdi:battery-alert-variant
+
+text_sensor:
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    name: "${prefix} CHG: Charging PV Input Voltage Status"
+    register_type: read
+    address: 0x3201
+    raw_encode: NONE
+    lambda: |-
+      uint16_t value = (data[item->offset] << 8) + data[item->offset+1];
+      value = value >> 14;   
+      value = value & 0x3; /* 0x1=1Bit, 0x3=2Bits, 0x7=3Bits */
+      switch (value) { 
+        case 0x0: return std::string("Normal");
+        case 0x1: return std::string("No Input Power");
+        case 0x2: return std::string("Higher Input Voltage");
+        case 0x3: return std::string("Input Voltage Error");
+        default: return std::string("Unknown");
+      }
+      return x;
+    icon: mdi:sine-wave
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    id: charger_status
+    name: "${prefix} CHG: Charging Status"
+    register_type: read
+    address: 0x3201
+    raw_encode: NONE
+    icon: mdi:battery-charging
+    lambda: |-
+      uint16_t value = (data[item->offset] << 8) + data[item->offset+1];
+      value = value >> 2;   /* starting D2 */
+      value = value & 0x3; /* for two bits */
+      switch (value) { 
+        case 0x0: return std::string("Not charging");
+        case 0x1: return std::string("Float");
+        case 0x2: return std::string("Boost");
+        case 0x3: return std::string("Equalization");
+        default: return std::string("Unknown");
+      }
+      return x;
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    name: "${prefix} CHG: Charging Health"
+    register_type: read
+    force_new_range: true
+    address: 0x3201
+    raw_encode: NONE
+    lambda: |-
+      uint16_t value = (data[item->offset] << 8) + data[item->offset+1];
+      value = value >> 1;
+      value = value & 0x1; /* 0x1=1Bit, 0x3=2Bits, 0x7=3Bits */
+      switch (value) { 
+        case 0x0: return std::string("Idle");
+        case 0x1: return std::string("Normal");
+        default: return std::string("Unknown");
+      }
+      return x;
+    icon: mdi:pulse
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    name: "${prefix} CHG: Charging State"
+    register_type: read
+    address: 0x3201
+    raw_encode: NONE
+    lambda: |-
+      uint16_t value = (data[item->offset] << 8) + data[item->offset+1];
+      value = value & 0x1; /* 0x1=1Bit, 0x3=2Bits, 0x7=3Bits */
+      switch (value) { 
+        case 0x0: return std::string("Standby");
+        case 0x1: return std::string("Running");
+        default: return std::string("Unknown");
+      }
+      return x;
+    icon: mdi:battery-positive
+
+  - platform: modbus_controller
+    modbus_controller_id: epever
+    name: "${prefix} CHG: Charging Register"
+    force_new_range: true
+    register_type: read
+    address: 0x3201
+    raw_encode: HEXBYTES
+    lambda: |-
+      return x;

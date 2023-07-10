@@ -18,7 +18,7 @@ esphome:
   includes: []
   libraries: []
   name_add_mac_suffix: false
-  min_version: 2023.5.1
+  min_version: 2023.6.5
 esp32:
   board: esp-wrover-kit
   framework:
@@ -2684,6 +2684,7 @@ wifi:
   power_save_mode: LIGHT
   fast_connect: false
   passive_scan: false
+  enable_on_boot: true
   networks:
   - ssid: EXTREME
     password: X2erZisRGFM7MepT
@@ -2704,6 +2705,7 @@ web_server:
   version: 2
   include_internal: false
   ota: true
+  log: true
   css_url: ''
   js_url: https://oi.esphome.io/v2/www.js
 time:

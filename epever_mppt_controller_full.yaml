@@ -226,6 +226,8 @@ sensor:
   filters:
   - multiply: 0.01
   icon: mdi:flash
+  device_class: power
+  state_class: measurement
   disabled_by_default: false
   force_update: false
   bitmask: 0xFFFFFFFF
@@ -340,6 +342,8 @@ sensor:
   filters:
   - multiply: 0.01
   icon: mdi:flash
+  device_class: power
+  state_class: measurement
   disabled_by_default: false
   force_update: false
   bitmask: 0xFFFFFFFF

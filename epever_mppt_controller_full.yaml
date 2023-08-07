@@ -1,7 +1,7 @@
 substitutions:
   name: tracer
   prefix: MPPT
-  update_interval: 10s
+  update_interval: 30s
   disabled_by_default: 'true'
   DI: GPIO19
   RO: GPIO18
@@ -1084,7 +1084,7 @@ sensor:
   register_count: 0
 - platform: wifi_signal
   name: MPPT ESP WiFi Signal
-  update_interval: 10s
+  update_interval: 30s
   entity_category: diagnostic
   disabled_by_default: false
   force_update: false
@@ -2713,14 +2713,6 @@ web_server:
   css_url: ''
   js_url: https://oi.esphome.io/v2/www.js
 time:
-- platform: homeassistant
-  id: hass_time
-  update_interval: 24h
-  on_time_sync:
-  - then:
-    - script.execute:
-        id: update_rtc
-  timezone: CET-1CEST,M3.5.0,M10.5.0/3
 - platform: sntp
   id: sntp_time
   update_interval: 24h
@@ -2782,11 +2774,11 @@ modbus:
       pulldown: false
     drive_strength: 20.0
     inverted: false
-  send_wait_time: 200ms
+  send_wait_time: 500ms
   disable_crc: false
 modbus_controller:
 - id: epever
   address: 0x01
-  update_interval: 10s
+  update_interval: 30s
   command_throttle: 0ms
 

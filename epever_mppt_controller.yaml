@@ -82,7 +82,7 @@ uart:
 modbus:
   id: modbus1
   flow_control_pin: ${REDE} # RE/DE
-  send_wait_time: 500ms
+  send_wait_time: 100ms
   # disable_crc: true
 
 modbus_controller:

@@ -2745,8 +2745,8 @@ uart:
       open_drain: false
       pullup: false
       pulldown: false
-    drive_strength: 20.0
     inverted: false
+    drive_strength: 20.0
   rx_pin:
     number: 18
     mode:
@@ -2755,8 +2755,8 @@ uart:
       open_drain: false
       pullup: false
       pulldown: false
-    drive_strength: 20.0
     inverted: false
+    drive_strength: 20.0
   baud_rate: 115200
   stop_bits: 1
   rx_buffer_size: 256
@@ -2772,9 +2772,9 @@ modbus:
       open_drain: false
       pullup: false
       pulldown: false
-    drive_strength: 20.0
     inverted: false
-  send_wait_time: 500ms
+    drive_strength: 20.0
+  send_wait_time: 100ms
   disable_crc: false
 modbus_controller:
 - id: epever

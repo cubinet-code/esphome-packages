@@ -1,7 +1,7 @@
 substitutions:
   name: tracer
   prefix: "MPPT"
-  update_interval: 30s
+  update_interval: 10s
   disabled_by_default: "true"
   DI: GPIO19    # TX Pin
   RO: GPIO18    # RX Pin
@@ -55,7 +55,7 @@ time:
   #   on_time_sync:
   #       then:
   #         - script.execute: update_rtc
-  
+
   - platform: sntp
     id: sntp_time
     update_interval: 24h
@@ -82,7 +82,7 @@ uart:
 modbus:
   id: modbus1
   flow_control_pin: ${REDE} # RE/DE
-  send_wait_time: 100ms
+  send_wait_time: 200ms
   # disable_crc: true
 
 modbus_controller:

@@ -1,7 +1,7 @@
 substitutions:
   name: tracer
   prefix: MPPT
-  update_interval: 30s
+  update_interval: 10s
   disabled_by_default: 'true'
   DI: GPIO19
   RO: GPIO18
@@ -1084,7 +1084,7 @@ sensor:
   register_count: 0
 - platform: wifi_signal
   name: MPPT ESP WiFi Signal
-  update_interval: 30s
+  update_interval: 10s
   entity_category: diagnostic
   disabled_by_default: false
   force_update: false
@@ -2774,11 +2774,11 @@ modbus:
       pulldown: false
     inverted: false
     drive_strength: 20.0
-  send_wait_time: 100ms
+  send_wait_time: 200ms
   disable_crc: false
 modbus_controller:
 - id: epever
   address: 0x01
-  update_interval: 30s
+  update_interval: 10s
   command_throttle: 0ms
 

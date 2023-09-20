@@ -6,6 +6,7 @@ binary_sensor:
     address: 0x3201
     bitmask: 0x2000
     icon: mdi:battery-alert-variant
+    device_class: problem
 
   - platform: modbus_controller
     modbus_controller_id: epever
@@ -14,6 +15,7 @@ binary_sensor:
     address: 0x3201
     bitmask: 0x1000
     icon: mdi:battery-alert-variant
+    device_class: problem
 
   - platform: modbus_controller
     modbus_controller_id: epever
@@ -22,6 +24,7 @@ binary_sensor:
     address: 0x3201
     bitmask: 0x800
     icon: mdi:battery-alert-variant
+    device_class: problem
 
   - platform: modbus_controller
     modbus_controller_id: epever
@@ -30,6 +33,7 @@ binary_sensor:
     address: 0x3201
     bitmask: 0x400
     icon: mdi:battery-alert-variant
+    device_class: problem
 
   - platform: modbus_controller
     modbus_controller_id: epever
@@ -38,6 +42,7 @@ binary_sensor:
     address: 0x3201
     bitmask: 0x200
     icon: mdi:battery-alert-variant
+    device_class: problem
 
   - platform: modbus_controller
     modbus_controller_id: epever
@@ -46,6 +51,7 @@ binary_sensor:
     address: 0x3201
     bitmask: 0x100
     icon: mdi:battery-alert-variant
+    device_class: problem
 
   - platform: modbus_controller
     modbus_controller_id: epever
@@ -54,6 +60,7 @@ binary_sensor:
     address: 0x3201
     bitmask: 0x80
     icon: mdi:battery-alert-variant
+    device_class: problem
 
   - platform: modbus_controller
     modbus_controller_id: epever
@@ -62,6 +69,7 @@ binary_sensor:
     address: 0x3201
     bitmask: 0x40
     icon: mdi:battery-alert-variant
+    device_class: problem
 
   - platform: modbus_controller
     modbus_controller_id: epever
@@ -70,7 +78,8 @@ binary_sensor:
     address: 0x3201
     bitmask: 0x20
     icon: mdi:battery-alert-variant
-
+    device_class: problem
+    
 text_sensor:
 
   - platform: modbus_controller

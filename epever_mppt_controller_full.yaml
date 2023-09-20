@@ -1688,6 +1688,7 @@ binary_sensor:
   address: 12800
   bitmask: 0x8000
   icon: mdi:battery-alert-variant-outline
+  device_class: problem
   disabled_by_default: false
   skip_updates: 0
   force_new_range: false

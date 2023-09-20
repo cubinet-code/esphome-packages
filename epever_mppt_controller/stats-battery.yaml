@@ -11,6 +11,7 @@ binary_sensor:
     address: 0x3200
     bitmask: 0x8000
     icon: mdi:battery-alert-variant-outline
+    device_class: problem
     
   - platform: modbus_controller
     modbus_controller_id: epever

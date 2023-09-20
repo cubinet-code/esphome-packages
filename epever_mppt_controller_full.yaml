@@ -18,13 +18,13 @@ esphome:
   includes: []
   libraries: []
   name_add_mac_suffix: false
-  min_version: 2023.7.1
+  min_version: 2023.8.3
 esp32:
   board: esp-wrover-kit
   framework:
-    version: 2.0.7
-    source: ~3.20007.0
-    platform_version: platformio/espressif32@5.3.0
+    version: 2.0.9
+    source: ~3.20009.0
+    platform_version: platformio/espressif32@5.4.0
     type: arduino
   variant: ESP32
 sensor:
@@ -2690,8 +2690,8 @@ wifi:
   passive_scan: false
   enable_on_boot: true
   networks:
-  - ssid: EXTREME
-    password: X2erZisRGFM7MepT
+  - ssid: \033[5mEXTREME\033[6m
+    password: \033[5mX2erZisRGFM7MepT\033[6m
     priority: 0.0
   use_address: tracer.local
 dashboard_import:
@@ -2726,7 +2726,7 @@ time:
 api:
   reboot_timeout: 0s
   port: 6053
-  password: ''
+  password: \033[5m''\033[6m
 ota:
   on_error:
   - then:
@@ -2745,8 +2745,8 @@ uart:
       open_drain: false
       pullup: false
       pulldown: false
-    inverted: false
     drive_strength: 20.0
+    inverted: false
   rx_pin:
     number: 18
     mode:
@@ -2755,8 +2755,8 @@ uart:
       open_drain: false
       pullup: false
       pulldown: false
-    inverted: false
     drive_strength: 20.0
+    inverted: false
   baud_rate: 115200
   stop_bits: 1
   rx_buffer_size: 256
@@ -2772,8 +2772,8 @@ modbus:
       open_drain: false
       pullup: false
       pulldown: false
-    inverted: false
     drive_strength: 20.0
+    inverted: false
   send_wait_time: 200ms
   disable_crc: false
 modbus_controller:

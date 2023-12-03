@@ -210,4 +210,10 @@ sensor:
       - multiply: 0.01
     icon: mdi:current-dc
 
-
+  # Caluclated SOC
+  - platform: integration
+    name: "MPPT RT: Battery SOC Ah"
+    sensor: battery_current
+    time_unit: h
+    integration_method: trapezoidal
+    icon: mdi:sine-wave

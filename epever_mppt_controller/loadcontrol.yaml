@@ -1,6 +1,4 @@
 sensor:
-
-
   - platform: modbus_controller
     disabled_by_default: ${disabled_by_default}
     modbus_controller_id: epever

@@ -12,13 +12,14 @@ esphome:
   project:
     name: cubinet-code.epever_mppt_controller
     version: 1.0.0
-  build_path: .esphome/build/tracer
+  build_path: build/tracer
   friendly_name: ''
+  area: ''
   platformio_options: {}
   includes: []
   libraries: []
   name_add_mac_suffix: false
-  min_version: 2023.8.3
+  min_version: 2023.11.6
 esp32:
   board: esp-wrover-kit
   framework:
@@ -26,6 +27,7 @@ esp32:
     source: ~3.20005.0
     platform_version: platformio/espressif32@5.4.0
     type: arduino
+  flash_size: 4MB
   variant: ESP32
 sensor:
 - platform: modbus_controller
@@ -157,23 +159,6 @@ sensor:
   icon: mdi:current-dc
   force_update: false
   bitmask: 0xFFFFFFFF
-  force_new_range: false
-  response_size: 0
-  register_count: 0
-- platform: modbus_controller
-  modbus_controller_id: epever
-  name: 'MPPT RT: PV Input Voltage'
-  address: 12544
-  unit_of_measurement: V
-  register_type: read
-  value_type: U_WORD
-  accuracy_decimals: 2
-  filters:
-  - multiply: 0.01
-  disabled_by_default: false
-  force_update: false
-  bitmask: 0xFFFFFFFF
-  skip_updates: 0
   force_new_range: false
   response_size: 0
   register_count: 0
@@ -2726,6 +2711,7 @@ logger:
 web_server:
   port: 80
   version: 2
+  enable_private_network_access: true
   include_internal: false
   ota: true
   log: true
@@ -2765,6 +2751,7 @@ uart:
       pullup: false
       pulldown: false
     drive_strength: 20.0
+    ignore_strapping_warning: false
     inverted: false
   rx_pin:
     number: 18
@@ -2775,6 +2762,7 @@ uart:
       pullup: false
       pulldown: false
     drive_strength: 20.0
+    ignore_strapping_warning: false
     inverted: false
   baud_rate: 115200
   stop_bits: 1
@@ -2792,6 +2780,7 @@ modbus:
       pullup: false
       pulldown: false
     drive_strength: 20.0
+    ignore_strapping_warning: false
     inverted: false
   send_wait_time: 200ms
   disable_crc: false
@@ -2800,4 +2789,5 @@ modbus_controller:
   address: 0x01
   update_interval: 10s
   command_throttle: 0ms
+  offline_skip_updates: 0
 

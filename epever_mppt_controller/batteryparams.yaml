@@ -494,7 +494,7 @@ script:
 
           std::vector<uint16_t> bat_params = {
             0,                                    // Battery Type User
-            (uint16_t)(id(reg9001).state),        // Battery capacity (Ah)
+            (uint16_t)(id(mppt_bp_battery_capacity).state),        // Battery capacity (Ah)
             (uint16_t)(id(reg9002).state * 100),  // Temperature compensation coefficient
             (uint16_t)(id(reg9003).state * 100),  // Over voltage disconnect voltage (Load)
             (uint16_t)(id(reg9004).state * 100),  // Charging limit voltage (highest voltage the controller will allow charging)

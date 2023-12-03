@@ -198,7 +198,7 @@ sensor:
 
   - platform: modbus_controller
     modbus_controller_id: epever
-    id: battery_current
+    id: mppt_stat_battery_current
     name: "${prefix} STAT: Battery Current"
     address: 0x331B
     register_type: read
@@ -213,7 +213,7 @@ sensor:
   # Calculated SOC
   - platform: integration
     name: "MPPT RT: Battery SOC Ah"
-    sensor: mppt_rt_battery_soc_ah
+    sensor: mppt_stat_battery_current
     time_unit: h
     integration_method: trapezoid
     icon: mdi:sine-wave

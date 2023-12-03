@@ -14,14 +14,9 @@ sensor.integration: [source .esphome/packages/93553e33/epever_mppt_controller/st
   restore: False
 button.template: [source .esphome/packages/93553e33/epever_mppt_controller/stats.yaml:223]
   platform: template
-  name: Template Button
+  name: MPPT RT: Battery SOC Ah Reset
   on_press: 
     - then: 
-        - logger.log: 
-            format: Button Pressed
-            level: DEBUG
-            tag: main
-            args: []
         - sensor.integration.reset: 
             
             Couldn't find ID 'mppt_rt_battery_soc_ah'. Please check you have defined an ID with that name in your configuration. These IDs look similar: "battery_soc", "min_battery_today".

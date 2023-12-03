@@ -1,17 +1,5 @@
 Failed config
 
-sensor.integration: [source .esphome/packages/93553e33/epever_mppt_controller/stats.yaml:214]
-  platform: integration
-  name: MPPT RT: Battery SOC Ah
-  
-  Couldn't find ID 'mppt_rt_battery_soc_ah'. Please check you have defined an ID with that name in your configuration. These IDs look similar: "battery_soc", "min_battery_today".
-  sensor: mppt_rt_battery_soc_ah
-  time_unit: h
-  integration_method: trapezoid
-  icon: mdi:sine-wave
-  disabled_by_default: False
-  force_update: False
-  restore: False
 button.template: [source .esphome/packages/93553e33/epever_mppt_controller/stats.yaml:223]
   platform: template
   name: MPPT RT: Battery SOC Ah Reset
@@ -19,6 +7,6 @@ button.template: [source .esphome/packages/93553e33/epever_mppt_controller/stats
     - then: 
         - sensor.integration.reset: 
             
-            Couldn't find ID 'mppt_rt_battery_soc_ah'. Please check you have defined an ID with that name in your configuration. These IDs look similar: "battery_soc", "min_battery_today".
+            Couldn't find ID 'mppt_rt_battery_soc_ah'. Please check you have defined an ID with that name in your configuration. These IDs look similar: "mppt_stat_battery_current", "battery_soc", "min_battery_today".
             id: mppt_rt_battery_soc_ah
   disabled_by_default: False

@@ -213,6 +213,7 @@ sensor:
   # Calculated SOC
   - platform: integration
     name: "MPPT RT: Battery SOC Ah"
+    id: mppt_rt_battery_soc_ah
     sensor: mppt_stat_battery_current
     time_unit: h
     integration_method: trapezoid

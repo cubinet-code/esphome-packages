@@ -751,6 +751,10 @@ sensor:
   time_unit: h
   integration_method: trapezoid
   icon: mdi:sine-wave
+  on_value:
+  - then:
+    - lambda: !lambda "if (id(mppt_rt_battery_soc_ah).state > 0.05){ \n  id(mppt_rt_battery_soc_ah).reset();\n\
+        };"
   disabled_by_default: false
   force_update: false
   restore: false
@@ -2769,9 +2773,9 @@ uart:
       open_drain: false
       pullup: false
       pulldown: false
-    inverted: false
-    ignore_strapping_warning: false
     drive_strength: 20.0
+    ignore_strapping_warning: false
+    inverted: false
   rx_pin:
     number: 18
     mode:
@@ -2780,9 +2784,9 @@ uart:
       open_drain: false
       pullup: false
       pulldown: false
-    inverted: false
-    ignore_strapping_warning: false
     drive_strength: 20.0
+    ignore_strapping_warning: false
+    inverted: false
   baud_rate: 115200
   stop_bits: 1
   rx_buffer_size: 256
@@ -2798,9 +2802,9 @@ modbus:
       open_drain: false
       pullup: false
       pulldown: false
-    inverted: false
-    ignore_strapping_warning: false
     drive_strength: 20.0
+    ignore_strapping_warning: false
+    inverted: false
   send_wait_time: 200ms
   disable_crc: false
 modbus_controller:

@@ -219,12 +219,7 @@ sensor:
     integration_method: trapezoid
     icon: mdi:sine-wave
     # unit_of_measurement: Ah
-    on_value:
-      then:
-        - lambda: |-
-            if (id(mppt_rt_battery_soc_ah).state > 0.05){ 
-              id(mppt_rt_battery_soc_ah).reset();
-            };
+
 button:
   - platform: template
     name: "MPPT RT: Battery SOC Ah Reset"

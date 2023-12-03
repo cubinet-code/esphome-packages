@@ -1481,8 +1481,8 @@ button:
   name: 'MPPT RT: Battery SOC Ah Reset'
   on_press:
   - then:
-    - sensor.integration.reset:
-        id: mppt_rt_battery_soc_ah
+    - lambda: !lambda |-
+        id(mppt_rt_battery_soc_ah).reset();
   disabled_by_default: false
 - platform: template
   name: 'MPPT BP: Write Battery Parameters'
@@ -2770,8 +2770,8 @@ uart:
       pullup: false
       pulldown: false
     inverted: false
-    drive_strength: 20.0
     ignore_strapping_warning: false
+    drive_strength: 20.0
   rx_pin:
     number: 18
     mode:
@@ -2781,8 +2781,8 @@ uart:
       pullup: false
       pulldown: false
     inverted: false
-    drive_strength: 20.0
     ignore_strapping_warning: false
+    drive_strength: 20.0
   baud_rate: 115200
   stop_bits: 1
   rx_buffer_size: 256
@@ -2799,8 +2799,8 @@ modbus:
       pullup: false
       pulldown: false
     inverted: false
-    drive_strength: 20.0
     ignore_strapping_warning: false
+    drive_strength: 20.0
   send_wait_time: 200ms
   disable_crc: false
 modbus_controller:

@@ -114,9 +114,14 @@ text_sensor:
       uint16_t value = (data[item->offset] << 8) + data[item->offset+1];
       value = value >> 2;   /* starting D2 */
       value = value & 0x3; /* for two bits */
+
+      if (id(mppt_chg_charging_status).state == "Boost" and value == 0x1){
+        id(mppt_rt_battery_soc_ah).reset(); 
+      }
+
       switch (value) { 
         case 0x0: return std::string("Not charging");
-        case 0x1: id(mppt_rt_battery_soc_ah).reset(); return std::string("Float");
+        case 0x1: return std::string("Float");
         case 0x2: return std::string("Boost");
         case 0x3: return std::string("Equalization");
         default: return std::string("Unknown");

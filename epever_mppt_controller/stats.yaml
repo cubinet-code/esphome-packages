@@ -215,5 +215,5 @@ sensor:
     name: "MPPT RT: Battery SOC Ah"
     sensor: battery_current
     time_unit: h
-    integration_method: trapezoidal
+    integration_method: trapezoid
     icon: mdi:sine-wave

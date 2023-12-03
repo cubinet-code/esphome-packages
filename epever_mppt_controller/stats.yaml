@@ -221,6 +221,7 @@ sensor:
     # unit_of_measurement: Ah
     filters:
       - lambda: return x + id(mppt_bp_battery_capacity).state;
+      - round: 2
 
 button:
   - platform: template

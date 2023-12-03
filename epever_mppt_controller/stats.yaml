@@ -226,4 +226,6 @@ button:
     on_press:
       then:
         - lambda: |-
-            id(mppt_rt_battery_soc_ah).reset();
+            // id(mppt_rt_battery_soc_ah).reset();
+            // set mppt_rt_battery_soc_ah state to 100
+            id(mppt_rt_battery_soc_ah).publish_state(100.0);

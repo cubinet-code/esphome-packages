@@ -1192,10 +1192,11 @@ text_sensor:
   icon: mdi:battery-charging
   lambda: !lambda "uint16_t value = (data[item->offset] << 8) + data[item->offset+1];\n\
     value = value >> 2;   /* starting D2 */\nvalue = value & 0x3; /* for two bits\
-    \ */\n\nif (id(mppt_chg_charging_status).state == \"Boost\" and value == 0x1){\n\
-    \  id(mppt_rt_battery_soc_ah).reset(); \n}\n\nswitch (value) { \n  case 0x0: return\
-    \ std::string(\"Not charging\");\n  case 0x1: return std::string(\"Float\");\n\
-    \  case 0x2: return std::string(\"Boost\");\n  case 0x3: return std::string(\"\
+    \ */\n\n// Reset the battery SOC counter when the charging status changes from\
+    \ Boost to Float\nif (value == 0x1 && id(mppt_chg_charging_status).state == \"\
+    Boost\") {\n  id(mppt_rt_battery_soc_ah).reset();\n}\n\nswitch (value) { \n  case\
+    \ 0x0: return std::string(\"Not charging\");\n  case 0x1: return std::string(\"\
+    Float\");\n  case 0x2: return std::string(\"Boost\");\n  case 0x3: return std::string(\"\
     Equalization\");\n  default: return std::string(\"Unknown\");\n}\nreturn x;"
   disabled_by_default: false
   bitmask: 0xFFFFFFFF

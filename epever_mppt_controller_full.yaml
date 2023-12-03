@@ -1486,7 +1486,7 @@ button:
     - lambda: !lambda |-
         // id(mppt_rt_battery_soc_ah).reset();
         // set mppt_rt_battery_soc_ah state to 100
-        id(mppt_rt_battery_soc_ah).state = 100.0;
+        id(mppt_rt_battery_soc_ah).publish_and_save_(100.0f);
   disabled_by_default: false
 - platform: template
   name: 'MPPT BP: Write Battery Parameters'

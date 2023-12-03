@@ -210,10 +210,18 @@ sensor:
       - multiply: 0.01
     icon: mdi:current-dc
 
-  # Caluclated SOC
+  # Calculated SOC
   - platform: integration
     name: "MPPT RT: Battery SOC Ah"
-    sensor: battery_current
+    sensor: mppt_rt_battery_soc_ah
     time_unit: h
     integration_method: trapezoid
     icon: mdi:sine-wave
+    # unit_of_measurement: Ah
+
+button:
+  - platform: template
+    name: "Template Button"
+    on_press:
+      - logger.log: Button Pressed
+      - sensor.integration.reset:  mppt_rt_battery_soc_ah

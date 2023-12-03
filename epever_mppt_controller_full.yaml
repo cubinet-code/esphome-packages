@@ -1486,7 +1486,7 @@ button:
     - lambda: !lambda |-
         // id(mppt_rt_battery_soc_ah).reset();
         // set mppt_rt_battery_soc_ah state to 100
-        id(mppt_rt_battery_soc_ah).publish_state(100.0);
+        id(mppt_rt_battery_soc_ah) = 100.0;
   disabled_by_default: false
 - platform: template
   name: 'MPPT BP: Write Battery Parameters'
@@ -2773,9 +2773,9 @@ uart:
       open_drain: false
       pullup: false
       pulldown: false
-    ignore_strapping_warning: false
-    inverted: false
     drive_strength: 20.0
+    inverted: false
+    ignore_strapping_warning: false
   rx_pin:
     number: 18
     mode:
@@ -2784,9 +2784,9 @@ uart:
       open_drain: false
       pullup: false
       pulldown: false
-    ignore_strapping_warning: false
-    inverted: false
     drive_strength: 20.0
+    inverted: false
+    ignore_strapping_warning: false
   baud_rate: 115200
   stop_bits: 1
   rx_buffer_size: 256
@@ -2802,9 +2802,9 @@ modbus:
       open_drain: false
       pullup: false
       pulldown: false
-    ignore_strapping_warning: false
-    inverted: false
     drive_strength: 20.0
+    inverted: false
+    ignore_strapping_warning: false
   send_wait_time: 200ms
   disable_crc: false
 modbus_controller:

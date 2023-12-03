@@ -228,4 +228,4 @@ button:
         - lambda: |-
             // id(mppt_rt_battery_soc_ah).reset();
             // set mppt_rt_battery_soc_ah state to 100
-            id(mppt_rt_battery_soc_ah) = 100.0;
+            id(mppt_rt_battery_soc_ah).state = 100.0;

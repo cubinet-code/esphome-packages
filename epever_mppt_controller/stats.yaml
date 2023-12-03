@@ -224,4 +224,6 @@ button:
   - platform: template
     name: "MPPT RT: Battery SOC Ah Reset"
     on_press:
-      - sensor.integration.reset:  mppt_rt_battery_soc_ah
+      then:
+        - lambda: |-
+            id(mppt_rt_battery_soc_ah).reset();

@@ -221,7 +221,6 @@ sensor:
 
 button:
   - platform: template
-    name: "Template Button"
+    name: "MPPT RT: Battery SOC Ah Reset"
     on_press:
-      - logger.log: Button Pressed
       - sensor.integration.reset:  mppt_rt_battery_soc_ah

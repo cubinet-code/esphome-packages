@@ -754,6 +754,8 @@ sensor:
   filters:
   - lambda: !lambda |-
       return x + id(mppt_bp_battery_capacity).state;
+  - round:
+      accuracy_decimals: 2
   disabled_by_default: false
   force_update: false
   restore: false

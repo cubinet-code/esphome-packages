@@ -114,9 +114,10 @@ text_sensor:
       uint16_t value = (data[item->offset] << 8) + data[item->offset+1];
       value = value >> 2;   /* starting D2 */
       value = value & 0x3; /* for two bits */
-
-      if (id(mppt_chg_charging_status).state == "Boost" and value == 0x1){
-        id(mppt_rt_battery_soc_ah).reset(); 
+      
+      // Reset the battery SOC counter when the charging status changes from Boost to Float
+      if (value == 0x1 && id(mppt_chg_charging_status).state == "Boost") {
+        id(mppt_rt_battery_soc_ah).reset();
       }
 
       switch (value) { 

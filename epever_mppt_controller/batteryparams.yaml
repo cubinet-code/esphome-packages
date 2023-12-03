@@ -119,7 +119,7 @@ number:
 
   - platform: modbus_controller
     modbus_controller_id: epever
-    id: reg9001
+    id: mppt_bp_battery_capacity
     address: 0x9001
     name: "${prefix} BP: Battery Capacity"
     unit_of_measurement: "Ah"

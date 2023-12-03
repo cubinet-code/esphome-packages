@@ -219,6 +219,8 @@ sensor:
     integration_method: trapezoid
     icon: mdi:sine-wave
     # unit_of_measurement: Ah
+    filters:
+      - lambda: return x + id(mppt_bp_battery_capacity).state;
 
 button:
   - platform: template

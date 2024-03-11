@@ -1,5 +1,4 @@
 sensor:
-
   - platform: modbus_controller
     modbus_controller_id: epever
     name: "${prefix} RT: PV Input Voltage"
@@ -104,7 +103,7 @@ sensor:
     filters:
       - multiply: 0.01
     icon: mdi:current-dc
-    
+
   - platform: modbus_controller
     modbus_controller_id: epever
     id: load_power
@@ -159,7 +158,7 @@ sensor:
   - platform: modbus_controller
     modbus_controller_id: epever
     id: battery_soc
-    name: "${prefix} RT: Battery SOC"
+    name: "${prefix} RT: Battery est. SOC"
     address: 0x311A
     unit_of_measurement: "%"
     register_type: read
@@ -192,7 +191,6 @@ sensor:
     icon: mdi:sine-wave
 
 text_sensor:
-
   - platform: modbus_controller
     modbus_controller_id: epever
     name: "${prefix} RT: Over Temperature Inside The Device"
@@ -207,5 +205,3 @@ text_sensor:
         default:  return esphome::to_string(value);
       }
       return x;
-
-

@@ -181,7 +181,7 @@ sensor:
 
   # Calculated SOC integration Pct
   - platform: template
-    name: "${prefix} STAT: Battery SOC Pct"
+    name: "${prefix} RT: Battery SOC Pct"
     lambda: |-
       if (id(mppt_rt_battery_soc_ah).state and id(mppt_bp_battery_capacity).state) {
         return id(mppt_rt_battery_soc_ah).state / id(mppt_bp_battery_capacity).state * 100.0;

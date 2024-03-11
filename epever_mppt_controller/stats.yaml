@@ -203,8 +203,8 @@ sensor:
   - platform: template
     name: "${prefix} STAT: Battery SOC Pct"
     lambda: |-
-      if (id(real_soc).state and id(mppt_bp_battery_capacity).state) {
-        return id(real_soc).state / id(mppt_bp_battery_capacity).state * 100.0;
+      if (id(mppt_rt_battery_soc_ah).state and id(mppt_bp_battery_capacity).state) {
+        return id(mppt_rt_battery_soc_ah).state / id(mppt_bp_battery_capacity).state * 100.0;
       } else {
         return 0.0;
       }

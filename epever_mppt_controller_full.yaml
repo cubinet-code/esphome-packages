@@ -407,6 +407,37 @@ sensor:
   force_new_range: false
   response_size: 0
   register_count: 0
+- platform: integration
+  name: 'MPPT RT: Battery SOC Ah'
+  id: mppt_rt_battery_soc_ah
+  sensor: mppt_stat_battery_current
+  time_unit: h
+  integration_method: trapezoid
+  accuracy_decimals: 2
+  state_class: measurement
+  icon: mdi:battery-high
+  filters:
+  - lambda: !lambda |-
+      return x + id(mppt_bp_battery_capacity).state;
+  disabled_by_default: false
+  force_update: false
+  restore: false
+  unit_of_measurement: Ah
+- platform: template
+  name: 'MPPT STAT: Battery SOC Pct'
+  lambda: !lambda |-
+    if (id(mppt_rt_battery_soc_ah).state and id(mppt_bp_battery_capacity).state) {
+      return id(mppt_rt_battery_soc_ah).state / id(mppt_bp_battery_capacity).state * 100.0;
+    } else {
+      return 0.0;
+    }
+  state_class: measurement
+  accuracy_decimals: 0
+  unit_of_measurement: '%'
+  icon: mdi:battery-high
+  disabled_by_default: false
+  force_update: false
+  update_interval: 60s
 - platform: modbus_controller
   modbus_controller_id: epever
   id: remote_battery_temperature
@@ -712,21 +743,6 @@ sensor:
   force_new_range: false
   response_size: 0
   register_count: 0
-- platform: template
-  name: 'MPPT STAT: Battery SOC Pct'
-  lambda: !lambda |-
-    if (id(mppt_rt_battery_soc_ah).state and id(mppt_bp_battery_capacity).state) {
-      return id(mppt_rt_battery_soc_ah).state / id(mppt_bp_battery_capacity).state * 100.0;
-    } else {
-      return 0.0;
-    }
-  state_class: measurement
-  accuracy_decimals: 0
-  unit_of_measurement: '%'
-  icon: mdi:battery-high
-  disabled_by_default: false
-  force_update: false
-  update_interval: 60s
 - platform: modbus_controller
   modbus_controller_id: epever
   id: mppt_stat_battery_current
@@ -746,22 +762,6 @@ sensor:
   skip_updates: 0
   force_new_range: false
   response_size: 0
-- platform: integration
-  name: 'MPPT RT: Battery SOC Ah'
-  id: mppt_rt_battery_soc_ah
-  sensor: mppt_stat_battery_current
-  time_unit: h
-  integration_method: trapezoid
-  accuracy_decimals: 2
-  state_class: measurement
-  icon: mdi:battery-high
-  filters:
-  - lambda: !lambda |-
-      return x + id(mppt_bp_battery_capacity).state;
-  disabled_by_default: false
-  force_update: false
-  restore: false
-  unit_of_measurement: Ah
 - platform: modbus_controller
   modbus_controller_id: epever
   address: 36889

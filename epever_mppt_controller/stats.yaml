@@ -184,21 +184,6 @@ sensor:
     filters:
       - multiply: 0.01
     icon: mdi:sine-wave
-    on_value:
-      then:
-        - sensor.template.publish:
-            id: real_soc
-            state: !lambda "return x*2;"
-            #state: !lambda 'return 101.1475 + pow((1.010924 - 101.1475)/(1 + pow((x/31.86812), 81.69155)),5299956);'
-            # 1.010924 /(1 + (x/31.86812)**81.69155)**5299956
-
-  - platform: template
-    id: real_soc
-    name: "${prefix} STAT: Battery SOC"
-    icon: mdi:battery-high
-    accuracy_decimals: 0
-    unit_of_measurement: "%"
-    state_class: measurement
 
   - platform: template
     name: "${prefix} STAT: Battery SOC Pct"

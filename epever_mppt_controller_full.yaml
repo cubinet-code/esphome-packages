@@ -705,12 +705,6 @@ sensor:
   filters:
   - multiply: 0.01
   icon: mdi:sine-wave
-  on_value:
-  - then:
-    - sensor.template.publish:
-        id: real_soc
-        state: !lambda |-
-          return x*2;
   disabled_by_default: false
   force_update: false
   bitmask: 0xFFFFFFFF
@@ -718,16 +712,6 @@ sensor:
   force_new_range: false
   response_size: 0
   register_count: 0
-- platform: template
-  id: real_soc
-  name: 'MPPT STAT: Battery SOC'
-  icon: mdi:battery-high
-  accuracy_decimals: 0
-  unit_of_measurement: '%'
-  state_class: measurement
-  disabled_by_default: false
-  force_update: false
-  update_interval: 60s
 - platform: template
   name: 'MPPT STAT: Battery SOC Pct'
   lambda: !lambda |-
